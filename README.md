@@ -3,7 +3,7 @@
 By: [Connor Baumler](https://ctbaumler.github.io/) `<baumler@cs.umd.edu>`, Calvin Bao, Huy Nghiem, Xinchen Yang, Marine Carpuat, and Hal Daumé III
 
 ```
-Bibtex will be updated here when available.
+To appear at ACL 26. Bibtex will be updated here when available.
 ```
 
 This repository contains writing logs generated in our study about post-editing LLM-generate text to express personal style. 
