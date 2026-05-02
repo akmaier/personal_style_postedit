@@ -32,22 +32,42 @@ from personal_style.llm_mimic import MimicCache, MimicRequest, make_generator  #
 
 
 def build_requests(obs: pd.DataFrame) -> list[MimicRequest]:
-    """One request per treatment task. Style samples = that participant's control texts."""
+    """One request per treatment task using the leakage-free held-out protocol.
+
+    Each participant has exactly 2 control texts. We deterministically assign
+    the one with the *lower* task_idx as the demo (shown to the model) and the
+    other as the held-out evaluation target (NOT shown). The held-out task_idx
+    is stored on the MimicRequest so scripts/08_compare_mimics.py can score the
+    mimic against the right vector.
+    """
     treat = obs[obs["condition"] == "treatment"]
-    ctrl = obs[obs["condition"] == "control"]
-    by_pid_ctrl = ctrl.groupby("pid")["final_text"].apply(list).to_dict()
+    ctrl = obs[obs["condition"] == "control"].sort_values(["pid", "task_idx"])
+    # Map each pid -> [(task_idx, final_text), (task_idx, final_text)]
+    pid_to_controls: dict[str, list[tuple[int, str]]] = {}
+    for pid, sub in ctrl.groupby("pid"):
+        pid_to_controls[str(pid)] = [
+            (int(r.task_idx), str(r.final_text))
+            for r in sub.itertuples(index=False)
+            if isinstance(r.final_text, str) and r.final_text.strip()
+        ]
 
     requests: list[MimicRequest] = []
     for _, r in treat.iterrows():
-        samples = by_pid_ctrl.get(r["pid"], [])
-        samples = tuple(s for s in samples if isinstance(s, str) and s.strip())
+        controls = pid_to_controls.get(str(r["pid"]), [])
+        if len(controls) < 2:
+            # Skip: cannot run the held-out protocol with fewer than 2 controls.
+            continue
+        # Sorted ascending by task_idx; demo is the earlier control, held-out is the later.
+        demo_idx, demo_text = controls[0]
+        held_out_idx, _held_out_text = controls[1]
         requests.append(
             MimicRequest(
                 pid=str(r["pid"]),
                 task_idx=int(r["task_idx"]),
                 scenario=str(r["scenario"]),
                 details=str(r["details"] or ""),
-                style_samples=samples,
+                style_samples=(demo_text,),
+                held_out_task_idx=held_out_idx,
             )
         )
     return requests
