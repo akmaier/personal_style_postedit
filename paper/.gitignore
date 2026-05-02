@@ -1,0 +1,28 @@
+# LaTeX build artifacts
+*.aux
+*.bbl
+*.blg
+*.fdb_latexmk
+*.fls
+*.lof
+*.log
+*.lot
+*.nav
+*.out
+*.snm
+*.synctex.gz
+*.toc
+*.vrb
+*.idx
+*.ilg
+*.ind
+*.bcf
+*.run.xml
+build/
+
+# Editor side-files
+*.swp
+.DS_Store
+
+# Keep PDFs for the figures we generate, but ignore the compiled paper PDF.
+main.pdf
