@@ -1,6 +1,6 @@
 PY ?= python3
 
-.PHONY: all data embeddings sims tests figures report clean test mimics mimic-compare
+.PHONY: all data embeddings sims tests figures report clean distclean test mimics mimic-compare
 
 all: data embeddings sims tests figures report
 
@@ -31,5 +31,21 @@ mimic-compare:
 test:
 	$(PY) -m pytest -q
 
+# `clean` removes only files that match .gitignore (i.e. anything generated
+# by the pipeline). Committed artifacts -- the LUAR mimic drafts under
+# data/processed/mimics/, the figures, and the results CSVs -- are preserved.
+# The previous `rm -rf data/processed figures results/*.csv` was destructive:
+# it deleted the committed Opus 4.7 draft cache (324 LLM-generated texts) and
+# the committed figures, ignoring the .gitignore negation rules entirely.
 clean:
-	rm -rf data/processed figures results/*.csv results/*.md
+	@command -v git >/dev/null 2>&1 || { echo "git not available; refusing to clean"; exit 1; }
+	@if [ ! -d .git ]; then echo "not a git checkout; refusing to clean"; exit 1; fi
+	git clean -fdX -- data/processed figures results
+
+# `distclean` is the explicit big-hammer version: removes BOTH ignored and
+# untracked files in the same paths. Still preserves anything committed
+# (so the Opus draft cache survives), but wipes any locally-staged work.
+distclean:
+	@command -v git >/dev/null 2>&1 || { echo "git not available; refusing to clean"; exit 1; }
+	@if [ ! -d .git ]; then echo "not a git checkout; refusing to clean"; exit 1; fi
+	git clean -fdx -- data/processed figures results

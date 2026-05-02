@@ -75,8 +75,12 @@ def main() -> None:
         ("Fig. 7", "Perceived self-similarity by condition.", "fig7_perceived.png"),
         ("Fig. 8", "Perceived vs. LUAR-measured self-similarity (rmcorr; H3).", "fig8_rmcorr.png"),
     ]
+    # `REPRODUCTION_REPORT.md` is written to the repo root, so figure links
+    # are relative to the root. Using `../figures/` resolves above the repo
+    # and renders as a broken image on GitHub. Keep the path as just
+    # `figures/<fname>`.
     for label, caption, fname in figs:
-        lines.append(f"### {label}\n\n*{caption}*\n\n![{label}](../figures/{fname})\n")
+        lines.append(f"### {label}\n\n*{caption}*\n\n![{label}](figures/{fname})\n")
 
     lines.append("\n## Notes on deviations from the paper\n")
     lines.append(

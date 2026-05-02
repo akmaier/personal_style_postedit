@@ -1,15 +1,16 @@
-"""Merge Opus 4.7 drafts produced inline by the agent into the mimic cache.
+"""Merge agent-produced mimic drafts into the canonical cache.
 
-Reads a JSON file of {cache_key: {"text": "..."}} mappings and merges them
-into data/processed/mimics/claude-opus-4-7.json. Validates that every key
-matches one of the expected requests under the v1 held-out protocol used by
-scripts/07_generate_mimics.py.
+Reads one or more JSON files of `{cache_key: {"text": "..."}}` mappings and
+merges them into `data/processed/mimics/<generator>.json`. Every key is
+validated against the v1 held-out protocol expected by `scripts/07_generate_mimics.py`.
 
 Usage:
-  python scripts/09_save_opus_drafts.py path/to/batch.json [path/to/another.json ...]
+  python scripts/09_save_drafts.py --generator claude-opus-4-7 BATCH.json [BATCH2.json ...]
+  python scripts/09_save_drafts.py --generator gpt-5.5         BATCH.json [BATCH2.json ...]
 """
 from __future__ import annotations
 
+import argparse
 import json
 import sys
 from pathlib import Path
@@ -29,29 +30,31 @@ _gen07 = _ilu.module_from_spec(_spec)
 _spec.loader.exec_module(_gen07)
 build_requests = _gen07.build_requests
 
-GENERATOR = "claude-opus-4-7"
 
-
-def build_keys() -> dict[str, MimicRequest]:
+def build_keys(generator: str) -> dict[str, MimicRequest]:
     paths = Paths()
     obs, _ = load_processed(paths)
     out: dict[str, MimicRequest] = {}
     for req in build_requests(obs):
-        out[MimicCache.key(req, GENERATOR)] = req
+        out[MimicCache.key(req, generator)] = req
     return out
 
 
 def main() -> None:
-    if len(sys.argv) < 2:
-        raise SystemExit("usage: scripts/09_save_opus_drafts.py BATCH.json [...]")
+    p = argparse.ArgumentParser()
+    p.add_argument("--generator", required=True,
+                   help="generator name, e.g. claude-opus-4-7 or gpt-5.5")
+    p.add_argument("batches", nargs="+", help="JSON batch files to merge")
+    args = p.parse_args()
+
     paths = Paths()
-    cache_path = paths.processed_dir / "mimics" / f"{GENERATOR}.json"
+    cache_path = paths.processed_dir / "mimics" / f"{args.generator}.json"
     cache = MimicCache(cache_path)
     data = cache.load()
-    expected = build_keys()
+    expected = build_keys(args.generator)
     added = 0
     bad = 0
-    for arg in sys.argv[1:]:
+    for arg in args.batches:
         batch = json.loads(Path(arg).read_text())
         for key, payload in batch.items():
             if key not in expected:
@@ -68,7 +71,7 @@ def main() -> None:
                 continue
             req = expected[key]
             data[key] = {
-                "generator": GENERATOR,
+                "generator": args.generator,
                 "pid": req.pid,
                 "task_idx": req.task_idx,
                 "scenario": req.scenario,
@@ -76,8 +79,9 @@ def main() -> None:
             }
             added += 1
     cache.save(data)
-    print(f"[{GENERATOR}] merged {added} drafts ({bad} skipped) -> {cache_path}")
-    print(f"[{GENERATOR}] cache now contains {sum(1 for v in data.values() if v['generator'] == GENERATOR)} drafts")
+    own = sum(1 for v in data.values() if v["generator"] == args.generator)
+    print(f"[{args.generator}] merged {added} drafts ({bad} skipped) -> {cache_path}")
+    print(f"[{args.generator}] cache now contains {own} drafts")
 
 
 if __name__ == "__main__":
