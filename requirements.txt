@@ -1,0 +1,15 @@
+numpy>=2.0
+pandas>=2.2
+pyarrow>=15
+scipy>=1.13
+statsmodels>=0.14
+pingouin>=0.5,<0.7
+matplotlib>=3.8
+seaborn>=0.13
+torch>=2.4
+transformers>=4.45,<5
+huggingface_hub>=0.24
+accelerate>=0.34
+tqdm>=4.66
+requests>=2.32
+einops>=0.7
