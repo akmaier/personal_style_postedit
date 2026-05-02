@@ -68,25 +68,35 @@ Full details and caveats: [`FINAL_ASSESSMENT.md`](FINAL_ASSESSMENT.md).
 
 The same LUAR-MUD embeddings used to *evaluate* style proximity can be
 flipped into *detection* features. A leave-authors-out 5-fold linear-SVM
-detector reaches:
+detector trained as a **generic human-vs.-AI binary classifier** (162
+unassisted-control vectors from 81 authors as the human class, 324 AI
+vectors per approach as the AI class) reaches:
 
 | Approach | Detection AUC (95 % bootstrap CI) |
 |---|---:|
-| o4-mini draft | **0.999** [0.997, 1.000] |
-| Human post-edit | **0.967** [0.957, 0.976] |
-| Claude Opus 4.7 mimic | **0.942** [0.925, 0.958] |
-| GPT-5.5 mimic | **0.914** [0.902, 0.929] |
+| o4-mini draft | **0.999** [0.996, 1.000] |
+| Human post-edit | **0.971** [0.960, 0.980] |
+| Claude Opus 4.7 mimic | **0.952** [0.944, 0.960] |
+| GPT-5.5 mimic | **0.931** [0.924, 0.937] |
 
 Detectability drops monotonically as the approach gets closer to the
 participant's natural style, but **no approach reaches chance** — even the
 strongest frontier-LLM mimic still leaves a residual stylometric signature.
 
-`tests/test_detection_no_leakage.py` enforces author-disjointness across
-train and test on every CV split. See
-[`scripts/11_detection_experiment.py`](scripts/11_detection_experiment.py)
-and `results/detection_aucs.csv` for the full numbers.
+The CV uses `GroupKFold(groups=pid)` so no author appears in both train
+and test of any split, and the human class uses **both** unassisted control
+texts of every author so the classifier learns "human vs. AI" rather than
+"is this by *this specific author*". Three unit tests in
+`tests/test_detection_no_leakage.py` enforce both invariants.
 
 ![Figure 11: detection AUC](figures/fig11_detection.png)
+
+A 2-D PCA and t-SNE projection of the same 1 458 embeddings makes the
+geometry visible: the two frontier-LLM mimics live in a different region
+of LUAR space than the o4-mini draft and the human post-edit, with human
+controls spanning both regions.
+
+![Figure 12 (t-SNE)](figures/fig12b_embedding_tsne.png)
 
 ## How to reproduce everything
 
@@ -96,6 +106,7 @@ make all              # paper reproduction: figures + hypothesis tests + report
 python3 scripts/08_compare_mimics.py    # leakage-free 4-way LUAR comparison
 python3 scripts/10_final_assessment.py  # Friedman + all-pairs + win-rate + Figure 10
 python3 scripts/11_detection_experiment.py  # 5-fold leave-authors-out detection AUC + Figure 11
+python3 scripts/12_embedding_visualization.py  # PCA + t-SNE of the LUAR space + Figure 12
 ```
 
 Wall-clock cost on CPU: ~ 2 min for the paper repro, ~ 1 min to embed the 648
