@@ -24,5 +24,11 @@ build/
 *.swp
 .DS_Store
 
-# Keep PDFs for the figures we generate, but ignore the compiled paper PDF.
+# Build artefacts
 main.pdf
+figures/_build/
+tables/*.tex
+
+# But keep the anonymized submission PDF tracked so reviewers (and future agents)
+# can verify the build without rebuilding from source.
+!main_anonymous.pdf
