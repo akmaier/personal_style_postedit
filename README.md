@@ -129,6 +129,11 @@ different protocol.
   target.
 
 ---
+This repository contains writing logs generated in our study about post-editing LLM-generate text to express personal style.
+
+> **Fork note (akmaier):** a step-by-step plan for fully reproducing the paper's results
+> and figures from these logs lives in [`REPRODUCTION_PLAN.md`](./REPRODUCTION_PLAN.md).
+
 
 ## Original data documentation (from upstream)
 
