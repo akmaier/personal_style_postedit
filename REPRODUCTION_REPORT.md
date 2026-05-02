@@ -39,37 +39,37 @@
 
 *Similarity to LLM-text and control text, before vs. after post-edit (H1a, H1b).*
 
-![Fig. 3](../figures/fig3_before_after.png)
+![Fig. 3](figures/fig3_before_after.png)
 
 ### Fig. 4
 
 *Edited text vs. own control vs. LLM-generated text (H1c).*
 
-![Fig. 4](../figures/fig4_treatment_vs_control_llm.png)
+![Fig. 4](figures/fig4_treatment_vs_control_llm.png)
 
 ### Fig. 5
 
 *Self-similarity vs. other-participant similarity (H1a', H2c).*
 
-![Fig. 5](../figures/fig5_self_vs_other.png)
+![Fig. 5](figures/fig5_self_vs_other.png)
 
 ### Fig. 6
 
 *Within-pool stylistic homogeneity for LLM, post-edited, control (H2a, H2b).*
 
-![Fig. 6](../figures/fig6_homogeneity.png)
+![Fig. 6](figures/fig6_homogeneity.png)
 
 ### Fig. 7
 
 *Perceived self-similarity by condition.*
 
-![Fig. 7](../figures/fig7_perceived.png)
+![Fig. 7](figures/fig7_perceived.png)
 
 ### Fig. 8
 
 *Perceived vs. LUAR-measured self-similarity (rmcorr; H3).*
 
-![Fig. 8](../figures/fig8_rmcorr.png)
+![Fig. 8](figures/fig8_rmcorr.png)
 
 
 ## Notes on deviations from the paper
