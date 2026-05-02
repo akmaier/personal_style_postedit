@@ -2,7 +2,8 @@
 
 Reads a JSON file of {cache_key: {"text": "..."}} mappings and merges them
 into data/processed/mimics/claude-opus-4-7.json. Validates that every key
-matches one of the 324 expected requests.
+matches one of the expected requests under the v1 held-out protocol used by
+scripts/07_generate_mimics.py.
 
 Usage:
   python scripts/09_save_opus_drafts.py path/to/batch.json [path/to/another.json ...]
@@ -19,25 +20,23 @@ sys.path.insert(0, str(REPO_ROOT / "src"))
 from personal_style.data import Paths, load_processed  # noqa: E402
 from personal_style.llm_mimic import MimicCache, MimicRequest  # noqa: E402
 
+# Pull in the same protocol-aware request builder as scripts/07
+sys.path.insert(0, str(REPO_ROOT / "scripts"))
+import importlib.util as _ilu
+
+_spec = _ilu.spec_from_file_location("_gen07", REPO_ROOT / "scripts" / "07_generate_mimics.py")
+_gen07 = _ilu.module_from_spec(_spec)
+_spec.loader.exec_module(_gen07)
+build_requests = _gen07.build_requests
+
 GENERATOR = "claude-opus-4-7"
 
 
 def build_keys() -> dict[str, MimicRequest]:
     paths = Paths()
     obs, _ = load_processed(paths)
-    treat = obs[obs["condition"] == "treatment"]
-    ctrl = obs[obs["condition"] == "control"]
-    by_pid_ctrl = ctrl.groupby("pid")["final_text"].apply(list).to_dict()
     out: dict[str, MimicRequest] = {}
-    for _, r in treat.iterrows():
-        samples = tuple(s for s in by_pid_ctrl.get(r["pid"], []) if isinstance(s, str) and s.strip())
-        req = MimicRequest(
-            pid=str(r["pid"]),
-            task_idx=int(r["task_idx"]),
-            scenario=str(r["scenario"]),
-            details=str(r["details"] or ""),
-            style_samples=samples,
-        )
+    for req in build_requests(obs):
         out[MimicCache.key(req, GENERATOR)] = req
     return out
 

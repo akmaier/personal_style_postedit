@@ -1,17 +1,18 @@
 """Stage 08: embed mimic drafts with LUAR and compare to human post-editing.
 
-For every treatment task with a mimic draft we compute:
-  sim(mimic_<model>, participant's control style)
+**Held-out evaluation protocol (v1).** Each participant has only 2 control texts.
+The generator is shown exactly one of them (the demo, with the lower task_idx)
+and is *never* shown the other (the held-out target). All four approaches
+(o4-mini draft, human post-edit, Opus 4.7 mimic, GPT-5.5 mimic) are scored
+against the same single held-out vector, so they share a leakage-free yardstick.
 
-We then compare distributions of this similarity across:
-  - LLM original (the o4-mini draft used in the study)
-  - human post-edited (treatment final_text)
-  - GPT-5.5 mimic
-  - Claude Opus 4.7 mimic
+For each treatment task with a mimic draft we compute:
+  sim_<approach>_heldout = cos( embed(<approach output>), embed(held-out control) )
+  sim_<approach>_other_mean = mean over OTHER participants of cos( <approach>, that pid's heldout )
 
 Outputs:
   - data/processed/mimic_similarities.parquet
-  - results/mimic_comparison.csv (paired stats edited <-> mimic)
+  - results/mimic_comparison.csv  (paired stats per generator)
   - figures/fig9_llm_mimic_vs_human.{pdf,png}
 """
 from __future__ import annotations
@@ -32,8 +33,6 @@ from personal_style.embeddings import embed_texts, load_luar  # noqa: E402
 from personal_style.similarity import (  # noqa: E402
     EmbeddingTable,
     cosine,
-    mean_cos_to_set,
-    normalize,
     participant_kind_indices,
 )
 from personal_style.stats import run_test  # noqa: E402
@@ -59,6 +58,34 @@ def load_mimic_drafts(paths: Paths) -> pd.DataFrame:
     return df
 
 
+def build_heldout_index(base: EmbeddingTable, obs: pd.DataFrame) -> dict[str, dict]:
+    """For each pid: dict with keys
+        demo_idx, demo_vec, held_out_idx, held_out_vec
+    using the same protocol as scripts/07: the lower-task_idx control is the
+    demo, the higher-task_idx control is the held-out target.
+    """
+    pki = participant_kind_indices(base)
+    out: dict[str, dict] = {}
+    pids = sorted(set(base.pids.tolist()))
+    for pid in pids:
+        ctrl_indices = pki.get((pid, "control"), [])
+        if len(ctrl_indices) < 2:
+            continue
+        # Sort by task_idx
+        rows = sorted(
+            [(int(base.task_idx[i]), i) for i in ctrl_indices], key=lambda x: x[0]
+        )
+        demo_ti, demo_emb_idx = rows[0]
+        ho_ti, ho_emb_idx = rows[1]
+        out[pid] = {
+            "demo_idx": demo_ti,
+            "demo_vec": base.vecs[demo_emb_idx],
+            "held_out_idx": ho_ti,
+            "held_out_vec": base.vecs[ho_emb_idx],
+        }
+    return out
+
+
 def main() -> None:
     paths = Paths()
     obs, _ = load_processed(paths)
@@ -66,10 +93,9 @@ def main() -> None:
     mimics = load_mimic_drafts(paths)
     if mimics.empty:
         raise SystemExit("no mimic drafts found; run scripts/07_generate_mimics.py first")
-    gens = sorted(mimics["generator"].unique())
     print(f"mimic drafts loaded: {len(mimics)} ({mimics['generator'].value_counts().to_dict()})")
 
-    # -- Embed mimic drafts with LUAR
+    # -- Embed mimic drafts with LUAR (idempotent)
     cache_path = paths.processed_dir / "mimic_embeddings.npz"
     if cache_path.exists():
         z = np.load(cache_path)
@@ -88,105 +114,106 @@ def main() -> None:
         new_vecs = embed_texts(new_texts, tokenizer, model, device, batch_size=16)
         for i, vec in zip(new_idx, new_vecs):
             cached[keys_needed[i]] = vec
-    # Persist cache
     if cached:
         all_keys = list(cached.keys())
         all_vecs = np.stack([cached[k] for k in all_keys]).astype(np.float32)
-        pids = np.array([k[0] for k in all_keys], dtype="U64")
-        task_idx = np.array([k[1] for k in all_keys], dtype=np.int32)
+        pids_arr = np.array([k[0] for k in all_keys], dtype="U64")
+        task_arr = np.array([k[1] for k in all_keys], dtype=np.int32)
         gens_arr = np.array([k[2] for k in all_keys], dtype="U32")
-        np.savez_compressed(cache_path, pids=pids, task_idx=task_idx, generators=gens_arr, vecs=all_vecs)
+        np.savez_compressed(cache_path, pids=pids_arr, task_idx=task_arr,
+                            generators=gens_arr, vecs=all_vecs)
 
-    # -- Build a per-task table with similarity to participant's control style
-    # We need each participant's control-text vectors (already embedded in stage 01)
+    # -- Load base (control / llm / edited) embeddings and build the held-out index
     base_npz = np.load(paths.processed_dir / "embeddings.npz")
-    base_pids = base_npz["pids"].astype(str)
-    base_kinds = base_npz["kinds"].astype(str)
-    base_task = base_npz["task_idx"].astype(int)
-    base_vecs = base_npz["vecs"].astype(np.float32)
-    base = EmbeddingTable(base_pids, base_kinds, base_task, base_npz["scenarios"].astype(str), base_vecs)
+    base = EmbeddingTable(
+        base_npz["pids"].astype(str),
+        base_npz["kinds"].astype(str),
+        base_npz["task_idx"].astype(int),
+        base_npz["scenarios"].astype(str),
+        base_npz["vecs"].astype(np.float32),
+    )
+    held = build_heldout_index(base, obs)
+    if not held:
+        raise SystemExit("no participants have >= 2 control texts; cannot run held-out protocol")
+    print(f"held-out index built for {len(held)} participants")
 
-    pki = participant_kind_indices(base)
-    pids_all = sorted(set(base.pids.tolist()))
-    pid_ctrl_vecs = {p: base.vecs[pki.get((p, "control"), [])] for p in pids_all}
-    pid_ctrl_centroid = {
-        p: (normalize(v.mean(axis=0)) if len(v) else None) for p, v in pid_ctrl_vecs.items()
-    }
+    # -- Build per-treatment-task scores against held-out target
+    # Index base table for quick lookup of (pid, kind, task_idx) -> vec
+    base_idx = {}
+    for i, (p, k, t) in enumerate(zip(base.pids, base.kinds, base.task_idx)):
+        base_idx[(str(p), str(k), int(t))] = base.vecs[i]
 
-    # Existing similarity table (treatment rows already have edited & llm sims to control)
-    treat_sim = pd.read_parquet(paths.processed_dir / "sim_treatment.parquet")
+    pids_all = sorted(held.keys())
+    held_vec = {pid: held[pid]["held_out_vec"] for pid in pids_all}
 
     rows = []
     for (pid, ti, gen), vec in cached.items():
-        cent = pid_ctrl_centroid.get(pid)
-        if cent is None:
+        pid = str(pid)
+        ti = int(ti)
+        if pid not in held:
             continue
-        # this mimic vs participant's own control style centroid
-        s_self = cosine(vec, cent)
-        # this mimic vs *other* participants' controls
-        other_pids = [q for q in pids_all if q != pid]
-        scores = []
-        for q in other_pids:
-            if pid_ctrl_centroid[q] is None or len(pid_ctrl_vecs[q]) == 0:
-                continue
-            scores.append(mean_cos_to_set(vec, pid_ctrl_vecs[q]))
+        ho_vec = held_vec[pid]
+        s_self = cosine(vec, ho_vec)
+        # Mean cos to OTHER participants' held-out vectors
+        scores = [cosine(vec, held_vec[q]) for q in pids_all if q != pid]
         s_other = float(np.mean(scores)) if scores else float("nan")
+
+        # Same-task baselines: o4-mini draft and human post-edit, also scored
+        # against THIS participant's held-out vector
+        llm_vec = base_idx.get((pid, "llm", ti))
+        edited_vec = base_idx.get((pid, "edited", ti))
+        s_llm_heldout = cosine(llm_vec, ho_vec) if llm_vec is not None else float("nan")
+        s_edited_heldout = cosine(edited_vec, ho_vec) if edited_vec is not None else float("nan")
+
         rows.append(
             {
                 "pid": pid,
-                "task_idx": int(ti),
-                "generator": gen,
-                "sim_mimic_control_self": float(s_self),
-                "sim_mimic_control_other_mean": s_other,
+                "task_idx": ti,
+                "generator": str(gen),
+                "held_out_task_idx": int(held[pid]["held_out_idx"]),
+                "demo_task_idx": int(held[pid]["demo_idx"]),
+                "sim_mimic_heldout": float(s_self),
+                "sim_mimic_heldout_other_mean": s_other,
+                "sim_llm_heldout": float(s_llm_heldout),
+                "sim_edited_heldout": float(s_edited_heldout),
             }
         )
-    sim_df = pd.DataFrame(rows)
-    out = sim_df.merge(
-        treat_sim[
-            [
-                "pid", "task_idx", "scenario",
-                "sim_edited_control_self", "sim_llm_control_self",
-                "sim_edited_control_other_mean", "sim_llm_control_other_mean",
-            ]
-        ],
-        on=["pid", "task_idx"],
-        how="inner",
-    )
+    out = pd.DataFrame(rows)
+
+    # Attach scenario for plotting nicety
+    obs_t = obs[obs["condition"] == "treatment"][["pid", "task_idx", "scenario"]].copy()
+    obs_t["pid"] = obs_t["pid"].astype(str)
+    out = out.merge(obs_t, on=["pid", "task_idx"], how="left")
+
     out_path = paths.processed_dir / "mimic_similarities.parquet"
     out.to_parquet(out_path, index=False)
-    print(f"wrote {out_path}: {len(out)} rows")
+    print(f"wrote {out_path}: {len(out)} rows ({out['generator'].value_counts().to_dict()})")
 
-    # -- Hypothesis tests: paired (per task) for each generator
-    # H_mimic_a: mimic similarity to own control >  llm draft similarity to own control
-    # H_mimic_b: mimic similarity to own control vs human-edited similarity to own control
-    # H_mimic_c: mimic vs llm in self-vs-other gap (does mimic shift toward THIS author?)
+    # -- Hypothesis tests, paired (per task), per generator, against held-out target
     test_rows = []
     for gen, sub in out.groupby("generator"):
-        sub = sub.dropna(subset=["sim_mimic_control_self", "sim_llm_control_self", "sim_edited_control_self"])
+        sub = sub.dropna(subset=["sim_mimic_heldout", "sim_llm_heldout", "sim_edited_heldout"])
         if len(sub) < 5:
             continue
-        m = sub["sim_mimic_control_self"].to_numpy()
-        l = sub["sim_llm_control_self"].to_numpy()
-        e = sub["sim_edited_control_self"].to_numpy()
-        # vs LLM original
-        r1 = run_test(f"{gen}: mimic vs llm (self-similarity)", m, l, paired=True, n_perm=10000, seed=8000 + len(test_rows))
+        m = sub["sim_mimic_heldout"].to_numpy()
+        l = sub["sim_llm_heldout"].to_numpy()
+        e = sub["sim_edited_heldout"].to_numpy()
+        m_other = sub["sim_mimic_heldout_other_mean"].to_numpy()
+        r1 = run_test(f"{gen}: mimic vs o4-mini (heldout)", m, l, paired=True, n_perm=10000, seed=9001 + len(test_rows))
         test_rows.append(_row(r1, len(sub)))
-        # vs human-edited
-        r2 = run_test(f"{gen}: mimic vs human-edited (self-similarity)", m, e, paired=True, n_perm=10000, seed=8000 + len(test_rows))
+        r2 = run_test(f"{gen}: mimic vs human-edited (heldout)", m, e, paired=True, n_perm=10000, seed=9001 + len(test_rows))
         test_rows.append(_row(r2, len(sub)))
-        # mimic self - mimic other (should be > 0 if mimic is targeting THIS author)
-        m_other = sub["sim_mimic_control_other_mean"].to_numpy()
-        r3 = run_test(f"{gen}: mimic self vs mimic other (targeting check)", m, m_other, paired=True, n_perm=10000, seed=8000 + len(test_rows))
+        r3 = run_test(f"{gen}: mimic self vs other-author heldout (targeting)", m, m_other, paired=True, n_perm=10000, seed=9001 + len(test_rows))
         test_rows.append(_row(r3, len(sub)))
 
     test_df = pd.DataFrame(test_rows)
     res_csv = REPO_ROOT / "results" / "mimic_comparison.csv"
     res_csv.parent.mkdir(parents=True, exist_ok=True)
     test_df.to_csv(res_csv, index=False)
-    print("\n", test_df.to_string(index=False))
+    if not test_df.empty:
+        print("\n", test_df.to_string(index=False))
     print(f"\nwrote {res_csv}")
 
-    # -- Figure 9: comparative violin
     figdir = REPO_ROOT / "figures"
     figdir.mkdir(parents=True, exist_ok=True)
     _make_figure9(out, figdir)
@@ -205,28 +232,57 @@ def _row(res, n: int) -> dict:
     }
 
 
+def _same_author_upper_bound() -> float | None:
+    """Mean LUAR cos between each participant's two control texts.
+
+    This is the natural upper bound on the held-out metric: a person writing
+    two unassisted texts in their own voice. Any approach that exceeds this
+    has plausibly memorized the held-out target rather than mimicking style.
+    """
+    try:
+        z = np.load(Paths().processed_dir / "embeddings.npz")
+        t = EmbeddingTable(
+            z["pids"].astype(str), z["kinds"].astype(str),
+            z["task_idx"].astype(int), z["scenarios"].astype(str),
+            z["vecs"].astype(np.float32),
+        )
+        pi = participant_kind_indices(t)
+        sims = []
+        for pid in sorted(set(t.pids.tolist())):
+            ctrl = pi.get((pid, "control"), [])
+            if len(ctrl) < 2:
+                continue
+            rows = sorted([(int(t.task_idx[i]), i) for i in ctrl], key=lambda x: x[0])
+            sims.append(cosine(t.vecs[rows[0][1]], t.vecs[rows[1][1]]))
+        return float(np.mean(sims)) if sims else None
+    except Exception as e:
+        print(f"upper-bound calculation skipped: {e!r}")
+        return None
+
+
 def _make_figure9(df: pd.DataFrame, out_dir: Path) -> None:
-    """Distribution of similarity-to-own-control by approach."""
-    series = []
-    labels = []
-    colors = []
-    palette = {"llm": "#d95f02", "edited": "#1b9e77", "gpt-5.5": "#7570b3", "claude-opus-4-7": "#e7298a", "stub": "#666666"}
-    # original LLM and human-edited (one row per task -> one value)
-    series.append(df["sim_llm_control_self"].dropna().to_numpy())
-    labels.append("LLM draft\n(o4-mini)")
-    colors.append(palette["llm"])
-    series.append(df["sim_edited_control_self"].dropna().to_numpy())
-    labels.append("Human\npost-edited")
-    colors.append(palette["edited"])
+    """Distribution of similarity-to-held-out-control by approach."""
+    palette = {"llm": "#d95f02", "edited": "#1b9e77",
+               "gpt-5.5": "#7570b3", "claude-opus-4-7": "#e7298a", "stub": "#666666"}
+
+    # Use per-row dedup so o4-mini and human-edited each contribute one value per task,
+    # not one per (task, generator) row.
+    base = df.drop_duplicates(subset=["pid", "task_idx"])
+
+    series = [base["sim_llm_heldout"].dropna().to_numpy(),
+              base["sim_edited_heldout"].dropna().to_numpy()]
+    labels = ["LLM draft\n(o4-mini)", "Human\npost-edited"]
+    colors = [palette["llm"], palette["edited"]]
     for gen in sorted(df["generator"].unique()):
-        sub = df[df["generator"] == gen]["sim_mimic_control_self"].dropna().to_numpy()
+        sub = df[df["generator"] == gen]["sim_mimic_heldout"].dropna().to_numpy()
         series.append(sub)
-        nice = {"gpt-5.5": "GPT-5.5\nstyle-mimic", "claude-opus-4-7": "Claude Opus 4.7\nstyle-mimic",
+        nice = {"gpt-5.5": "GPT-5.5\nstyle-mimic",
+                "claude-opus-4-7": "Claude Opus 4.7\nstyle-mimic",
                 "stub": "Stub\nstyle-mimic"}.get(gen, gen)
         labels.append(nice)
         colors.append(palette.get(gen, "#888888"))
 
-    fig, ax = plt.subplots(figsize=(2.0 + 1.6 * len(series), 4.4))
+    fig, ax = plt.subplots(figsize=(2.0 + 1.6 * len(series), 4.6))
     parts = ax.violinplot(series, positions=range(len(series)), widths=0.85,
                           showmeans=False, showextrema=False)
     for pc, c in zip(parts["bodies"], colors):
@@ -238,11 +294,20 @@ def _make_figure9(df: pd.DataFrame, out_dir: Path) -> None:
         ax.scatter(np.full_like(arr, i, dtype=float) + rng.uniform(-0.07, 0.07, size=len(arr)),
                    arr, s=5, color="black", alpha=0.25)
         ax.hlines(arr.mean(), i - 0.3, i + 0.3, color="black", lw=1.5)
-        ax.text(i, arr.mean() + 0.02, f"{arr.mean():.3f}", ha="center", fontsize=8, color="black")
+        ax.text(i, arr.mean() + 0.02, f"{arr.mean():.3f}",
+                ha="center", fontsize=8, color="black")
+
+    upper = _same_author_upper_bound()
+    if upper is not None:
+        ax.axhline(upper, color="#444", ls="--", lw=1.0)
+        ax.text(len(series) - 0.5, upper + 0.005,
+                f"same-author control \u2194 control\nupper bound = {upper:.3f}",
+                ha="right", va="bottom", fontsize=8, color="#333")
+
     ax.set_xticks(range(len(series)))
     ax.set_xticklabels(labels)
-    ax.set_ylabel("LUAR cosine sim. to own control text")
-    ax.set_title("Figure 9: how close to the participant's own style does each approach get?")
+    ax.set_ylabel("LUAR cosine sim. to HELD-OUT control text\n(participant's other unassisted text)")
+    ax.set_title("Figure 9: leakage-free comparison vs the participant's held-out control text")
     fig.tight_layout()
     fig.savefig(out_dir / "fig9_llm_mimic_vs_human.pdf", bbox_inches="tight")
     fig.savefig(out_dir / "fig9_llm_mimic_vs_human.png", bbox_inches="tight", dpi=200)
