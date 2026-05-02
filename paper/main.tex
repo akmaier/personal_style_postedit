@@ -27,6 +27,15 @@
 % Compact display style
 \captionsetup{font=small,labelfont=bf}
 
+% --- Anonymisation switch ----------------------------------------------------
+% The blind-review build (paper/Makefile target `all` + `anonymize`) keeps
+% the title page anonymised. The author-credited build (target `arxiv`)
+% overrides this by passing `\anonymousfalse` before \input{main}. This
+% lets a single source produce both PDFs without versioning the .tex.
+\providecommand{\ifanonymous}{}  % suppress 'undefined' before the next line
+\newif\ifanonymous \anonymoustrue
+% -----------------------------------------------------------------------------
+
 \begin{document}
 
 %-------------------------------------------------------------------
@@ -38,9 +47,19 @@
 
 \titlerunning{Closing the Gap on Personal Writing Style}
 
-\author{Anonymous Author(s)\inst{1}}
-\authorrunning{Anonymous Author(s)}
-\institute{Withheld for blind review}
+\ifanonymous
+  \author{Anonymous Author(s)\inst{1}}
+  \authorrunning{Anonymous Author(s)}
+  \institute{Withheld for blind review}
+\else
+  % Real authors and institution. Used by `make arxiv` to build
+  % `main_arxiv.pdf`. Order: project lead first, advisory co-author second.
+  \author{Andreas K. Maier\inst{1} \and Siming Bayer\inst{1}}
+  \authorrunning{A.\,K. Maier and S. Bayer}
+  \institute{Pattern Recognition Lab, Friedrich-Alexander-Universit\"at
+    Erlangen-N\"urnberg, Erlangen, Germany\\
+    \email{andreas.maier@fau.de}}
+\fi
 
 \maketitle
 

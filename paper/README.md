@@ -24,20 +24,32 @@ paper/
 \u2514\u2500\u2500 (later turns will add main.tex, refs.bib, figures/, etc.)
 ```
 
-## Status
+## Two builds from one source
 
-This first turn delivers the **template, requirements, and plan**. No paper
-text has been written yet — we deliberately separate planning from drafting
-so that later checks against `paper_requirements.md` are meaningful.
+`paper/main.tex` produces two PDFs from a single source via the
+`\ifanonymous` switch at the top of the file:
 
-## Building (once main.tex exists)
+| Target | Output | Title page | Used for |
+|---|---|---|---|
+| `make all` (then `make anonymize`) | `main_anonymous.pdf` | "Anonymous Author(s) / Withheld for blind review" | Workshop blind review |
+| `make arxiv` | `main_arxiv.pdf` | "Andreas K. Maier and Siming Bayer / Pattern Recognition Lab, FAU Erlangen-N\u00fcrnberg" | arXiv submission |
+
+`make arxiv` reuses the same `main.tex`, the same `refs.bib`, and the
+same generated tables and figures; it only changes the `\anonymousfalse`
+switch via `pdflatex`'s preamble injection. So the two PDFs share every
+sentence, every figure, every number, and every reference. Only the
+title-page authors and affiliation differ.
+
+The blind-review `main_anonymous.pdf` is committed to the repo. The
+author-credited `main_arxiv.pdf` is **not** committed (per user's
+preference, kept as a fresh build artefact).
 
 ```
 cd paper/
-pdflatex -interaction=nonstopmode main.tex
-bibtex   main
-pdflatex -interaction=nonstopmode main.tex
-pdflatex -interaction=nonstopmode main.tex
+make all          # \u2192 main.pdf  (anonymised, blind-review build)
+make anonymize    # \u2192 main_anonymous.pdf  (PDF metadata stripped)
+make arxiv        # \u2192 main_arxiv.pdf  (author-credited, ready for arXiv)
+make check        # run paper/scripts/check_paper.py against main.pdf
 ```
 
 ## Sources verified during planning

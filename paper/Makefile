@@ -2,9 +2,10 @@ PDFLATEX ?= pdflatex
 BIBTEX   ?= bibtex
 LATEXMK  ?= latexmk
 
-PAPER = main
+PAPER       = main
+PAPER_ARXIV = main_arxiv
 
-.PHONY: all clean tables figures anonymize check distclean
+.PHONY: all clean tables figures anonymize arxiv check distclean
 
 all: tables figures $(PAPER).pdf
 
@@ -33,6 +34,16 @@ $(PAPER).pdf: $(PAPER).tex refs.bib tables figures
 anonymize: $(PAPER).pdf
 	cp $(PAPER).pdf $(PAPER)_anonymous.pdf
 	exiftool -overwrite_original -all= $(PAPER)_anonymous.pdf >/dev/null
+
+# Author-credited build for arXiv: same source, anonymous switch flipped off.
+# Uses -jobname so the aux files do not collide with the blind-review build.
+arxiv: tables figures
+	-TEXINPUTS=.:./template: BSTINPUTS=.:./template: $(PDFLATEX) -interaction=nonstopmode -jobname=$(PAPER_ARXIV) "\\AtBeginDocument{\\anonymousfalse}\\input{$(PAPER).tex}" >/dev/null
+	-TEXINPUTS=.:./template: BSTINPUTS=.:./template: $(BIBTEX) $(PAPER_ARXIV) >/dev/null
+	-TEXINPUTS=.:./template: BSTINPUTS=.:./template: $(PDFLATEX) -interaction=nonstopmode -jobname=$(PAPER_ARXIV) "\\AtBeginDocument{\\anonymousfalse}\\input{$(PAPER).tex}" >/dev/null
+	-TEXINPUTS=.:./template: BSTINPUTS=.:./template: $(PDFLATEX) -interaction=nonstopmode -jobname=$(PAPER_ARXIV) "\\AtBeginDocument{\\anonymousfalse}\\input{$(PAPER).tex}" >/dev/null
+	@test -f $(PAPER_ARXIV).pdf || (echo "ARXIV BUILD FAILED" && tail -40 $(PAPER_ARXIV).log && exit 1)
+	@echo "==>" $$(pdfinfo $(PAPER_ARXIV).pdf | awk '/^Pages:/ {print $$2 " pages (arXiv build)"}')
 
 # Run the requirement-checker (automated portion of paper_check.md).
 check: $(PAPER).pdf
