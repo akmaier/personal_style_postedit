@@ -1,0 +1,16 @@
+__pycache__/
+*.pyc
+.pytest_cache/
+.ruff_cache/
+*.egg-info/
+build/
+dist/
+.venv/
+venv/
+
+# By default ignore generated artifacts but keep the real LLM mimic drafts
+# (committed so analyses can be re-run without re-querying the API).
+data/processed/*
+!data/processed/mimics/
+data/processed/mimics/mimic_embeddings.npz
+*.npz
