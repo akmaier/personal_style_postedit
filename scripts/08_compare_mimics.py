@@ -232,6 +232,34 @@ def _row(res, n: int) -> dict:
     }
 
 
+def _same_author_upper_bound() -> float | None:
+    """Mean LUAR cos between each participant's two control texts.
+
+    This is the natural upper bound on the held-out metric: a person writing
+    two unassisted texts in their own voice. Any approach that exceeds this
+    has plausibly memorized the held-out target rather than mimicking style.
+    """
+    try:
+        z = np.load(Paths().processed_dir / "embeddings.npz")
+        t = EmbeddingTable(
+            z["pids"].astype(str), z["kinds"].astype(str),
+            z["task_idx"].astype(int), z["scenarios"].astype(str),
+            z["vecs"].astype(np.float32),
+        )
+        pi = participant_kind_indices(t)
+        sims = []
+        for pid in sorted(set(t.pids.tolist())):
+            ctrl = pi.get((pid, "control"), [])
+            if len(ctrl) < 2:
+                continue
+            rows = sorted([(int(t.task_idx[i]), i) for i in ctrl], key=lambda x: x[0])
+            sims.append(cosine(t.vecs[rows[0][1]], t.vecs[rows[1][1]]))
+        return float(np.mean(sims)) if sims else None
+    except Exception as e:
+        print(f"upper-bound calculation skipped: {e!r}")
+        return None
+
+
 def _make_figure9(df: pd.DataFrame, out_dir: Path) -> None:
     """Distribution of similarity-to-held-out-control by approach."""
     palette = {"llm": "#d95f02", "edited": "#1b9e77",
@@ -254,7 +282,7 @@ def _make_figure9(df: pd.DataFrame, out_dir: Path) -> None:
         labels.append(nice)
         colors.append(palette.get(gen, "#888888"))
 
-    fig, ax = plt.subplots(figsize=(2.0 + 1.6 * len(series), 4.4))
+    fig, ax = plt.subplots(figsize=(2.0 + 1.6 * len(series), 4.6))
     parts = ax.violinplot(series, positions=range(len(series)), widths=0.85,
                           showmeans=False, showextrema=False)
     for pc, c in zip(parts["bodies"], colors):
@@ -268,6 +296,14 @@ def _make_figure9(df: pd.DataFrame, out_dir: Path) -> None:
         ax.hlines(arr.mean(), i - 0.3, i + 0.3, color="black", lw=1.5)
         ax.text(i, arr.mean() + 0.02, f"{arr.mean():.3f}",
                 ha="center", fontsize=8, color="black")
+
+    upper = _same_author_upper_bound()
+    if upper is not None:
+        ax.axhline(upper, color="#444", ls="--", lw=1.0)
+        ax.text(len(series) - 0.5, upper + 0.005,
+                f"same-author control \u2194 control\nupper bound = {upper:.3f}",
+                ha="right", va="bottom", fontsize=8, color="#333")
+
     ax.set_xticks(range(len(series)))
     ax.set_xticklabels(labels)
     ax.set_ylabel("LUAR cosine sim. to HELD-OUT control text\n(participant's other unassisted text)")
