@@ -80,14 +80,31 @@ vectors per approach as the AI class) reaches:
 | GPT-5.5 mimic | **0.931** [0.924, 0.937] |
 
 Detectability drops monotonically as the approach gets closer to the
-participant's natural style, but **no approach reaches chance** — even the
-strongest frontier-LLM mimic still leaves a residual stylometric signature.
+participant's natural style, but **no approach reaches chance**.
 
 The CV uses `GroupKFold(groups=pid)` so no author appears in both train
 and test of any split, and the human class uses **both** unassisted control
 texts of every author so the classifier learns "human vs. AI" rather than
 "is this by *this specific author*". Three unit tests in
 `tests/test_detection_no_leakage.py` enforce both invariants.
+
+We then ran six diagnostics
+(`scripts/13_detection_diagnostics.py`,
+`results/detection_diagnostics.csv`) to ask whether the headline AUCs
+hold up to robustness checks. They do — but with a critical caveat:
+
+| Diagnostic | o4-mini | Human edit | Opus 4.7 | GPT-5.5 |
+|---|---:|---:|---:|---:|
+| Headline (full LinearSVC) | 0.999 | 0.971 | 0.952 | 0.931 |
+| Length-only (1 feature) | 0.818 | 0.565 | **0.517** | **0.880** |
+| Cross-LLM (train Opus → test GPT) | — | — | 0.913 | 0.888 |
+
+**Most of the GPT-5.5 detection signal is length, not style** (length
+alone gets 0.880 vs full 0.931). **The Opus 4.7 detection signal is
+genuinely stylistic** (length alone gets only 0.517 vs full 0.952). The
+cross-LLM AUC of ~0.9 shows there's a generic frontier-LLM signature
+that transfers between the two. See `results/detection_diagnostics_summary.md`
+for the full write-up.
 
 ![Figure 11: detection AUC](figures/fig11_detection.png)
 

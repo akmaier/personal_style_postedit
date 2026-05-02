@@ -1,0 +1,23 @@
+diagnostic,approach,n_features,n_params_LinearSVC,mean_n_train_per_fold,min_n_train_per_fold,max_n_train_per_fold,underdetermined,auc_mean,auc_std
+A. param/sample count,o4-mini,512,513.0,388.8,384.0,390.0,True,,
+A. param/sample count,Human post-edit,512,513.0,388.8,384.0,390.0,True,,
+A. param/sample count,Claude Opus 4.7,512,513.0,388.8,384.0,390.0,True,,
+A. param/sample count,GPT-5.5,512,513.0,388.8,384.0,390.0,True,,
+B. shuffled labels,o4-mini,512,,,,,,0.4716735502869132,0.054897163380838776
+B. shuffled labels,Human post-edit,512,,,,,,0.46879741574718237,0.07911950399280691
+B. shuffled labels,Claude Opus 4.7,512,,,,,,0.49437367993865167,0.06955880164967311
+B. shuffled labels,GPT-5.5,512,,,,,,0.4782535570978214,0.03246175177336703
+C. length-only baseline,o4-mini,1,,,,,,0.8179646950692042,0.07621836674516592
+C. length-only baseline,Human post-edit,1,,,,,,0.5651706787954153,0.05636147533666534
+C. length-only baseline,Claude Opus 4.7,1,,,,,,0.5172893801362457,0.1451388242028499
+C. length-only baseline,GPT-5.5,1,,,,,,0.8800847142625432,0.062294627139537845
+D. cross-model generalisation,"train=claude-opus-4-7, test=gpt-5.5",512,,,,,,0.9126467001981405,
+D. cross-model generalisation,"train=gpt-5.5, test=claude-opus-4-7",512,,,,,,0.8880124980948026,
+E. LinearSVC after PCA(32),o4-mini,32,,,,,,0.9980803281790657,0.0016337185639797127
+E. LinearSVC after PCA(32),Human post-edit,32,,,,,,0.9675159493944637,0.01107186504870885
+E. LinearSVC after PCA(32),Claude Opus 4.7,32,,,,,,0.9249594506920416,0.008872494936477023
+E. LinearSVC after PCA(32),GPT-5.5,32,,,,,,0.9119877270761245,0.024750469852308287
+"F. L2-logreg, C=1e-3 (heavy regularisation)",o4-mini,512,,,,,,0.9977231563581315,0.003025090734916622
+"F. L2-logreg, C=1e-3 (heavy regularisation)",Human post-edit,512,,,,,,0.9755741106185122,0.010371454935735222
+"F. L2-logreg, C=1e-3 (heavy regularisation)",Claude Opus 4.7,512,,,,,,0.9309752784385813,0.018467705387868617
+"F. L2-logreg, C=1e-3 (heavy regularisation)",GPT-5.5,512,,,,,,0.9257349562067475,0.01519023993124169

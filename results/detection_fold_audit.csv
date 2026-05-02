@@ -1,0 +1,21 @@
+fold,n_train_samples,n_test_samples,n_train_pids,n_test_pids,n_overlap_pids,approach
+0,384,102,64,17,0,o4-mini
+1,390,96,65,16,0,o4-mini
+2,390,96,65,16,0,o4-mini
+3,390,96,65,16,0,o4-mini
+4,390,96,65,16,0,o4-mini
+0,384,102,64,17,0,Human post-edit
+1,390,96,65,16,0,Human post-edit
+2,390,96,65,16,0,Human post-edit
+3,390,96,65,16,0,Human post-edit
+4,390,96,65,16,0,Human post-edit
+0,384,102,64,17,0,Claude Opus 4.7
+1,390,96,65,16,0,Claude Opus 4.7
+2,390,96,65,16,0,Claude Opus 4.7
+3,390,96,65,16,0,Claude Opus 4.7
+4,390,96,65,16,0,Claude Opus 4.7
+0,384,102,64,17,0,GPT-5.5
+1,390,96,65,16,0,GPT-5.5
+2,390,96,65,16,0,GPT-5.5
+3,390,96,65,16,0,GPT-5.5
+4,390,96,65,16,0,GPT-5.5
