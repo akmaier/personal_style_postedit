@@ -1,6 +1,6 @@
 PY ?= python3
 
-.PHONY: all data embeddings sims tests figures report clean test
+.PHONY: all data embeddings sims tests figures report clean test mimics mimic-compare
 
 all: data embeddings sims tests figures report
 
@@ -21,6 +21,12 @@ figures:
 
 report:
 	$(PY) scripts/06_build_report.py
+
+mimics:
+	$(PY) scripts/07_generate_mimics.py --generators gpt-5.5 claude-opus-4-7
+
+mimic-compare:
+	$(PY) scripts/08_compare_mimics.py
 
 test:
 	$(PY) -m pytest -q
