@@ -1,6 +1,6 @@
 PY ?= python3
 
-.PHONY: all data embeddings sims tests figures report clean distclean test mimics mimic-compare final-assessment detection embedding-viz detection-diagnostics
+.PHONY: all data embeddings sims tests figures report clean distclean test mimics mimic-compare final-assessment detection embedding-viz detection-diagnostics adversarial
 
 all: data embeddings sims tests figures report
 
@@ -39,6 +39,15 @@ embedding-viz:
 
 detection-diagnostics:
 	$(PY) scripts/13_detection_diagnostics.py
+
+# Adversarial rewriting requires sub-agent intervention between `prepare` and
+# `aggregate` (each sub-agent loop talks to the score CLI). The Makefile target
+# only runs the prepare and aggregate phases; sub-agents are dispatched
+# manually from the Cursor agent.
+adversarial:
+	$(PY) scripts/14_adversarial_rewriting.py prepare
+	@echo "Now dispatch sub-agents per scripts/14_adversarial_rewriting.py docstring,"
+	@echo "then run: $(PY) scripts/14_adversarial_rewriting.py aggregate"
 
 test:
 	$(PY) -m pytest -q

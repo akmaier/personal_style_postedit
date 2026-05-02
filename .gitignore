@@ -9,11 +9,15 @@ dist/
 venv/
 
 # By default ignore generated artifacts but keep the real LLM mimic drafts
-# committed under data/processed/mimics/, so analyses re-run without API calls.
+# committed under data/processed/mimics/ and the adversarial trajectories
+# committed under data/processed/adversarial_runs/, so analyses re-run
+# without API calls.
 # IMPORTANT: never `rm -rf data/processed` -- that bypasses these rules and
-# deletes the committed mimic cache (~300 KB of real LLM-generated text per
-# generator). The Makefile `clean` target uses `git clean -fdX` instead.
+# deletes the committed caches. The Makefile `clean` target uses
+# `git clean -fdX` instead.
 data/processed/*
 !data/processed/mimics/
+!data/processed/adversarial_runs/
+!data/processed/adversarial_pack.json
 data/processed/mimics/mimic_embeddings.npz
 *.npz

@@ -1,0 +1,155 @@
+{
+  "target_id": "target_03",
+  "pid": "572392a4-224e-4261-ad20-1c06fabc9220",
+  "task_idx": 1,
+  "scenario": "reassurance",
+  "iterations": [
+    {
+      "iteration": 0,
+      "margin": 2.8009860515594482,
+      "predicted_class": "AI",
+      "word_count": 155,
+      "text_path": "/tmp/iter_t03_00.txt"
+    },
+    {
+      "iteration": 1,
+      "margin": 1.5971040725708008,
+      "predicted_class": "AI",
+      "word_count": 152,
+      "text_path": "/tmp/iter_t03_01.txt"
+    },
+    {
+      "iteration": 2,
+      "margin": 2.0214474201202393,
+      "predicted_class": "AI",
+      "word_count": 157,
+      "text_path": "/tmp/iter_t03_02.txt"
+    },
+    {
+      "iteration": 3,
+      "margin": 1.9179232120513916,
+      "predicted_class": "AI",
+      "word_count": 151,
+      "text_path": "/tmp/iter_t03_03.txt"
+    },
+    {
+      "iteration": 4,
+      "margin": 2.2636659145355225,
+      "predicted_class": "AI",
+      "word_count": 164,
+      "text_path": "/tmp/iter_t03_04.txt"
+    },
+    {
+      "iteration": 5,
+      "margin": 1.7494244575500488,
+      "predicted_class": "AI",
+      "word_count": 112,
+      "text_path": "/tmp/iter_t03_05.txt"
+    },
+    {
+      "iteration": 6,
+      "margin": 2.0589492321014404,
+      "predicted_class": "AI",
+      "word_count": 144,
+      "text_path": "/tmp/iter_t03_06.txt"
+    },
+    {
+      "iteration": 7,
+      "margin": 1.0525822639465332,
+      "predicted_class": "AI",
+      "word_count": 141,
+      "text_path": "/tmp/iter_t03_07.txt"
+    },
+    {
+      "iteration": 8,
+      "margin": 1.4169533252716064,
+      "predicted_class": "AI",
+      "word_count": 143,
+      "text_path": "/tmp/iter_t03_08.txt"
+    },
+    {
+      "iteration": 9,
+      "margin": 1.395930290222168,
+      "predicted_class": "AI",
+      "word_count": 132,
+      "text_path": "/tmp/iter_t03_09.txt"
+    },
+    {
+      "iteration": 10,
+      "margin": 0.7697494029998779,
+      "predicted_class": "AI",
+      "word_count": 146,
+      "text_path": "/tmp/iter_t03_10.txt"
+    },
+    {
+      "iteration": 11,
+      "margin": 0.8816802501678467,
+      "predicted_class": "AI",
+      "word_count": 155,
+      "text_path": "/tmp/iter_t03_11.txt"
+    },
+    {
+      "iteration": 12,
+      "margin": 0.5701074600219727,
+      "predicted_class": "AI",
+      "word_count": 143,
+      "text_path": "/tmp/iter_t03_12.txt"
+    },
+    {
+      "iteration": 13,
+      "margin": 0.6436420679092407,
+      "predicted_class": "AI",
+      "word_count": 148,
+      "text_path": "/tmp/iter_t03_13.txt"
+    },
+    {
+      "iteration": 14,
+      "margin": 0.7180635929107666,
+      "predicted_class": "AI",
+      "word_count": 146,
+      "text_path": "/tmp/iter_t03_14.txt"
+    },
+    {
+      "iteration": 15,
+      "margin": 0.6398105621337891,
+      "predicted_class": "AI",
+      "word_count": 147,
+      "text_path": "/tmp/iter_t03_15.txt"
+    },
+    {
+      "iteration": 16,
+      "margin": 0.6583559513092041,
+      "predicted_class": "AI",
+      "word_count": 145,
+      "text_path": "/tmp/iter_t03_16.txt"
+    },
+    {
+      "iteration": 17,
+      "margin": 0.6372939348220825,
+      "predicted_class": "AI",
+      "word_count": 141,
+      "text_path": "/tmp/iter_t03_17.txt"
+    },
+    {
+      "iteration": 18,
+      "margin": 0.4956924617290497,
+      "predicted_class": "AI",
+      "word_count": 144,
+      "text_path": "/tmp/iter_t03_18.txt"
+    },
+    {
+      "iteration": 19,
+      "margin": 0.24766388535499573,
+      "predicted_class": "AI",
+      "word_count": 145,
+      "text_path": "/tmp/iter_t03_19.txt"
+    },
+    {
+      "iteration": 20,
+      "margin": 0.03885325789451599,
+      "predicted_class": "AI",
+      "word_count": 147,
+      "text_path": "/tmp/iter_t03_20.txt"
+    }
+  ]
+}

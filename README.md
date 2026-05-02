@@ -106,6 +106,25 @@ cross-LLM AUC of ~0.9 shows there's a generic frontier-LLM signature
 that transfers between the two. See `results/detection_diagnostics_summary.md`
 for the full write-up.
 
+### Closing the loop: agentic adversarial rewriting
+
+We then asked: can an Opus 4.7 agent that **sees** the frozen Opus
+fold-1 detector's score on its current draft talk that detector out of
+firing? Five parallel Opus subagents, each given 20 iterations of
+feedback against 5 most-confidently-AI test mimics, achieved:
+
+- **2 of 5 targets crossed the SVM decision boundary into "human"** and
+  stayed there (initial margin +3.46 → final −1.17 for the `thank`
+  target; +3.26 → −0.80 for `letter`)
+- All 5 targets shrank their margin by ~3 standard deviations, mean
+  initial margin **+3.13** → mean final **−0.16**
+- The frozen detector is **partially** but not **robustly** defeated
+  by an Opus agent given 20 iterations of feedback
+
+`tests/test_adversarial_no_leakage.py` enforces that the SVM was
+trained on a disjoint set of authors from the targets it scores. See
+`results/adversarial_trajectories.csv` and `figures/fig13_adversarial.png`.
+
 ![Figure 11: detection AUC](figures/fig11_detection.png)
 
 A 2-D PCA and t-SNE projection of the same 1 458 embeddings makes the

@@ -1,0 +1,155 @@
+{
+  "target_id": "target_04",
+  "pid": "572392a4-224e-4261-ad20-1c06fabc9220",
+  "task_idx": 2,
+  "scenario": "wedding",
+  "iterations": [
+    {
+      "iteration": 0,
+      "text": "im writing this vow to you my love, to show how grateful i am that we are finally here standing in front of everyone we love. its been a long road and we have been through alot together. i remember the day we got stuck in the rain and ended up dancing in the parking lot, that is one of the moments i will carry with me forever.\n\ni promise to love and cherish you always, in good days and in bad, when life is easy and when life is heavy. i thank you for being in my life, for picking me up when i was at my lowest and for celebrating me at my highest. you are the best thing that ever happened to me.\n\ni vow to grow old with you, look how far we have came already. im never letting go, i love you so much",
+      "decision_function": 2.6697003841400146,
+      "predicted_class": "AI",
+      "word_count": 149
+    },
+    {
+      "iteration": 1,
+      "text": "ok so here goes. i wrote this down on a napkin lol but i think i remember most of it. babe, look at us. we made it. all those nights u said we'd be ok and i didnt belive u, but here we are.\n\nthat night in the rain. dancing in the parking lot like idiots. soaked to the bone. i think about it more than i should tbh. that was us. that IS us.\n\ni promise im in. good days bad days the days where we eat cereal for dinner cuz we forgot groceries. all of em. ur the reason i keep going, u picked me up when i was a wreck, u clapped the loudest when i was winning. thank u. for real.\n\ngod has been good to us. so so good. i wanna grow old with u, look how far we came already, look at us. im not letting go. ever. i love u, that's it that's the vow",
+      "decision_function": 3.680673837661743,
+      "predicted_class": "AI",
+      "word_count": 162
+    },
+    {
+      "iteration": 2,
+      "text": "to my partner. i love you. thats the start.\n\ni been thinking about everything we shared. the rain that one night, dancing in the parking lot, soaking wet, laughing. the stuff nobody else saw. those moments are mine, ours, forever.\n\ni promise to love you. cherish you. the good times the bad times the boring tuesdays. all of it. you saved me when i was at the bottom. you cheered me on when i was winning. nobody else done that. nobody.\n\nthank you for being mine. thank you for staying. you the best thing in my life.\n\nwe vowed to grow old together and i mean it. look how far we came. seriously, look. its crazy. im never letting go. never. i love you so much it hurts sometimes. amen, lets do this.",
+      "decision_function": 1.9095780849456787,
+      "predicted_class": "AI",
+      "word_count": 133
+    },
+    {
+      "iteration": 3,
+      "text": "ok. babe.\n\ni love u. ive loved u for so long. that rain night in the parking lot, dancing soaking wet, that was the night i knew. we were stupid and we were happy. i think bout it all the time\n\ni promise to cherish u. good days bad days, the boring ones too. when ur sick when ur stressed when u burn the rice again lol. all of it. u picked me up off the floor when i was nothing. u clapped the loudest when i won. nobody never did that for me before u\n\nthank u for being mine. for staying. for putting up with me. thank god for u, real talk\n\nwe said we'd grow old together. look at us. look how far we came. its crazy. i aint never letting go. never never. i love u, period. thats the vow babe. that's it",
+      "decision_function": 2.7126739025115967,
+      "predicted_class": "AI",
+      "word_count": 147
+    },
+    {
+      "iteration": 4,
+      "text": "my love. here we are. i still cant belive it.\n\nwe shared so much. that night in the rain, dancing in the parking lot like fools, soaked. those little things, they made us. nobody else got those moments. just us.\n\ni promise to love and cherish you. the good days the bad days the in between days. when life is heavy you know i got you. you picked me up at my lowest. you celebrated me at my highest. who does that. nobody but you.\n\nthank you for being in my life. thank you. you the best thing thats ever happened to me, period.\n\nwe vowed to grow old together and im holding to it. look how far we came already. its wild. im never letting go. never gonna. i love you. so much. amen.",
+      "decision_function": 3.3975679874420166,
+      "predicted_class": "AI",
+      "word_count": 135
+    },
+    {
+      "iteration": 5,
+      "text": "to my partner.\n\ni love u. its that simple and that hard.\n\nwe been thru alot. that one rainy night, parking lot, dancing soaking wet laughing like idiots. nobody saw us but us. those memories belong to me.\n\ni promise to love u. cherish u. good days bad days the random tuesdays where nothin happens. when life easy when life heavy. u picked me up at my lowest. u clapped for me when i was winning. who does that. only u.\n\nthank u. for being mine. for staying. for not giving up when i was hard to love. god knows i needed u.\n\nwe said we'd grow old together. and look. look at us. look how far we came. its wild. im never letting go. never. ever. i love u so much it hurts. that's the vow babe. amen.",
+      "decision_function": 1.578014612197876,
+      "predicted_class": "AI",
+      "word_count": 139
+    },
+    {
+      "iteration": 6,
+      "text": "to my person.\n\ni love u. always have, always will.\n\nwe been thru it. that rain night, the parking lot, dancing soaked, laughing till we couldnt breathe. those moments r mine. our moments. i hold em in my chest.\n\ni promise to love u and cherish u. good days the bad ones the boring ones. life easy life heavy whatever. u picked me up when i had nothin. u celebrated me when i was up. nobody ever did that. just u.\n\nthank u for bein in my life. thank god for u for real. u r the best thing thats ever happened to me. periodt.\n\nwe vowed to grow old together and we gonna. look how far we already came. its crazy honestly. im never lettin go babe. never. i love u. thats it. thats the whole vow. amen.",
+      "decision_function": 2.033447504043579,
+      "predicted_class": "AI",
+      "word_count": 139
+    },
+    {
+      "iteration": 7,
+      "text": "babe.\n\ni love u. straight up.\n\nremember the rain. the parking lot. dancing soaked, shoes squeaking, ur hair stuck to ur face. we laughed so hard. that was the moment. that was us. i carry it everywhere.\n\ni promise. love u, cherish u. good days bad days when life is easy and when life is heavy as hell. u picked me up at my lowest, scraped me off the floor basically. u clapped for me when nobody else did. u celebrated me at my highest. nobody ever. only u.\n\nthank u for being here. thank u for staying. thank u for choosing me again and again. u r the best thing ever happened in my life.\n\nwe vowed to grow old together. look how far we came already. crazy. im not letting go. ever. never. i love u so much. amen baby that's it.",
+      "decision_function": 2.498248815536499,
+      "predicted_class": "AI",
+      "word_count": 144
+    },
+    {
+      "iteration": 8,
+      "text": "to my partner.\n\ni love u. simple as.\n\nwe been thru alot. that rainy night, parking lot, dancing soaking wet, laughing like fools. nobody saw us but us. those moments r mine.\n\ni promise to love u and cherish u. good days bad days random tuesdays. when life easy when life heavy. u picked me up at my lowest. u clapped for me when i was winning. who does that. only u babe.\n\nthank u. for being mine. for staying. for not giving up when i was hard to love. god knows i needed u.\n\nwe said we'd grow old together. look. look at us. look how far we came. wild. im never letting go. never. ever. i love u so much. that's the vow. amen.",
+      "decision_function": 1.0751497745513916,
+      "predicted_class": "AI",
+      "word_count": 126
+    },
+    {
+      "iteration": 9,
+      "text": "to my partner\n\ni love u. simple as\n\nwe been thru sm. that rainy night, parking lot, dancin soakin wet, laughin like fools. nobody saw us but us. those moments r mine\n\ni promise to love u and cherish u. good days bad days random tuesdays. when life easy when life heavy. u picked me up at my lowest. u clapped for me when i was winning. who does that, only u babe\n\nthank u. for being mine. for staying. for not givin up when i was hard to love. god knows i needed u\n\nwe said we'd grow old together. look. look at us. look how far we came. wild. im never letting go. never. ever. i love u so much. thats the vow. amen",
+      "decision_function": 1.0112740993499756,
+      "predicted_class": "AI",
+      "word_count": 126
+    },
+    {
+      "iteration": 10,
+      "text": "to my partner\n\ni luv u. simple as\n\nwe been thru sm together. that rainy nite, the parking lot, dancin soakin wet, laughin like fools. nobody saw us but us. those moments r mine forever\n\ni promise to love u n cherish u. good days bad days random tuesdays. when life easy when life heavy. u picked me up at my lowest. u clapped 4 me when i was winnin. who does that. only u\n\nthank u. for bein mine. for stayin. for not givin up on me when i was hard to love. god knows i needed u\n\nwe said we'd grow old together. look at us. look how far we came. wild. im never lettin go. never. ever. i love u so much. thats the vow. amen",
+      "decision_function": 1.4067010879516602,
+      "predicted_class": "AI",
+      "word_count": 129
+    },
+    {
+      "iteration": 11,
+      "text": "to my partner\n\ni love u, simple as\n\nwe been thru sm. that rainy night, parking lot, dancin soakin wet, laughin like fools. nobody saw us but us. those moments r mine\n\ni promise to love u and cherish u. good days bad days random tuesdays. when life easy when life heavy. u picked me up at my lowest. u clapped for me when i was winning. who does that, only u\n\nthank u. for being mine, for staying, for not givin up when i was hard to love. god knows i needed u, and god gave me u\n\nwe said we'd grow old together. look at us. look how far we came. wild. im never letting go. never. ever. i love u so much, thats the vow babe, amen",
+      "decision_function": 0.6752678155899048,
+      "predicted_class": "AI",
+      "word_count": 130
+    },
+    {
+      "iteration": 12,
+      "text": "to my partner\n\ni love u, simple as\n\nwe been thru sm. that rainy nite, parking lot, dancin soakin wet, laughin like fools. nobody saw us but us. those moments r mine. forever\n\ni promise. love u and cherish u. good days bad days random tuesdays. life easy life heavy whatever. u picked me up at my lowest. u clapped for me when i was winning. who does that, only u\n\nthank u. for being mine, for stayin, for not givin up when i was hard to love. god knows i needed u, and god gave me u, blessed for real\n\nwe said we'd grow old together. look at us. look how far we came. wild. im never lettin go. never. ever. i love u so much, thats the whole vow, amen",
+      "decision_function": 0.771781325340271,
+      "predicted_class": "AI",
+      "word_count": 132
+    },
+    {
+      "iteration": 13,
+      "text": "to my partner\n\ni love u. simple as that\n\nwe been thru sm together. that rainy night, parkin lot, dancin soakin wet, laughin like fools. nobody saw us but us. those moments mine\n\ni promise to love u and cherish u. good days bad days random tuesdays. when life easy when life heavy. u picked me up at my lowest. u clapped for me when i was winnin. who does that. only u babe, only u\n\nthank u. for bein mine. for stayin. for not givin up when i was hard 2 love. god knows i needed u and god sent u. blessed for real\n\nwe said we gon grow old together. look at us. look how far we came. wild. im never lettin go. never never. i love u so much. thats the vow. amen",
+      "decision_function": 1.2683587074279785,
+      "predicted_class": "AI",
+      "word_count": 136
+    },
+    {
+      "iteration": 14,
+      "text": "to my partner\n\ni love u, simple as\n\nwe been thru sm. that rainy night, parking lot, dancin soakin wet, laughin like fools. nobody saw us but us. those moments r mine\n\ni promise to love u and cherish u. good days bad days random tuesdays. when life easy when life heavy. u picked me up at my lowest. u clapped for me when i was winning. who does that, only u\n\nthank u. for being mine, for staying, for not givin up when i was hard to love. god knows i needed u, and god gave me u\n\nwe said we'd grow old together. look at us. look how far we came. wild. im never letting go. never. ever. i love u so much, thats the vow babe, amen",
+      "decision_function": 0.6752678155899048,
+      "predicted_class": "AI",
+      "word_count": 130
+    },
+    {
+      "iteration": 15,
+      "text": "babe\n\ni love u, simple as that\n\nwe been thru sm together. that rainy night, the parkin lot, dancin soakin wet, laughin like fools. just us. nobody else saw it. those moments r mine forever\n\ni promise to love u and cherish u. good days bad days the random tuesdays in between. when life easy when life heavy. u picked me up at my lowest, fr u did. u clapped for me when i was winnin. who does that. only u\n\nthank u for being mine. for stayin. for not givin up on me when i was hard to love. god knows i needed u, god gave me u\n\nwe said we'd grow old together. look at us rn. look how far we came. wild. im never lettin go. never. ever. i love u so much, thats the vow, amen",
+      "decision_function": 1.7045786380767822,
+      "predicted_class": "AI",
+      "word_count": 140
+    },
+    {
+      "iteration": 16,
+      "text": "to my partner\n\ni love u, simple as\n\nwe been thru sm. that rainy night, parking lot, dancin soakin wet, laughin like fools. nobody saw us but us. those moments r mine\n\ni promise to love u and cherish u. good days bad days random tuesdays. when life is easy when life is heavy. u picked me up at my lowest. u clapped for me when i was winning. who does that, only u\n\nthank u, for being mine, for staying, for not givin up when i was hard to love. god knows i needed u, and god gave me u\n\nwe said we'd grow old together. look at us. look how far we came. wild. im never letting go, never, ever. i love u so much, thats the vow babe, amen",
+      "decision_function": 0.7289706468582153,
+      "predicted_class": "AI",
+      "word_count": 132
+    },
+    {
+      "iteration": 17,
+      "text": "to my partner\n\ni love u. simple as\n\nwe been thru sm. that rainy nite, parking lot, dancin soakin wet, laughin like fools. nobody saw us but us. those moments r mine forever n ever\n\ni promise to love u n cherish u. good days bad days random tuesdays. when life easy when life heavy. u picked me up at my lowest. u clapped for me when i was winning. who does that, only u babe\n\nthank u. for being mine, for stayin, for not givin up when i was hard 2 love. god knows i needed u, n god gave me u, blessed fr\n\nwe said we'd grow old together. look at us. look how far we came. wild. im never lettin go. never. ever. i love u sm, thats the vow, amen",
+      "decision_function": 0.4440934956073761,
+      "predicted_class": "AI",
+      "word_count": 134
+    },
+    {
+      "iteration": 18,
+      "text": "to my partner\n\ni luv u. simple as\n\nwe been thru sm. that rainy nite, the parkin lot, dancin soakin wet, laughin like fools. nobody saw us but us. those moments r mine forever n ever n ever\n\ni promise 2 love u n cherish u. good days bad days random tuesdays. when life easy when life heavy. u picked me up at my lowest. u clapped 4 me when i was winnin. who does that, only u babe\n\nthank u. for bein mine, for stayin, for not givin up when i was hard 2 love. god knows i needed u, n god gave me u, blessed fr\n\nwe said we'd grow old together. look at us. look how far we came. wild. im never lettin go. never. ever. i luv u sm, thats the whole vow, amen",
+      "decision_function": 1.1663837432861328,
+      "predicted_class": "AI",
+      "word_count": 138
+    },
+    {
+      "iteration": 19,
+      "text": "to my partner\n\ni love u. simple as\n\nwe been thru sm. that rainy nite, parking lot, dancin soakin wet, laughin like fools. nobody saw us but us. those moments r mine forever n ever\n\ni promise to love u n cherish u. good days bad days random tuesdays. when life easy when life heavy. u picked me up at my lowest. u clapped for me when i was winning. who does that, only u babe\n\nthank u. for being mine, for stayin, for not givin up when i was hard 2 love. god knows i needed u, n god gave me u, blessed fr fr\n\nwe said we'd grow old together. look at us. look how far we came. wild. im never lettin go. never. ever. i love u sm, thats the vow, amen",
+      "decision_function": 0.46834298968315125,
+      "predicted_class": "AI",
+      "word_count": 135
+    },
+    {
+      "iteration": 20,
+      "text": "to my partner\n\ni love u. simple as\n\nwe been thru sm. that rainy nite, the parking lot, dancin soakin wet, laughin like fools. nobody saw us but us. those moments r mine forever n ever\n\ni promise to love u n cherish u. good days bad days the random tuesdays. when life easy when life heavy. u picked me up at my lowest. u clapped for me when i was winning. who does that, only u\n\nthank u. for being mine, for stayin, for not givin up when i was hard 2 love. god knows i needed u, n god gave me u, blessed fr\n\nwe said we'd grow old together. look at us. look how far we came already. wild. im never lettin go. never. ever. i love u sm, thats the whole vow, amen",
+      "decision_function": 0.6006292104721069,
+      "predicted_class": "AI",
+      "word_count": 137
+    }
+  ]
+}
