@@ -9,7 +9,10 @@ dist/
 venv/
 
 # By default ignore generated artifacts but keep the real LLM mimic drafts
-# (committed so analyses can be re-run without re-querying the API).
+# committed under data/processed/mimics/, so analyses re-run without API calls.
+# IMPORTANT: never `rm -rf data/processed` -- that bypasses these rules and
+# deletes the committed mimic cache (~300 KB of real LLM-generated text per
+# generator). The Makefile `clean` target uses `git clean -fdX` instead.
 data/processed/*
 !data/processed/mimics/
 data/processed/mimics/mimic_embeddings.npz
