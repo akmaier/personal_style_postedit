@@ -6,7 +6,11 @@ By: [Connor Baumler](https://ctbaumler.github.io/) `<baumler@cs.umd.edu>`, Calvi
 To appear at ACL 26. Bibtex will be updated here when available.
 ```
 
-This repository contains writing logs generated in our study about post-editing LLM-generate text to express personal style. 
+This repository contains writing logs generated in our study about post-editing LLM-generate text to express personal style.
+
+> **Fork note (akmaier):** a step-by-step plan for fully reproducing the paper's results
+> and figures from these logs lives in [`REPRODUCTION_PLAN.md`](./REPRODUCTION_PLAN.md).
+
 
 Each log contains the following:
 
