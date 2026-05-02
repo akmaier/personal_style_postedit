@@ -20,6 +20,7 @@ date we last confirmed it points at the correct work. This is requirement
 | `wolf2020transformers` | Transformers: State-of-the-Art NLP | Wolf et al. | EMNLP 2020 (System Demos), pp. 38--45 | https://aclanthology.org/2020.emnlp-demos.6/ | 2026-05-02 |
 | `paszke2019pytorch` | PyTorch | Paszke et al. | NeurIPS 2019, pp. 8024--8035 | https://papers.nips.cc/paper_files/paper/2019/hash/bdbca288fee7f92f2bfa9f7012727740-Abstract.html | 2026-05-02 |
 | `vallat2018pingouin` | Pingouin: statistics in Python | Vallat | JOSS 3(31):1026, 2018 | https://doi.org/10.21105/joss.01026 | 2026-05-02 |
+| `pedregosa2011sklearn` | Scikit-learn: Machine Learning in Python | Pedregosa et al. | JMLR 12:2825-2830, 2011 | https://www.jmlr.org/papers/v12/pedregosa11a.html | 2026-05-02 |
 | `virtanen2020scipy` | SciPy 1.0 | Virtanen et al. | Nature Methods 17:261--272, 2020 | https://doi.org/10.1038/s41592-019-0686-0 | 2026-05-02 |
 | `openai2025o4mini` | OpenAI o4-mini | OpenAI | Model card, 2025 | https://openai.com/ | 2026-05-02 (web search confirmed model identifier) |
 | `anthropic2026opus47` | Claude Opus 4.7 | Anthropic | Model card, 2026 | https://www.anthropic.com/news/claude-opus-4-7 | 2026-05-02 |

@@ -64,6 +64,30 @@ Full details and caveats: [`FINAL_ASSESSMENT.md`](FINAL_ASSESSMENT.md).
 
 ![Figure 10: final assessment](figures/fig10_final_assessment.png)
 
+### The arms race: AI-text detection on the same embeddings
+
+The same LUAR-MUD embeddings used to *evaluate* style proximity can be
+flipped into *detection* features. A leave-authors-out 5-fold linear-SVM
+detector reaches:
+
+| Approach | Detection AUC (95 % bootstrap CI) |
+|---|---:|
+| o4-mini draft | **0.999** [0.997, 1.000] |
+| Human post-edit | **0.967** [0.957, 0.976] |
+| Claude Opus 4.7 mimic | **0.942** [0.925, 0.958] |
+| GPT-5.5 mimic | **0.914** [0.902, 0.929] |
+
+Detectability drops monotonically as the approach gets closer to the
+participant's natural style, but **no approach reaches chance** — even the
+strongest frontier-LLM mimic still leaves a residual stylometric signature.
+
+`tests/test_detection_no_leakage.py` enforces author-disjointness across
+train and test on every CV split. See
+[`scripts/11_detection_experiment.py`](scripts/11_detection_experiment.py)
+and `results/detection_aucs.csv` for the full numbers.
+
+![Figure 11: detection AUC](figures/fig11_detection.png)
+
 ## How to reproduce everything
 
 ```bash
@@ -71,6 +95,7 @@ pip install -r requirements.txt   # pinned: torch, transformers, LUAR-MUD via HF
 make all              # paper reproduction: figures + hypothesis tests + report
 python3 scripts/08_compare_mimics.py    # leakage-free 4-way LUAR comparison
 python3 scripts/10_final_assessment.py  # Friedman + all-pairs + win-rate + Figure 10
+python3 scripts/11_detection_experiment.py  # 5-fold leave-authors-out detection AUC + Figure 11
 ```
 
 Wall-clock cost on CPU: ~ 2 min for the paper repro, ~ 1 min to embed the 648
