@@ -13,3 +13,5 @@ accelerate>=0.34
 tqdm>=4.66
 requests>=2.32
 einops>=0.7
+openai>=1.50
+anthropic>=0.40
