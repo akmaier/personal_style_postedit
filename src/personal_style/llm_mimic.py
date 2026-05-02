@@ -41,42 +41,75 @@ TASK_INSTRUCTIONS = {
     "eulogy": "Please help me write a draft of a eulogy.",
 }
 
-PROMPT_TEMPLATE = """{instruction} Only respond with the draft with no additional content or explanation. Please do not include any placeholder text such as "[name]". The final draft should be about 150 words.
+_STYLE_BLOCK_SINGULAR = (
+    "Below is a short writing sample written by the author, on a different topic, "
+    "in their natural unassisted style. Mimic this author's personal writing style "
+    "as closely as possible -- their typical sentence length, punctuation habits, "
+    "vocabulary register, capitalization, and tone. If the author writes in lowercase "
+    "or with idiosyncratic spelling, preserve those tendencies."
+)
+_STYLE_BLOCK_PLURAL = (
+    "Below are short writing samples written by the same author, on different topics, "
+    "in their natural unassisted style. Mimic this author's personal writing style "
+    "as closely as possible -- their typical sentence length, punctuation habits, "
+    "vocabulary register, capitalization, and tone. If the author writes in lowercase "
+    "or with idiosyncratic spelling, preserve those tendencies."
+)
 
-Here are some details to help you write:
-{details}
 
-Below are two short writing samples written by the same author, on different topics, in their natural unassisted style. Mimic this author's personal writing style as closely as possible -- their typical sentence length, punctuation habits, vocabulary register, and tone:
-
---- STYLE SAMPLE 1 ---
-{sample_1}
-
---- STYLE SAMPLE 2 ---
-{sample_2}
-"""
+def _build_prompt(instruction: str, details: str, style_samples: tuple[str, ...]) -> str:
+    """Build a prompt that adapts to 1 or 2 style samples."""
+    head = (
+        f"{instruction} Only respond with the draft with no additional content or "
+        f'explanation. Please do not include any placeholder text such as "[name]". '
+        f"The final draft should be about 150 words.\n\n"
+        f"Here are some details to help you write:\n{details.strip() or '(no details provided)'}\n\n"
+    )
+    samples = [s.strip() for s in style_samples if s and s.strip()]
+    if not samples:
+        return head
+    if len(samples) == 1:
+        return (
+            head
+            + _STYLE_BLOCK_SINGULAR
+            + "\n\n--- STYLE SAMPLE ---\n"
+            + samples[0]
+            + "\n"
+        )
+    body = _STYLE_BLOCK_PLURAL + "\n"
+    for i, s in enumerate(samples, start=1):
+        body += f"\n--- STYLE SAMPLE {i} ---\n{s}\n"
+    return head + body
 
 
 @dataclass(frozen=True)
 class MimicRequest:
+    """A request to a style-mimicking generator.
+
+    `style_samples` are the participant's unassisted writing samples shown to
+    the model as style demonstrations. Under the leakage-free held-out protocol
+    we pass exactly one sample (the "demo control"); the held-out control is
+    not shown to the model and is used downstream as the evaluation target.
+
+    `held_out_task_idx` is the task_idx of the participant's other control text
+    (the one *not* shown to the model). It is recorded only as metadata so the
+    evaluation script can look up the correct held-out vector; it is **not**
+    embedded in the prompt and does not affect the model's input.
+    """
+
     pid: str
     task_idx: int
     scenario: str
     details: str
     style_samples: tuple[str, ...]
+    held_out_task_idx: int | None = None
 
     def prompt(self) -> str:
         instruction = TASK_INSTRUCTIONS.get(
             self.scenario,
             f"Please help me write a draft of a personal {self.scenario}.",
         )
-        s1 = self.style_samples[0] if self.style_samples else ""
-        s2 = self.style_samples[1] if len(self.style_samples) > 1 else s1
-        return PROMPT_TEMPLATE.format(
-            instruction=instruction,
-            details=self.details.strip() or "(no details provided)",
-            sample_1=s1.strip() or "(no sample available)",
-            sample_2=s2.strip() or "(no sample available)",
-        )
+        return _build_prompt(instruction, self.details, self.style_samples)
 
 
 class Generator(ABC):
@@ -217,6 +250,12 @@ class MimicCache:
         h.update(str(req.task_idx).encode())
         h.update(req.scenario.encode())
         h.update(req.details.encode())
+        # Salt the cache key with a leakage-protocol tag so cached entries from
+        # the original 2-sample protocol cannot collide with the new 1-sample
+        # held-out protocol. This is set whenever held_out_task_idx is provided.
+        if req.held_out_task_idx is not None:
+            h.update(b"|held_out_protocol_v1|")
+            h.update(str(req.held_out_task_idx).encode())
         for s in req.style_samples:
             h.update(s.encode())
         return h.hexdigest()[:16]
