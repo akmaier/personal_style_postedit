@@ -8,5 +8,9 @@ dist/
 .venv/
 venv/
 
-data/processed/
+# By default ignore generated artifacts but keep the real LLM mimic drafts
+# (committed so analyses can be re-run without re-querying the API).
+data/processed/*
+!data/processed/mimics/
+data/processed/mimics/mimic_embeddings.npz
 *.npz
