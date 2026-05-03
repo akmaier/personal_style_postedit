@@ -1,0 +1,25 @@
+% Three-panel reproduction montage for the RRPR paper.
+% Each panel reproduces one published figure of Baumler et al. (ACL 26).
+\documentclass[border=4pt]{standalone}
+\usepackage{graphicx}
+\usepackage{caption}
+\usepackage{subcaption}
+\begin{document}
+\begin{minipage}{14cm}
+\begin{subfigure}[t]{4.55cm}
+  \centering
+  \includegraphics[width=\linewidth]{../../figures/fig3_before_after.png}\\
+  \footnotesize\textbf{Fig.~3 (orig.)}\,\,H1a/H1b: post-editing shifts style toward control \& away from LLM.
+\end{subfigure}\hfill
+\begin{subfigure}[t]{4.55cm}
+  \centering
+  \includegraphics[width=\linewidth]{../../figures/fig6_homogeneity.png}\\
+  \footnotesize\textbf{Fig.~6 (orig.)}\,\,H2a/H2b: pool homogeneity LLM\,$>$\,Edited\,$>$\,Control.
+\end{subfigure}\hfill
+\begin{subfigure}[t]{4.55cm}
+  \centering
+  \includegraphics[width=\linewidth]{../../figures/fig8_rmcorr.png}\\
+  \footnotesize\textbf{Fig.~8 (orig.)}\,\,H3: rmcorr $r=+0.244$, $p<10^{-8}$.
+\end{subfigure}
+\end{minipage}
+\end{document}
