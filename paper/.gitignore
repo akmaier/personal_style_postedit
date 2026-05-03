@@ -26,13 +26,11 @@ build/
 
 # Build artefacts
 main.pdf
-main_arxiv.pdf
 figures/_build/
 tables/*.tex
 
-# But keep the anonymized submission PDF tracked so reviewers (and future agents)
-# can verify the build without rebuilding from source.
+# Keep BOTH submission PDFs tracked so reviewers can grab them straight off
+# GitHub without rebuilding from source. main_anonymous.pdf is for the RRPR
+# blind review; main_arxiv.pdf is the author-credited version for arXiv.
 !main_anonymous.pdf
-
-# main_arxiv.pdf is regenerated via `make arxiv`. Don't track it -- the user
-# wanted it as a fresh build artefact each time, not version-controlled.
+!main_arxiv.pdf

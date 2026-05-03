@@ -40,9 +40,12 @@ switch via `pdflatex`'s preamble injection. So the two PDFs share every
 sentence, every figure, every number, and every reference. Only the
 title-page authors and affiliation differ.
 
-The blind-review `main_anonymous.pdf` is committed to the repo. The
-author-credited `main_arxiv.pdf` is **not** committed (per user's
-preference, kept as a fresh build artefact).
+Both `main_anonymous.pdf` (for the RRPR blind review) and
+`main_arxiv.pdf` (the author-credited version, for arXiv upload) are
+committed so reviewers can grab the current PDFs straight off GitHub
+without having to rebuild from source. They are regenerated on every
+`make all` / `make anonymize` / `make arxiv` run; commit them after
+edits to keep the repo PDFs in sync with the source.
 
 ```
 cd paper/
