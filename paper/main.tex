@@ -71,20 +71,21 @@ paired permutation tests with BH-FDR confirms five large effects;
 the LLM--vs--LLM pair (Opus vs.\ GPT-5.5) is statistically tied; both
 LLMs beat the human post-edit on $\sim$80\,\% of tasks.
 Finally, we cast the same data as an arms race. A leave-authors-out
-linear-SVM detector on LUAR embeddings, trained as a generic
-human-vs.-AI binary classifier (162 unassisted-control vectors from
-81 authors as the human class, $324$ AI vectors per approach as the
-AI class, with no author appearing in both train and test of any
-fold) reaches AUC $0.999$ on the unconditioned o4-mini draft,
-$0.971$ on the human post-edit, $0.952$ on Opus\,4.7, and $0.931$
-on GPT-5.5. Detectability drops monotonically as the approach gets
-closer to the participant's natural style, but no approach reaches
-chance: a residual stylometric signature persists even in the
-strongest mimic. A 2-D PCA and t-SNE projection makes this geometry
-visible: o4-mini and human post-edits land in one region of LUAR
-space, the two frontier-LLM mimics in another, with human controls
-spanning both. All code, all 648 mimic drafts, the trained
-detectors, and the agentic harness are released.
+linear-SVM detector on LUAR embeddings reaches AUC $0.999$ on the
+unconditioned o4-mini draft, $0.971$ on the human post-edit,
+$0.952$ on Opus\,4.7, and $0.931$ on GPT-5.5. Six diagnostic
+experiments---shuffled-label, length-only, cross-LLM, PCA-then-SVM,
+heavy regularisation, and a per-fold author audit---show that these
+AUCs survive every robustness check, but the \emph{source} of the
+signal differs sharply across approaches: GPT-5.5 detection is
+largely a length game (length-only AUC $=$ $0.880$), whereas
+Opus\,4.7 detection is a genuine stylistic signature
+(length-only AUC $=$ $0.517$, full LUAR AUC $=$ $0.952$). 2-D PCA
+and t-SNE projections show why this isn't visible to the eye: the
+Opus signal lives in 512-d directions that flatten onto the same
+2-D axes as the human controls. The arms race is real, but its
+shape is asymmetric. All code, all 648 mimic drafts, the trained
+detectors, every diagnostic, and the agentic harness are released.
 
 \keywords{Reproducible research \and Authorship style embeddings \and
 LLM evaluation \and AI-text detection \and Permutation tests \and
@@ -520,21 +521,74 @@ state of the art for detection is comfortably above chance even for
 GPT-5.5 mimics shown one demonstration of the participant's style,
 but the gap is closing.
 
-\paragraph{Geometry of the embedding space.}
-Figure~\ref{fig:embedding-tsne} projects the same $1\,458$ embedding
-vectors used by the detector onto two dimensions via PCA(2) and
-t-SNE(2). The two frontier-LLM mimics (Opus and GPT-5.5) cluster
-tightly in one region of LUAR space; the o4-mini draft and the
-human post-edit cluster in a second region; and the human controls
-$\blacktriangle$ are scattered across both. This is consistent with
-the win-rate result of Section~\ref{sec:stats} (Opus and GPT-5.5
-sit closer to the human controls on average) and with the detection
-result above (the AI clouds are still distinct enough from the
-human cloud that a linear classifier can separate them). The first
-two PCs explain only $\sim$22\,\% of the variance in LUAR
-embeddings, so this 2-D picture is suggestive rather than complete;
-the t-SNE companion plot shows the same qualitative structure
-under a non-linear projection.
+\paragraph{Geometry, and why the headline AUCs deserve a second look.}
+Fig.~\ref{fig:detection} (right panel) projects the same $1\,458$
+embedding vectors onto two dimensions via t-SNE(2) (PCA(2) companion
+in the repo). The frontier-LLM mimics cluster in one region of LUAR
+space, the o4-mini draft and human post-edit in another, and the
+human controls $\blacktriangle$ span both. The Opus cloud and the
+human-control triangles \emph{overlap} visually---hard to reconcile
+with the $0.952$ Opus AUC. Three reasonable suspicions arise: (a) the LinearSVC has
+$513$ parameters but only $\sim$$390$ training samples per fold, so it
+operates in an underdetermined regime; (b) some author-level
+information may still leak; (c) length or other content-format
+features could be doing most of the work. Six diagnostics
+(Table~\ref{tab:detection-diag}) settle each one.
+
+\textbf{(A)}~Per-fold author audit: $0/0/0/0/0$ pid overlap on
+every fold for every approach---\emph{no author leak.}
+\textbf{(B)}~Shuffled-label baseline: AUC $\in [0.47, 0.49]$,
+ruling out the underdetermined-regression artefact (a).
+\textbf{(C)}~Length-only baseline (single feature): AUC $=$ $0.818$ on
+o4-mini, $0.565$ on human post-edit, $\mathbf{0.517}$ on Opus,
+$\mathbf{0.880}$ on GPT-5.5---\emph{most of the GPT-5.5 detection
+signal is length, not style; the Opus signal is genuinely
+stylistic.} \textbf{(D)}~Cross-LLM transfer: train on one frontier
+LLM, test on the other. AUC $=$ $0.913$ (Opus$\to$GPT-5.5),
+$0.888$ (GPT-5.5$\to$Opus)---\emph{a generic frontier-LLM signature
+exists.} \textbf{(E)}~PCA(32)$+$LinearSVC ($33$ params, properly
+determined): AUC $=$ $0.998 / 0.968 / 0.925 / 0.912$, almost
+identical to the full numbers. \textbf{(F)}~Heavily-regularised
+L2-LR ($C{=}10^{-3}$): AUC $=$ $0.998 / 0.976 / 0.931 / 0.926$.
+The signal survives every robustness check.
+
+\begin{table}[t]
+\centering
+\caption{Six diagnostics on the detection result. \textbf{Headline}
+is the LinearSVC on raw 512-d LUAR. \textbf{Shuffle} is the same
+classifier on randomly-permuted labels (must be $\sim$$0.5$).
+\textbf{Length} is a one-feature baseline. \textbf{PCA(32)} reduces
+the SVM to 33 parameters. The shuffle and length rows are AUC means
+($\pm$ SD across the 5 folds).}
+\label{tab:detection-diag}
+\begin{tabular}{l@{\quad} r r r r}
+\toprule
+& o4-mini & Human edit & Opus 4.7 & GPT-5.5 \\
+\midrule
+Headline (full LinearSVC) & 0.999 & 0.971 & 0.952 & 0.931 \\
+\textbf{B} Shuffle labels       & 0.472 & 0.469 & 0.494 & 0.478 \\
+\textbf{C} Length-only (1 feat) & 0.818 & 0.565 & \textbf{0.517} & \textbf{0.880} \\
+\textbf{E} PCA(32) + LinearSVC  & 0.998 & 0.968 & 0.925 & 0.912 \\
+\textbf{F} L2-LR, $C{=}10^{-3}$ & 0.998 & 0.976 & 0.931 & 0.926 \\
+\midrule
+\multicolumn{5}{l}{\textbf{D} Cross-LLM: train Opus $\to$ test GPT $=$ $0.913$;\,
+                   train GPT $\to$ test Opus $=$ $0.888$} \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+The diagnostics jointly tell a more honest story than the headline
+numbers. \textbf{The Opus AUC of $0.952$ is genuine stylistic
+detection}: the length feature gives only $0.517$, and a
+non-author-specific contrast (cross-LLM) still gives $0.91$. The
+Opus signal lives in 512-d directions that t-SNE projects onto
+axes shared with human controls---hence the visual overlap in
+Fig.~\ref{fig:detection} (right). \textbf{The GPT-5.5 AUC of $0.931$,
+in contrast, is mostly a length game}: length alone gets $0.880$,
+and the additional gain from full LUAR is small. Either GPT-5.5 is
+a much better stylistic mimic than Opus on this metric, or our
+prompt elicits more uniform output length from GPT-5.5 than from
+Opus---probably both.
 
 \begin{table}[t]
 \centering
@@ -550,47 +604,34 @@ bootstraps over the 5 fold AUCs. \textsc{n-pids} = 81 in every row.}
 
 \begin{figure}[t]
 \centering
-\includegraphics[width=0.7\linewidth]{../figures/fig11_detection.png}
-\caption{Detection AUC drops monotonically as the approach gets closer
-to the participant's natural style, but no approach reaches chance.
-Bars show 95\,\% percentile bootstrap CIs over the 5 fold AUCs.}
+\begin{minipage}[t]{0.49\linewidth}
+\includegraphics[width=\linewidth]{../figures/fig11_detection.png}
+\end{minipage}\hfill
+\begin{minipage}[t]{0.49\linewidth}
+\includegraphics[width=\linewidth]{../figures/fig12b_embedding_tsne.png}
+\end{minipage}
+\caption{\textbf{Left:} detection AUC under leave-authors-out 5-fold
+CV; bars show $95\,\%$ percentile bootstrap CIs over the 5 fold
+AUCs. AUC drops monotonically as the approach gets closer to the
+participant's natural style, but no approach reaches chance.
+\textbf{Right:} t-SNE(2) projection of the same $1\,458$ LUAR
+embeddings the detector sees. Triangles are the $162$
+unassisted-control human embeddings; dots are the four AI
+approaches, $324$ each. The frontier-LLM mimics (Opus, GPT-5.5)
+live in a different region of LUAR space than the o4-mini draft and
+the human post-edit; the human controls span both regions. The
+PCA(2) companion plot is in the released repository.}
 \label{fig:detection}
 \end{figure}
 
-\begin{figure}[t]
-\centering
-\begin{minipage}[t]{0.485\linewidth}
-\includegraphics[width=\linewidth]{../figures/fig12a_embedding_pca.png}
-\end{minipage}\hfill
-\begin{minipage}[t]{0.485\linewidth}
-\includegraphics[width=\linewidth]{../figures/fig12b_embedding_tsne.png}
-\end{minipage}
-\caption{2-D projection of the same $1\,458$ LUAR embeddings the
-detector sees: PCA(2) (\textbf{left}) and t-SNE(2) (\textbf{right}).
-Triangles ($\blacktriangle$) are the $162$ unassisted-control human
-embeddings; dots are the four AI approaches, $324$ each. The
-frontier-LLM mimics (Opus, GPT-5.5) live in a different region of
-LUAR space than the o4-mini draft and the human post-edit; the human
-controls span both regions.}
-\label{fig:embedding-tsne}
-\end{figure}
-
 \paragraph{Why this matters.}
-Read together with the held-out similarity result in
-Section~\ref{sec:extension}, the detection result tells the same
-story from the opposite direction. The Section~\ref{sec:extension}
-finding is that the LLM mimics close most of the gap between the
-unconditioned o4-mini draft and the natural same-author ceiling.
-The Section~\ref{sec:detection} finding is that even after that gap
-is closed, a simple linear probe still picks up an AI signature with
-high accuracy. Both observations are consistent: closing the gap on
-\emph{average} cosine to the author still leaves enough \emph{shape}
-in the embedding distribution for a discriminative model to exploit.
-This is the essence of the arms race: the tools used to evaluate AI
-output (LUAR-MUD) are the same tools that, when used as features for
-a downstream classifier, can be turned into AI detectors. A new
-generation of LLM closes part of the gap; a classifier of the same
-embedding family finds new structure to exploit.
+Closing the gap on \emph{average} similarity still leaves enough
+\emph{shape} in the LUAR distribution for a discriminator to
+exploit---but the shape is not the same shape across approaches.
+The Opus signal is genuinely stylistic and transfers to GPT-5.5
+(diagnostic D); the GPT-5.5 signal is mostly length. The arms race
+is real, but its shape is asymmetric. Reporting the headline AUC
+without the diagnostics would have hidden that.
 
 %-------------------------------------------------------------------
 \section{Discussion and limitations}\label{sec:discussion}
@@ -634,7 +675,7 @@ with three or more controls per author would let us compare style
 sample sizes directly. The released study has only two controls,
 which is why we do not run that experiment here.
 
-\paragraph{Detection ceiling vs.\ floor.}
+\paragraph{Detection ceiling vs.\ floor and the length confound.}
 The Section~\ref{sec:detection} detector is a linear SVM on
 LUAR-MUD embeddings. It is therefore a \emph{lower bound} on the
 detectability of these AI texts, not an upper one. A non-linear
@@ -642,9 +683,13 @@ classifier, an ensemble over multiple authorship-embedding families,
 or a perplexity-style classifier could each plausibly raise the AUC
 above what we report. Likewise, a future LLM mimic shown more than
 one demonstration, or one specifically trained to fool LUAR, could
-plausibly lower it. The \emph{relative} ordering of the four
-approaches is the robust finding here; the absolute AUCs are a
-snapshot of the arms race in spring 2026.
+plausibly lower it. The diagnostics in
+Section~\ref{sec:detection} also expose a length confound for
+GPT-5.5---most of its $0.931$ headline AUC comes from word-count
+alone---which means the Opus and GPT-5.5 numbers should not be
+read as equally stylistic. The \emph{relative} ordering of the
+four approaches is the robust finding; the absolute AUCs and their
+\emph{causes} are a snapshot of the arms race in spring 2026.
 
 %-------------------------------------------------------------------
 \section{Reproducibility checklist}\label{sec:checklist}

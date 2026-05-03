@@ -149,11 +149,22 @@ monotonically as the approach gets closer to the participant's style:
 | GPT-5.5 mimic | 0.931 [0.924, 0.937] |
 
 None of the four approaches reaches chance, and the bootstrap CIs do not
-overlap between adjacent rows. So the *same* LUAR embeddings used to score
-style proximity in §2 can be flipped into a strong AI-text detector — even
-the best frontier-LLM mimic still carries a residual signature. This is
-the arms race in numbers: each new generation closes part of the gap, but
-the discriminative model finds new structure to exploit.
+overlap between adjacent rows. But six follow-up diagnostics
+(`scripts/13_detection_diagnostics.py`) show the *source* of the signal
+is sharply different across approaches:
+
+- **GPT-5.5: most of the AUC is length** (length-only baseline = 0.880,
+  full LUAR = 0.931). The mimic writes ~150 words reliably; humans vary.
+- **Opus 4.7: the AUC is genuinely stylistic** (length-only = 0.517,
+  full LUAR = 0.952).
+- **Cross-LLM** (train Opus → test GPT-5.5) AUC = 0.913: a generic
+  frontier-LLM signature transfers between the two.
+- **Shuffle-label baseline** AUC ≈ 0.49 and **PCA(32)** AUC ≈ 0.92 confirm
+  the headline is not an underdetermined-regression artefact.
+
+So the arms race is real, but its shape is asymmetric. Reporting the
+headline AUC without the length-confound diagnostic would have been
+misleading. See `results/detection_diagnostics_summary.md`.
 
 ## 7. Reproducing this
 

@@ -189,6 +189,39 @@ def check_numbers() -> None:
         fail("D.2 (detection GPT-5.5 in paper)",
              f"AUC {rounded} not in main.tex (CSV says {gpt55_auc:.4f})")
 
+    # Diagnostics (D.2 / B.x). The paper must report:
+    #  - the GPT-5.5 length-only AUC (~0.88) as evidence of the length confound
+    #  - the Opus length-only AUC (~0.52) as evidence the Opus signal is genuine
+    #  - the shuffle-label baseline somewhere
+    diag_csv = REPO / "results" / "detection_diagnostics.csv"
+    if diag_csv.exists():
+        diag = pd.read_csv(diag_csv)
+        len_rows = diag[diag["diagnostic"].str.startswith("C.")]
+        if not len_rows.empty:
+            gpt_len = len_rows[len_rows["approach"] == "GPT-5.5"]["auc_mean"].iloc[0]
+            opus_len = len_rows[len_rows["approach"] == "Claude Opus 4.7"]["auc_mean"].iloc[0]
+            if f"{gpt_len:.3f}" in tex:
+                ok("D.2 (length-only GPT-5.5)",
+                   f"length-only AUC {gpt_len:.3f} appears in paper")
+            else:
+                fail("D.2 (length-only GPT-5.5)",
+                     f"length-only AUC {gpt_len:.3f} missing from paper")
+            if f"{opus_len:.3f}" in tex:
+                ok("D.2 (length-only Opus)",
+                   f"length-only AUC {opus_len:.3f} appears in paper")
+            else:
+                fail("D.2 (length-only Opus)",
+                     f"length-only AUC {opus_len:.3f} missing from paper")
+        if "shuffle" in tex.lower() or "Shuffle" in tex:
+            ok("D.2 (shuffle-label diagnostic)",
+               "shuffle-label diagnostic mentioned in paper")
+        else:
+            fail("D.2 (shuffle-label diagnostic)",
+                 "shuffle-label diagnostic not mentioned")
+    else:
+        fail("D.2 (diagnostics CSV)",
+             "results/detection_diagnostics.csv not found")
+
 
 # ---------------------------------------------------------------------------
 # Figures and tables referenced from text
