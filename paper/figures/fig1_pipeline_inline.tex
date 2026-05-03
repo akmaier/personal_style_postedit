@@ -25,7 +25,10 @@
   \node[test, right=of mimsim] (final) {Friedman + 6\\paired tests\\\texttt{10\_final}};
   \node[outbox, right=of final] (fig9)  {Figs.~9, 10};
 
-  \node[data, below=18pt of gen, xshift=-30pt] (drafts) {Opus + GPT-5.5\\drafts\\\texttt{mimics/*.json}};
+  % Drafts box, placed to the left of `gen` (about a cm leftward of its
+  % previous mid-position). It feeds into the LLM mimic generation step.
+  \node[data, below=18pt of gen, xshift=-58pt]
+        (drafts) {Opus + GPT-5.5\\drafts\\\texttt{mimics/*.json}};
 
   \draw[->] (logs)  -- (tidy);
   \draw[->] (tidy)  -- (luar);
@@ -33,10 +36,14 @@
   \draw[->] (sim)   -- (tests);
   \draw[->] (tests) -- (figs);
 
-  \draw[->] (tidy.south) |- ($(gen.north)+(0,4pt)$);
+  % Branches into the extension lane. Both arrows now end at the WEST
+  % anchor of an actual node so they don't point into empty space:
+  %   tidy -> gen      (planning details flow into mimic generation)
+  %   luar -> mimsim   (the same LUAR embedder also embeds the mimics)
+  \draw[->] (tidy.south) |- (gen.west);
+  \draw[->] (luar.south) |- (mimsim.west);
   \draw[->] (drafts) -| (gen.south);
   \draw[->] (gen) -- (mimsim);
-  \draw[->] (luar.south) |- ($(mimsim.north)+(0,4pt)$);
   \draw[->] (mimsim) -- (final);
   \draw[->] (final) -- (fig9);
 \end{tikzpicture}
