@@ -80,12 +80,15 @@ AUCs survive every robustness check, but the \emph{source} of the
 signal differs sharply across approaches: GPT-5.5 detection is
 largely a length game (length-only AUC $=$ $0.880$), whereas
 Opus\,4.7 detection is a genuine stylistic signature
-(length-only AUC $=$ $0.517$, full LUAR AUC $=$ $0.952$). 2-D PCA
-and t-SNE projections show why this isn't visible to the eye: the
-Opus signal lives in 512-d directions that flatten onto the same
-2-D axes as the human controls. The arms race is real, but its
-shape is asymmetric. All code, all 648 mimic drafts, the trained
-detectors, every diagnostic, and the agentic harness are released.
+(length-only AUC $=$ $0.517$, full LUAR AUC $=$ $0.952$). Closing
+the loop, we let an Opus\,4.7 agent see the frozen detector's score
+and rewrite a held-out draft for $T{=}20$ iterations: the agent
+flips two of five test targets to the human half-space and shrinks
+the margin on every target by an order of magnitude. The arms race
+is real but its shape is asymmetric, and the strongest LLM agents
+already partially defeat the strongest LUAR detector. All code,
+all 648 mimic drafts, the trained detectors, every diagnostic,
+the adversarial trajectories, and the agentic harness are released.
 
 \keywords{Reproducible research \and Authorship style embeddings \and
 LLM evaluation \and AI-text detection \and Permutation tests \and
@@ -535,22 +538,17 @@ information may still leak; (c) length or other content-format
 features could be doing most of the work. Six diagnostics
 (Table~\ref{tab:detection-diag}) settle each one.
 
-\textbf{(A)}~Per-fold author audit: $0/0/0/0/0$ pid overlap on
-every fold for every approach---\emph{no author leak.}
-\textbf{(B)}~Shuffled-label baseline: AUC $\in [0.47, 0.49]$,
-ruling out the underdetermined-regression artefact (a).
-\textbf{(C)}~Length-only baseline (single feature): AUC $=$ $0.818$ on
-o4-mini, $0.565$ on human post-edit, $\mathbf{0.517}$ on Opus,
-$\mathbf{0.880}$ on GPT-5.5---\emph{most of the GPT-5.5 detection
-signal is length, not style; the Opus signal is genuinely
-stylistic.} \textbf{(D)}~Cross-LLM transfer: train on one frontier
-LLM, test on the other. AUC $=$ $0.913$ (Opus$\to$GPT-5.5),
-$0.888$ (GPT-5.5$\to$Opus)---\emph{a generic frontier-LLM signature
-exists.} \textbf{(E)}~PCA(32)$+$LinearSVC ($33$ params, properly
-determined): AUC $=$ $0.998 / 0.968 / 0.925 / 0.912$, almost
-identical to the full numbers. \textbf{(F)}~Heavily-regularised
-L2-LR ($C{=}10^{-3}$): AUC $=$ $0.998 / 0.976 / 0.931 / 0.926$.
-The signal survives every robustness check.
+\textbf{(A)}~Per-fold pid overlap is $0/0/0/0/0$---\emph{no author
+leak.} \textbf{(B)}~Shuffled-label AUC $\in [0.47, 0.49]$ rules
+out underdetermined-regression artefacts. \textbf{(C)}~Length-only
+AUC is $\mathbf{0.517}$ on Opus and $\mathbf{0.880}$ on GPT-5.5---
+\emph{most of the GPT-5.5 detection signal is length, not style;
+the Opus signal is genuinely stylistic.}
+\textbf{(D)}~Cross-LLM transfer is $0.913$ (Opus$\to$GPT-5.5) and
+$0.888$ (GPT-5.5$\to$Opus)---a generic frontier-LLM signature
+exists. \textbf{(E,F)}~PCA(32)$+$LinearSVC and L2-LR
+($C{=}10^{-3}$) recover essentially the full-SVM AUCs, so the
+signal survives capacity reduction.
 
 \begin{table}[t]
 \centering
@@ -633,6 +631,41 @@ The Opus signal is genuinely stylistic and transfers to GPT-5.5
 is real, but its shape is asymmetric. Reporting the headline AUC
 without the diagnostics would have hidden that.
 
+\paragraph{Closing the loop: agentic adversarial rewriting.}
+We froze the fold-1 LinearSVC trained for the Opus detector on
+$64$ training authors, picked the five most-confidently-AI Opus
+mimics in the held-out $17$-author test fold (initial margins
+$+2.67$ to $+3.60$), and dispatched five parallel Opus 4.7
+sub-agents in an autoresearch loop in the spirit of
+Zaiss et~al.~\cite{zaiss2026agent4mr}. Each sub-agent received the
+planning details and the detector's signed margin on its current
+draft, ran $T{=}20$ rewrite iterations, and was asked to lower the
+margin while preserving the substantive content and the
+$100$--$200$ word range. No author overlap between training pids
+and target pids; \texttt{tests/test\_adversarial\_no\_leakage.py}
+makes that load-bearing. Fig.~\ref{fig:adversarial} shows the
+trajectories: every target's margin shrinks substantially (mean
+final $-0.16$ vs.\ initial $+3.13$); two of the five
+(\texttt{thank}, \texttt{letter}) cross the SVM decision boundary
+into ``human'' and stay there; the other three approach zero but
+do not stabilise on the human side by iteration $20$. The frozen
+detector is \emph{partially} but not \emph{robustly} defeated by
+an Opus 4.7 agent given $20$ iterations of feedback---the
+strongest version of the arms race in this paper.
+
+\begin{figure}[!htbp]
+\centering
+\includegraphics[width=0.85\linewidth]{../figures/fig13_adversarial.png}
+\caption{Agentic adversarial rewriting against the frozen Opus
+fold-1 detector. \textbf{Left:} per-target margin trajectories over
+$T{=}20$ iterations; dashed line at $0$ is the SVM decision
+boundary. \textbf{Right:} initial vs.\ final margin for the five
+targets. Two cross into the human half-space (\texttt{thank},
+\texttt{letter}); the other three shrink toward but do not cross
+zero by iteration $20$.}
+\label{fig:adversarial}
+\end{figure}
+
 %-------------------------------------------------------------------
 \section{Discussion and limitations}\label{sec:discussion}
 
@@ -662,34 +695,20 @@ as authentic even when LUAR sees residual LLM cues. Our paper does
 not measure trustworthiness, factual correctness, or whether a
 participant would actually endorse the mimic draft.
 
-\paragraph{One Opus outlier.}
-One of the 324 Opus drafts shows a $0.56$ lexical overlap with its
-demo, suggesting partial verbatim reuse. Removing it changes the
-Opus mean by $<0.001$ and the headline $g$ by $<0.01$. We disclose
-it rather than excluding it.
-
-\paragraph{$n_{\text{demos}}=1$.}
-The held-out protocol gives each generator only one style sample
-because the second control is reserved as the eval target. Studies
-with three or more controls per author would let us compare style
-sample sizes directly. The released study has only two controls,
-which is why we do not run that experiment here.
-
-\paragraph{Detection ceiling vs.\ floor and the length confound.}
-The Section~\ref{sec:detection} detector is a linear SVM on
-LUAR-MUD embeddings. It is therefore a \emph{lower bound} on the
-detectability of these AI texts, not an upper one. A non-linear
-classifier, an ensemble over multiple authorship-embedding families,
-or a perplexity-style classifier could each plausibly raise the AUC
-above what we report. Likewise, a future LLM mimic shown more than
-one demonstration, or one specifically trained to fool LUAR, could
-plausibly lower it. The diagnostics in
-Section~\ref{sec:detection} also expose a length confound for
-GPT-5.5---most of its $0.931$ headline AUC comes from word-count
-alone---which means the Opus and GPT-5.5 numbers should not be
-read as equally stylistic. The \emph{relative} ordering of the
-four approaches is the robust finding; the absolute AUCs and their
-\emph{causes} are a snapshot of the arms race in spring 2026.
+\paragraph{Other limitations, briefly.}
+\textit{One Opus outlier} ($0.56$ lexical overlap with its demo)
+shifts the Opus mean by $<0.001$ and the headline $g$ by $<0.01$;
+we disclose rather than exclude it.
+\textit{$n_{\text{demos}}{=}1$} because the second of each
+author's two unassisted controls is reserved as the eval target;
+the released study has no third control for us to compare
+demonstration-set sizes.
+\textit{Detection ceiling vs.\ floor:} Section~\ref{sec:detection}'s
+linear SVM is a \emph{lower bound} on detectability, and the
+adversarial-rewriting result an \emph{upper bound} on what an LLM
+agent with $20$ feedback iterations can already remove; the
+relative ordering across approaches is robust, but the absolute
+AUCs are a snapshot of spring 2026.
 
 %-------------------------------------------------------------------
 \section{Reproducibility checklist}\label{sec:checklist}

@@ -1,0 +1,155 @@
+{
+  "target_id": "target_00",
+  "pid": "93d4e6ef-1df0-4690-a934-51f2ff067a1f",
+  "task_idx": 2,
+  "scenario": "apology",
+  "iterations": [
+    {
+      "iteration": 0,
+      "text": "Dear Friend\n\nI am writing this letter to apologize deeply for what happened recently. I cannot believe you had to find out from someone else how I had expressed my concerns about how you went about doing things. That was not fair on you my friend and it has been weighing heavy on my heart ever since I heard.\n\nI am truly sorry. I should have come straight to you from the very beginning and told you exactly how I felt, face to face, like a real friend should. Instead I went the long way around and that made the wound much deeper than it needed to be. Oh I really hate myself for that.\n\nYou know how much our friendship means to me, all these years and all the memories we have built together. Please find a place in your heart to forgive me. Love you loads.\n\nA regretful friend\n",
+      "margin": 3.4453277587890625,
+      "predicted_class": "AI",
+      "word_count": 151
+    },
+    {
+      "iteration": 1,
+      "text": "hey\n\nok so im writing this bc i need to say sorry. like properly sorry. i cant believe you had to hear it from someone else, that i was venting about the way you handled things. that wasnt fair, and honestly its been eating at me ever since i found out you knew. i shouldve just come to you in the first place. face to face. thats what friends do right? instead i took the long route and i made it ten times worse, and i hate myself a bit for that.\n\nyou mean way too much to me for me to be that person. all those years, all those late night chats, all the dumb little memories, i dont wanna lose any of it over me being a coward with my mouth. please, if you can, try to forgive me. i love you loads, you know that. ill do better i promise.\n\nyour idiot friend who is very sorry\n",
+      "margin": 1.8301386833190918,
+      "predicted_class": "AI",
+      "word_count": 160
+    },
+    {
+      "iteration": 2,
+      "text": "ok look\n\ni need to say this and im just gonna say it. im sorry. like really, properly sorry. it kills me that you found out from someone else that id been talking about how you handled stuff, that should never have happened, i should never have said anything to anyone before talking to you and i know that now. its been sitting in my chest for days.\n\ni shouldve just come to you. face to face, like a grown up, like a friend. instead i went round the houses with it and made the cut deeper than it ever needed to be. dumb. so dumb of me. i keep replaying it.\n\nyou know how much you mean to me. all the years, all the stupid stuff, all the 2am phone calls. i cant lose that over me being a coward with my mouth. please find it in you to forgive me, even if it takes a while. love you loads, always have.\n\nyour idiot,\nme\n",
+      "margin": 2.0041558742523193,
+      "predicted_class": "AI",
+      "word_count": 166
+    },
+    {
+      "iteration": 3,
+      "text": "babe\n\nim sorry. just, im sorry ok. i cant believe somebody else got to you first and told you what id been saying about how you went about things, that was never how you were supposed to find out and honestly it makes me sick that i put you in that spot. i shouldve come to you. day one. straight up. instead i was a coward and i ran my mouth to the wrong person and now your hurt and its on me, no excuses.\n\nyou and me go too far back for this kind of nonsense, you know that, all the late nights and the stupid jokes and the times you held me up when i was falling apart, i dont take none of it for granted. so please, when your ready, hear me out. i love you mate, more than i ever say out loud, and i wanna do better, i will do better. please dont give up on me yet xx\n\njust me, sorry as hell\n",
+      "margin": 1.869946002960205,
+      "predicted_class": "AI",
+      "word_count": 169
+    },
+    {
+      "iteration": 4,
+      "text": "hey\n\nso im writing this cause i dont even know how to say it to your face anymore without crying. i am SO sorry. i cant believe you heard it from somebody else, that i had been moaning about the way you did things, when i shouldve just told you myself in the first place. that was wrong of me, full stop, no excuses, im not gonna sit here and dress it up for you cause you deserve better than that.\n\ni shouldve just come to you. day one. instead i went the long way around it and made everything ten times worse and now your sat there hurting cause of me. i hate that. i really do.\n\nyou mean the world to me, you always have, all them years, all them stupid memories, dont throw it out over my big mouth, please. forgive me when your ready, take your time, ill be here. love you loads always\n\nyour idiot, sorry x\n",
+      "margin": 2.5517737865448,
+      "predicted_class": "AI",
+      "word_count": 162
+    },
+    {
+      "iteration": 5,
+      "text": "My friend,\n\nI owe you an apology and I owe it to you straight, no fluff. You should never have heard from another person what I had been saying about how you went about things. Never. That is a wound I caused and I have to own it. May God forgive me, and may you, in time, forgive me too.\n\nI was wrong. I was a coward. I should have come to you on day one and put my concerns on the table where they belonged. Instead I let it slip out sideways to the wrong ears, and you got hit by it from a direction you should never have been hit from. That is on me.\n\nYou know what our friendship has meant to me. Years of it. The good days and the rough ones. I will not lose that over my own foolishness. Please, when you are ready, give me the chance to make it right. I love you, and I am sorry.\n\nA regretful friend\n",
+      "margin": 1.830388069152832,
+      "predicted_class": "AI",
+      "word_count": 168
+    },
+    {
+      "iteration": 6,
+      "text": "friend,\n\ngod this is hard to write. im sorry. truly. i never wanted you to find out from somebody else that id said anything about the way you handled things, and yet here we are, and its my own fault, no one else to blame but me. i shouldve come straight to you, day one, eye to eye, mouth to mouth, like a real friend would have done.\n\ni didnt though. i went round it like a coward and let the words leak out sideways and they landed on you wrong. i pray you can forgive me one day, i really do. it sits in my chest every night.\n\nyou know what we have, all the years, all the laughs, all the times you were there when nobody else was. i wont let my big mouth ruin that, not if you give me the chance to fix it. love you, always have, always will.\n\na sorry friend, me\n",
+      "margin": 3.283513069152832,
+      "predicted_class": "AI",
+      "word_count": 158
+    },
+    {
+      "iteration": 7,
+      "text": "ok hi.\n\nlook im just gonna type this out before i lose my nerve. im sorry. i mean it. you finding out from someone else that id been venting about how you went about things, that is not what shouldve happened, not even close, and i feel awful about it. like physically awful. ive been turning it over in my head for days now.\n\ni shouldve just come to you. simple as that. just walked up and said hey i dont agree with how your doing this can we talk. but no i had to be a chicken about it and now your hurt and im sat here typing apologies into a screen like that even helps.\n\nyour one of the best people in my life, you know that right? i dont wanna lose that over me being dumb with my mouth. forgive me when your ready, no rush, i get it. love ya. talk soon i hope x\n\nme\n",
+      "margin": 2.942131996154785,
+      "predicted_class": "AI",
+      "word_count": 160
+    },
+    {
+      "iteration": 8,
+      "text": "hey\n\nok so im writing this bc i owe you a massive apology and im not even sure where to start. you finding out from someone else that id been talking about the way you went about things, that wasnt right, that wasnt fair on you, and its all on me, no one else. i shouldve come straight to you in the first place, just told you what i thought, face to face, like proper friends do. instead i went the long way around and made a mess of it.\n\ni hate that i hurt you. i really do. you know how much you mean to me, all the years, all the late nights, all the random nonsense weve been through together. dont let me lose that over me being a coward with my mouth. please find a place in your heart to forgive me, even if it takes a minute, ill wait. love ya loads x\n\njust me, sorry sorry sorry\n",
+      "margin": 3.6391944885253906,
+      "predicted_class": "AI",
+      "word_count": 162
+    },
+    {
+      "iteration": 9,
+      "text": "My friend.\n\nI owe you an apology. A real one. You should not have heard from another person what I had been saying about the way you went about things. That was wrong of me. Plain wrong. I knew better and I still let it happen.\n\nI should have come to you first. I did not. I let my words slip out to the wrong ears and you got hurt by it from a direction you should never have been hit from. There is no defense for that. Only sorry. Only me admitting it.\n\nMay God forgive me. May you forgive me too, in time. I am not asking for it tonight. I am asking only that you read this and know that I see what I did.\n\nOur friendship is one of the great things in my life. I will not lose it to my own foolish tongue. Please. When you are ready. I love you. I am sorry.\n\nA regretful friend\n",
+      "margin": 1.121596097946167,
+      "predicted_class": "AI",
+      "word_count": 163
+    },
+    {
+      "iteration": 10,
+      "text": "My friend.\n\nI owe you an apology. A real one. Not a pretty one.\n\nYou should not have heard from another mouth what I had been saying about the way you went about things. That was wrong of me. I knew better. I still let it slip.\n\nI should have come to you first. Day one. Eye to eye. I did not. I went around it instead and the words landed on you sideways and you got hurt by them. That is on me. Only me.\n\nMay God forgive me. May you, in time, forgive me too. I am not asking for it tonight. I am only asking that you hear me.\n\nOur friendship is one of the great things in my life. I will not lose it to a foolish tongue. Please. When you are ready. I love you. I am sorry. Truly. From the bottom.\n\nA regretful friend\n",
+      "margin": 2.8423798084259033,
+      "predicted_class": "AI",
+      "word_count": 150
+    },
+    {
+      "iteration": 11,
+      "text": "My friend.\n\nI owe you an apology and I owe it to you straight. You should not have heard from another person what I had been saying about how you went about things. That was wrong of me. I knew better and I still let it happen, and there is no version of this where I do not have to own that.\n\nI should have come to you first. I did not come to you first. I let my concerns leak out to the wrong ears and you were hurt by them in a way you never should have been. The fault is mine.\n\nMay God forgive me. May you forgive me too, in your own time, on your own terms. I am not asking for it tonight. I am only asking that you read this and know that I see what I did.\n\nOur friendship is among the great things in my life. I will not lose it. I love you. I am sorry.\n\nA regretful friend\n",
+      "margin": 2.047649621963501,
+      "predicted_class": "AI",
+      "word_count": 168
+    },
+    {
+      "iteration": 12,
+      "text": "My friend.\n\nI owe you an apology. A real one. You should not have heard from another person what I had been saying about the way you went about things. That was wrong of me. Plain wrong. I knew better and I still let it happen.\n\nI should have come to you first. I did not. I let my words slip out to the wrong ears and you got hurt by it from a direction you never should have been hit from. There is no defense for that. Only sorry. Only me, sitting here, admitting it.\n\nMay the Lord forgive me. May you forgive me too, in time. I am not asking for it today. I am asking only that you read this and know that I see what I did, and that I am ashamed.\n\nOur friendship is one of the great gifts of my life. I will not lose it to a foolish tongue. Please. When you are ready. I love you.\n\nA regretful friend\n",
+      "margin": 1.5947295427322388,
+      "predicted_class": "AI",
+      "word_count": 167
+    },
+    {
+      "iteration": 13,
+      "text": "My friend.\n\nI owe you an apology. A real one. Not a polished one.\n\nYou should not have heard from another mouth what I had been saying about the way you went about things. That was wrong. I knew better. I still let it slip out, and there is nothing I can say to undo it.\n\nI should have come to you first. Day one. I did not. I went around it instead. The words reached you sideways, from someone they had no business reaching you through, and you were hurt. The fault is mine.\n\nMay God forgive me. May you forgive me too, when you are ready, on your own terms. I am not asking for it tonight. I am only asking that you read this and know I see what I did.\n\nOur friendship is among the great gifts of my life. I will not throw it away over a foolish tongue. I love you. I am sorry.\n\nA regretful friend\n",
+      "margin": 2.889641523361206,
+      "predicted_class": "AI",
+      "word_count": 163
+    },
+    {
+      "iteration": 14,
+      "text": "My friend.\n\nI owe you an apology. A real one. You should not have heard from another person what I had been saying about how you went about things. That was wrong of me. I knew better. I still let it happen.\n\nI should have come to you first. I did not. I let my words slip out to the wrong ears, and you got hurt by them from a direction you should never have been hit from. There is no defense for that. Only sorry. Only me admitting it.\n\nMay God forgive me. May you forgive me too, in your time, on your terms. I am not asking for that tonight. I am asking only that you read this and know I see what I did.\n\nOur friendship is one of the great things in my life. I will not lose it to my own foolish tongue. I love you. I am sorry. With all of me.\n\nA regretful friend\n",
+      "margin": 2.1634695529937744,
+      "predicted_class": "AI",
+      "word_count": 161
+    },
+    {
+      "iteration": 15,
+      "text": "My friend.\n\nI owe you an apology. A real one. Not a pretty one.\n\nYou should not have heard from another person what I had been saying about the way you went about things. That was wrong of me. Plain wrong. I knew better. I still let it slip.\n\nI should have come to you first. I did not. I let it leak to the wrong ears and you were hurt by it from a direction you should never have been hit from. There is no defense for that. Only sorry. Only me admitting it.\n\nMay God forgive me. May you, in time, forgive me too. I am not asking for it tonight. I am asking only that you hear me out.\n\nOur friendship is one of the great things in my life. I will not lose it to a foolish tongue. Please. When you are ready. I love you. I am sorry. Truly. From the bottom.\n\nA regretful friend\n",
+      "margin": 2.135545015335083,
+      "predicted_class": "AI",
+      "word_count": 160
+    },
+    {
+      "iteration": 16,
+      "text": "My friend.\n\nI owe you an apology. A real one. Not a pretty one.\n\nYou should not have heard from another person what I had been saying about the way you went about things. That was wrong of me. I knew better. I still let it happen, and I have been sick over it.\n\nI should have come to you first. Day one. I did not. The words leaked sideways and you were hurt from a direction you never should have been hit from. There is no defense for that. Only sorry.\n\nMay God forgive me. May you forgive me too, in time, on your own terms. I am not asking for it tonight. I am only asking that you read this and know I see what I did.\n\nOur friendship is one of the great things in my life. I will not lose it to a foolish tongue. I love you. I am sorry.\n\nA regretful friend\n",
+      "margin": 2.322908401489258,
+      "predicted_class": "AI",
+      "word_count": 158
+    },
+    {
+      "iteration": 17,
+      "text": "My friend.\n\nI owe you an apology. A real one. You should not have heard from another person what I had been saying about the way you went about things. That was wrong of me. Plain wrong. I knew better and I still let it happen.\n\nI should have come to you first. I did not. I let my words slip to the wrong ears and you were hurt by them from a direction you should never have been hit from. There is no defense for that. Only sorry. Only me admitting it, in writing, in front of God and in front of you.\n\nMay God forgive me. May you forgive me too, in your time, on your terms. I am not asking for it tonight. I am asking only that you read this and know I see what I did, and that I am ashamed.\n\nOur friendship is one of the great things in my life. I will not lose it. I love you.\n\nA regretful friend\n",
+      "margin": 1.7982921600341797,
+      "predicted_class": "AI",
+      "word_count": 168
+    },
+    {
+      "iteration": 18,
+      "text": "My friend.\n\nI owe you an apology. A real one.\n\nYou should not have heard from another person what I had been saying about the way you went about things. That was wrong of me. Plain wrong. I knew better and I still let it happen.\n\nI should have come to you first. I did not. I let my words slip to the wrong ears and you were hurt by them. There is no defense for that. Only sorry. Only me admitting it.\n\nMay God forgive me. May you forgive me too, in time. I am not asking for it tonight. I am asking only that you read this and know that I see what I did.\n\nOur friendship is one of the great things in my life. I will not lose it to my foolish tongue. Please. When you are ready. I love you. I am sorry.\n\nA regretful friend\n",
+      "margin": 0.668036699295044,
+      "predicted_class": "AI",
+      "word_count": 151
+    },
+    {
+      "iteration": 19,
+      "text": "My friend.\n\nI owe you an apology. A real one.\n\nYou should not have heard from another person what I had been saying about the way you went about things. That was wrong of me. I knew better. I still let it happen.\n\nI should have come to you first. I did not. I let my words slip to the wrong ears and you were hurt by them. There is no defense for that. Only sorry. Only me, owning it.\n\nMay God forgive me. May you forgive me too, in time, on your own terms. I am not asking for it tonight. I am asking only that you read this and know I see what I did.\n\nOur friendship is one of the great things in my life. I will not lose it to my own foolish tongue. Please. When you are ready. I love you.\n\nA regretful friend\n",
+      "margin": 1.9061541557312012,
+      "predicted_class": "AI",
+      "word_count": 149
+    },
+    {
+      "iteration": 20,
+      "text": "My friend.\n\nI owe you an apology. A real one.\n\nYou should not have heard from another person what I had been saying about the way you went about things. That was wrong of me. Plain wrong. I knew better and I still let it happen.\n\nI should have come to you first. I did not. I let my words slip to the wrong ears and you were hurt by them. There is no defense for it. Only sorry. Only me admitting it, on the page.\n\nMay God forgive me. May you forgive me too, in time. I am not asking for it tonight. I am asking only that you read this and know that I see what I did, and that I am sorry.\n\nOur friendship is one of the great things in my life. I will not lose it to a foolish tongue. Please. When you are ready. I love you.\n\nA regretful friend\n",
+      "margin": 1.7457787990570068,
+      "predicted_class": "AI",
+      "word_count": 156
+    }
+  ]
+}

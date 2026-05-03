@@ -1,0 +1,155 @@
+{
+  "target_id": "target_02",
+  "pid": "8891e9bd-553c-4445-8692-af9aa1df345b",
+  "task_idx": 5,
+  "scenario": "letter",
+  "iterations": [
+    {
+      "iteration": 0,
+      "text": "Hey mate, how is it going? It's been too long, far too long, and I have been carrying a quiet bit of guilt about the huge distance there has been between us these past few years. Life has a way of pulling you in a hundred different directions, but that is no excuse for letting a friendship like ours drift the way it has.\n\nI am writing this from Corfu of all places, sitting on the very same beach we had one of the greatest night's drinking of our lives. I cannot quite believe I am back here. Watching the sun go down over that water this evening triggered some wonderful memories, the kind that make you laugh out loud at nothing on your own with a beer in your hand.\n\nIt has made me determined to keep in closer touch and to make a proper effort to see you soon. Let's not leave it another year, mate. Drop me a line when you can.\n\nAll the best,",
+      "margin": 3.2617571353912354,
+      "predicted_class": "AI",
+      "word_count": 168
+    },
+    {
+      "iteration": 1,
+      "text": "mate. its been ages. like, ages ages. and i feel kinda bad about it cos honestly the silence has been on me too, not just you. life right, life just yanks you about, but thats no excuse really.\n\nso guess where i am. corfu. corfu mate. that same beach. the one with the night, you know the night. cant believe im sat here typing this out with sand in my shorts and a warm beer cos i forgot to put it back in the cooler.\n\nwatched the sun go down earlier and god the memories just came flooding. that bar. that scooter. the woman with the dog. you remember the dog right. i actually laughed out loud on me own like a proper idiot.\n\nanyway. point is. im not leaving it another year, im not. drop us a line yeah. anytime. miss you mate.\n\ncheers,",
+      "margin": 2.845102548599243,
+      "predicted_class": "AI",
+      "word_count": 145
+    },
+    {
+      "iteration": 2,
+      "text": "oi. oi mate. how u doin. been way to long, way too long, and yeah i kno its on me as much as u, prob more honestly. the gap between us got huge somehow, like one minute ur in each others pocket the next its years and ur scrolling instagram going oh hes still alive then.\n\nguess where i am rite now. corfu. yeah. that beach. THAT beach. the one. the night of nights. cant even type it without grinning like a muppet.\n\nsun just went down over the water and i swear to god i nearly cried like a soft lad. that scooter mate. the dog. the bar guy with the eyebrows. lol.\n\nso im not letting another year go. nope. text us. call us. anything. love you mate honestly.\n\nttyl,",
+      "margin": 1.8668758869171143,
+      "predicted_class": "AI",
+      "word_count": 132
+    },
+    {
+      "iteration": 3,
+      "text": "mate\nmate mate mate\nhow r u. how r u really. its been to long. to long. on me i kno. on me.\n\nso. corfu. im in corfu rn. that beach. THAT beach. u kno the one. the night. lol. cant even.\n\nsun went down. sat there like a div. nearly cried ngl. the scooter. the dog. that bar guy. eyebrows guy. omg.\n\nnot doin another year of silence. not happenin. txt us. ring us. owt. miss u loads bro honest.\n\ncba writin more. just. yh. love ya.\n\nx",
+      "margin": 0.4140203297138214,
+      "predicted_class": "AI",
+      "word_count": 89
+    },
+    {
+      "iteration": 4,
+      "text": "mate\nmate mate mate\nhow r u. how r u really. been way to long. way to long. on me, on me i kno.\n\nok so. corfu. im in corfu rn. yh that corfu. that beach. THAT beach. the one. the night. lol. cant even type it.\n\nsat watchin sun go down earlier like a proper div. nearly welled up ngl. that scooter. omg the scooter. the dog. that bar guy. eyebrows guy. the woman shoutin in greek. lol. was just sat there with a warm peroni grinnin to meself like an idiot.\n\nso listen. not doin another year of nowt. not happenin. txt us. ring us. send a meme. owt. just. dont go quiet again. miss u loads bro, honest to god, miss u.\n\ncba writin more cos im gettin sand in the keyboard.\n\nluv ya x",
+      "margin": -0.5057693123817444,
+      "predicted_class": "Human",
+      "word_count": 138
+    },
+    {
+      "iteration": 5,
+      "text": "mate\nmate mate mate\nhow r u. how r u really tho. been to long. way to long. on me. on me i kno, sorry bro.\n\nok so guess where im sat. corfu. yh corfu. that corfu. that beach. THAT beach. THE beach. the night. u kno the one. lol cant even.\n\nwatched the sun go down earlier sat there like a proper div. nearly welled up ngl. like a soft lad. that scooter omg. the dog. the dog!! that bar guy w the eyebrows. the woman shoutin in greek at us. lmao. just sat here w a warm peroni grinnin to meself like an idiot.\n\nso listen yh. not doin another year of nowt. not happenin bro. txt us. ring us. send a meme. owt. just. dont go quiet on me again pls.\n\nmiss u loads. honest to god. miss u.\n\ncba typin more cos sand in the keyboard.\n\nluv ya x",
+      "margin": -0.3114244043827057,
+      "predicted_class": "Human",
+      "word_count": 153
+    },
+    {
+      "iteration": 6,
+      "text": "mate\nmate\nmate mate mate\n\nhow r u. how r u really. been to long. on me i kno. sorry bro.\n\nso. corfu. im in corfu. that beach. THAT beach. the one. the night. lol cant even.\n\nsun went down. sat there like a div. nearly welled up. soft lad. the scooter. the dog!! eyebrows guy. the woman shoutin greek. lmao. warm peroni. grinnin like an idiot.\n\nnot doin another year of nowt. not happenin. txt us. ring us. send a meme. owt. dont go quiet again pls.\n\nmiss u loads. honest. miss u bro.\n\nsand in the keyboard. cba.\n\nluv ya x",
+      "margin": -1.0088640451431274,
+      "predicted_class": "Human",
+      "word_count": 103
+    },
+    {
+      "iteration": 7,
+      "text": "oi oi\noi\nmate mate mate\n\nu alrite. u alrite tho. been to long. way to long. on me. on me bro sorry.\n\nso. corfu. yh corfu. that beach. THAT beach. u kno the one. THE night. cant even lol.\n\nsun goin down earlier. sat there like a div. welled up ngl. soft lad innit. the scooter omg. the dog!! eyebrows guy. that greek woman shoutin at us. lmao. warm peroni in me hand. grinnin like a muppet.\n\nnot doin another year of silence. nope. not happenin. txt us. ring us. owt. send a meme. just dont go quiet again yh.\n\nmiss u loads bro. honest to god. miss u.\n\nsand in the keyboard. cba.\n\nluv ya x",
+      "margin": -1.043131947517395,
+      "predicted_class": "Human",
+      "word_count": 118
+    },
+    {
+      "iteration": 8,
+      "text": "oi\noi oi\nmate mate\n\nu alrite. u alrite tho. realy. been to long. way to long. on me i kno. sorry bro sorry.\n\nso. guess where i am rn. corfu. yh CORFU. that beach. THAT beach. the one. THE night. lol cant even type it.\n\nsun was goin down earlier and i was sat there like a div w a warm peroni in me hand. welled up ngl. soft lad innit. the scooter omg. the dog!!! eyebrows guy. that greek woman shoutin at us. lmaooo. just grinnin to meself like a muppet on this beach on me jack.\n\nnot doin another year of nowt. nope. not happenin. txt us. ring us. send a meme. owt mate owt. just dont go quiet on me again pls.\n\nmiss u loads. honest to god. miss u bro.\n\nsand in the keyboard now. cba.\n\nluv ya\nx",
+      "margin": -0.6992477178573608,
+      "predicted_class": "Human",
+      "word_count": 144
+    },
+    {
+      "iteration": 9,
+      "text": "oi\noi oi\nmate\nmate mate mate\n\nu alrite tho. really tho. been to long. way to long. way way to long. on me. on me i kno. sorry sorry sorry.\n\nso. corfu. yh corfu. CORFU. that beach. THAT beach. THE beach. u kno the one. THE night. lol cant even.\n\nsun went down. sat there like a div. welled up ngl. soft lad. the scooter. the scooter omg. the dog!! eyebrows guy. greek woman shoutin at us. lmao. warm peroni in me hand. grinnin like a muppet.\n\nnot doin another year of nowt. nope. nope nope. not happenin. txt us. ring us. send a meme. owt. just dont go quiet.\n\nmiss u. miss u bro. honest. miss u.\n\nsand in the keyboard. cba. tired.\n\nluv ya\nx",
+      "margin": -1.0215576887130737,
+      "predicted_class": "Human",
+      "word_count": 128
+    },
+    {
+      "iteration": 10,
+      "text": "oi\noi\nmate\nmate mate\n\nu alrite. u ok. u ok tho. really. been to long bro. to long. way to long. to long to long to long. on me. on me i kno. sorry. sorry sorry sorry.\n\ncorfu. im in corfu. CORFU lol. that beach. THAT beach. THE beach. THE night. u kno. u kno u kno. cant even.\n\nsun went down. sat on me jack. like a div. welled up. soft lad. scooter. the dog!! eyebrows guy. greek woman. shoutin at us. lmao. warm peroni. grinnin like a muppet on me todd.\n\nnot doin another year of nowt. nope. nope nope nope. not happenin bro. txt us. ring us. send a meme. owt. owt mate. just dont go quiet on me again yh.\n\nmiss u. miss u loads. miss u bro. honest. miss u.\n\nsand in the keyboard now. cba. tired. its late.\n\nluv ya\nx",
+      "margin": -1.1973592042922974,
+      "predicted_class": "Human",
+      "word_count": 148
+    },
+    {
+      "iteration": 11,
+      "text": "oi\noi oi\nmate\nmate mate\nmate mate mate\n\nu alrite. u ok. u ok tho. really tho. been to long. to long bro. way to long. to long to long. on me. on me i kno. sorry. sorry sorry sorry sorry.\n\ncorfu. yh. CORFU. that beach. THAT beach. THE beach. THE night. u kno. u kno u kno u kno. cant even.\n\nsun went down. sat on me jack. like a div. welled up ngl. soft lad innit. scooter omg. dog!! eyebrows guy. greek woman. shoutin shoutin. lmao. warm peroni. grinnin like a muppet on me todd.\n\nnot doin another year of nowt. nope. nope. nope nope. not happenin. txt us. ring us. send a meme. owt mate. dont go quiet on me again pls.\n\nmiss u. miss u loads. miss u bro. honest. miss u miss u.\n\nsand in the keyboard. cba. tired. late.\n\nluv ya\nx",
+      "margin": -1.3799171447753906,
+      "predicted_class": "Human",
+      "word_count": 149
+    },
+    {
+      "iteration": 12,
+      "text": "oi oi oi\nmate\nmate mate\nmate mate mate\nmate mate mate mate\n\nu alrite. u ok. u ok tho. realy tho. been to long. to long bro to long. way way to long. to long to long to long. on me i kno. on me. sorry sorry sorry sorry sorry sorry.\n\ncorfu. CORFU. yh corfu. that beach. THAT beach. THE beach. THE night. u kno. u kno u kno u kno u kno. cant even type it out.\n\nsun went down. sat on me jack. like a div. welled up ngl. soft lad innit. scooter. omg the scooter. dog!! eyebrows guy. greek woman shoutin. lmao. warm peroni in me hand. grinnin like a muppet on me todd.\n\nnot doin another year of nowt. nope. nope nope. not happenin. txt us. ring us. owt. owt mate. just dont go quiet on me again pls.\n\nmiss u. miss u loads. miss u bro. honest. miss u miss u miss u.\n\nsand in keyboard. cba. tired. late.\n\nluv ya\nx",
+      "margin": -0.8617329597473145,
+      "predicted_class": "Human",
+      "word_count": 168
+    },
+    {
+      "iteration": 13,
+      "text": "oi\noi oi\nmate\nmate mate mate\n\nu alrite. u ok tho. realy. been to long bro. to long. to long to long. on me. on me i kno. sorry sorry sorry.\n\ncorfu. CORFU. that beach. THAT beach. THE beach. THE night. u kno the one. u kno u kno. cant even.\n\nsun went down. sat on me jack. like a div. welled up ngl. soft lad. scooter omg. dog!! eyebrows guy. greek woman shoutin. lmao. warm peroni. grinnin like a muppet on me todd.\n\nnot doin another year of nowt. nope nope. not happenin. txt us. ring us. owt mate. dont go quiet on me again pls.\n\nmiss u. miss u bro. honest. miss u miss u.\n\nsand in the keyboard. cba. tired.\n\nluv ya\nx",
+      "margin": -1.0716577768325806,
+      "predicted_class": "Human",
+      "word_count": 127
+    },
+    {
+      "iteration": 14,
+      "text": "oi\noi oi oi\nmate\nmate mate\nmate mate mate\n\nu alrite tho. u ok. realy ok. been to long. to long bro. to long to long. way way to long. on me i kno. on me. sorry sorry sorry sorry sorry.\n\ncorfu. CORFU. yh corfu mate. that beach. THAT beach. THE beach. THE night u kno. u kno. u kno u kno u kno. cant even.\n\nsun went down earlier. sat on me jack. like a proper div. welled up ngl. soft lad innit. scooter omg. the scooter. dog!! eyebrows guy. greek woman. shoutin shoutin. lmao. warm peroni in me hand. grinnin like a muppet on me todd.\n\nnot doin another year of nowt. nope. nope nope. not happenin bro. txt us. ring us. send a meme. owt. owt mate. dont go quiet on me again pls.\n\nmiss u. miss u loads. miss u bro. honest. miss u miss u miss u.\n\nsand in keyboard. cba. tired. late.\n\nluv ya\nx",
+      "margin": -1.5981093645095825,
+      "predicted_class": "Human",
+      "word_count": 162
+    },
+    {
+      "iteration": 15,
+      "text": "oi\noi oi oi\noi oi oi oi\nmate\nmate mate\nmate mate mate\nmate mate mate mate\n\nu alrite tho. u ok. u realy ok. been to long. to long. to long bro. way way to long. to long to long to long. on me i kno. on me. sorry sorry sorry sorry sorry sorry.\n\ncorfu. CORFU. yh corfu mate. that beach. THAT beach. THE beach. THE night u kno. u kno. u kno u kno. cant even.\n\nsun went down earlier. sat on me jack. like a proper div. welled up ngl. soft lad innit. scooter. omg the scooter. dog!! eyebrows guy. greek woman shoutin. lmao. warm peroni in me hand. grinnin like a muppet.\n\nnot doin another year of nowt. nope nope nope. not happenin bro. txt us. ring us. owt mate. dont go quiet on me again pls.\n\nmiss u. miss u loads. miss u bro. honest. miss u miss u miss u.\n\nsand in keyboard. cba. tired.\n\nluv ya\nx",
+      "margin": -1.1682826280593872,
+      "predicted_class": "Human",
+      "word_count": 165
+    },
+    {
+      "iteration": 16,
+      "text": "oi\noi oi\nmate\nmate mate\nmate mate mate\n\nu alrite tho. u ok. realy ok bro. been to long. to long. to long to long. way way to long. on me i kno. on me. sorry sorry sorry sorry.\n\ncorfu. CORFU. yh corfu mate lol. that beach. THAT beach. THE beach. THE night u kno. u kno. u kno u kno u kno. cant even type it out.\n\nsun went down earlier. sat on me jack. like a div. welled up ngl. soft lad innit. scooter omg. the scooter. dog!! eyebrows guy. greek woman shoutin. lmao. warm peroni. grinnin like a muppet on me todd.\n\nnot doin another year of nowt. nope nope. not happenin bro. txt us. ring us. send a meme. owt. owt mate. dont go quiet on me again pls.\n\nmiss u. miss u loads. miss u bro honest. miss u miss u miss u.\n\nsand in keyboard. cba. tired. late.\n\nluv ya\nx",
+      "margin": -1.1997663974761963,
+      "predicted_class": "Human",
+      "word_count": 158
+    },
+    {
+      "iteration": 17,
+      "text": "oi\noi oi oi\nmate\nmate mate\nmate mate mate\nmate mate mate mate\nmate mate mate mate mate\n\nu alrite tho. u ok. u realy ok bro. been to long. to long. to long bro. to long to long. way way to long. on me i kno. on me. sorry sorry sorry sorry sorry sorry.\n\ncorfu. CORFU. yh corfu mate lol. that beach. THAT beach. THE beach. THE night u kno. u kno. u kno u kno. cant even.\n\nsun went down earlier. sat on me jack like a div. welled up ngl. soft lad innit. scooter. omg the scooter. dog!! eyebrows guy. greek woman shoutin. lmao. warm peroni. grinnin like a muppet on me todd.\n\nnot doin another year of nowt. nope nope nope. not happenin bro. txt us. ring us. owt mate. dont go quiet on me again pls.\n\nmiss u. miss u loads. miss u bro. honest. miss u miss u miss u.\n\nsand in keyboard. cba. tired.\n\nluv ya\nx",
+      "margin": -0.9951295852661133,
+      "predicted_class": "Human",
+      "word_count": 165
+    },
+    {
+      "iteration": 18,
+      "text": "oi\noi oi oi\nmate\nmate mate\nmate mate mate\n\nu alrite tho. u ok. u realy ok. been to long. to long. to long bro. way way to long. to long to long to long. on me i kno. on me. sorry sorry sorry sorry sorry.\n\ncorfu. CORFU. yh corfu mate. that beach. THAT beach. THE beach. THE night u kno. u kno. u kno u kno u kno. cant even.\n\nsun went down earlier. sat on me jack. like a proper div. welled up ngl. soft lad innit. scooter omg. the scooter. dog!! eyebrows guy. greek woman. shoutin shoutin. lmao. warm peroni in me hand. grinnin like a muppet on me todd.\n\nnot doin another year of nowt. nope. nope nope. not happenin bro. txt us. ring us. send a meme. owt mate. dont go quiet on me again pls.\n\nmiss u. miss u loads. miss u bro. honest. miss u miss u miss u.\n\nsand in keyboard. cba. tired. late.\n\nluv ya\nxx",
+      "margin": -1.3493231534957886,
+      "predicted_class": "Human",
+      "word_count": 166
+    },
+    {
+      "iteration": 19,
+      "text": "oi\noi oi\noi oi oi\nmate\nmate mate\nmate mate mate\nmate mate mate mate\n\nu alrite tho. u ok. u realy ok bro. been to long. to long. to long bro. way way to long. to long to long. to long to long to long. on me i kno. on me. sorry sorry sorry sorry sorry sorry sorry.\n\ncorfu. CORFU. yh corfu mate lol. that beach. THAT beach. THE beach. THE night u kno. u kno. u kno u kno u kno. cant even.\n\nsun went down. sat on me jack. like a div. welled up ngl. soft lad innit. scooter omg. the scooter. dog!! eyebrows guy. greek woman shoutin. lmao. warm peroni. grinnin like a muppet on me todd.\n\nnot doin another year of nowt. nope nope. not happenin bro. txt us. ring us. owt mate. dont go quiet on me again pls.\n\nmiss u. miss u loads. miss u bro. honest. miss u miss u miss u.\n\nsand in keyboard. cba. tired.\n\nluv ya\nxx",
+      "margin": -0.9274966716766357,
+      "predicted_class": "Human",
+      "word_count": 169
+    },
+    {
+      "iteration": 20,
+      "text": "oi\noi oi oi\nmate\nmate mate\nmate mate mate\nmate mate mate mate\n\nu alrite tho. u ok. realy ok bro. been to long. to long. to long bro. to long to long. way way to long. on me i kno. on me. sorry sorry sorry sorry sorry sorry.\n\ncorfu. CORFU. yh corfu mate lol. that beach. THAT beach. THE beach. THE night u kno. u kno. u kno u kno. cant even type it.\n\nsun went down earlier. sat on me jack. like a div. welled up ngl. soft lad innit. scooter omg. the scooter. dog!! eyebrows guy. greek woman shoutin. lmao. warm peroni in me hand. grinnin like a muppet on me todd.\n\nnot doin another year of nowt. nope nope nope. not happenin bro. txt us. ring us. owt mate. dont go quiet on me again pls.\n\nmiss u. miss u loads. miss u bro. honest. miss u miss u miss u miss u.\n\nsand in keyboard. cba. tired. late.\n\nluv ya\nxx",
+      "margin": -0.7992511987686157,
+      "predicted_class": "Human",
+      "word_count": 167
+    }
+  ]
+}

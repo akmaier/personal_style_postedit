@@ -1,0 +1,155 @@
+{
+  "target_id": "target_01",
+  "pid": "8891e9bd-553c-4445-8692-af9aa1df345b",
+  "task_idx": 2,
+  "scenario": "thank",
+  "iterations": [
+    {
+      "iteration": 0,
+      "text": "My dear friend Steve was the kind of person who always showed up, no matter what the circumstance, and he certainly proved that to me again last month when I was lying in that hospital bed. The fact that you traveled such a long distance just to come and sit with me for a few hours is something I will never be able to repay, and frankly I would not even know how to begin. That was a very scary time of my life, more frightening than I let on to most people, and your support in those days was hugely important to me in ways that words can hardly capture. I remember waking up and seeing you there in that uncomfortable hospital chair and thinking how lucky I am to have a friend of so many years who would drop everything for me. Thank you, truly, from the bottom of my heart. You will always have my deepest gratitude.",
+      "margin": 3.4568142890930176,
+      "predicted_class": "AI",
+      "word_count": 160
+    },
+    {
+      "iteration": 1,
+      "text": "steve i still cant believe you came all that way just to sit with me in the hospital, like who does that?? i was so scared, more scared than i told anyone, and then i wake up and theres you in that awful plastic chair lookin half asleep and i just thought ok im gonna be fine. you drove what, 6 hours? for a few hours of me being half drugged and rambling lol. i dont even know how to thank you properly, i really dont. it was such a scary time and having you there meant everything, more than i can put into words honestly. youve been my friend for what, 20 years now, and you still keep showing up. anyway. thank you. i mean it. love ya buddy, see you at thanksgiving, drinks on me forever. - me",
+      "margin": 4.574838161468506,
+      "predicted_class": "AI",
+      "word_count": 140
+    },
+    {
+      "iteration": 2,
+      "text": "Steve, I've been meaning to write this for weeks and I just kept putting it off because I didn't know how to say it. You came all the way out here when I was in the hospital. You drove all that way and sat with me. I don't know what else to say. It was the worst time of my life and I was honestly terrified, more than I let anyone see. When I woke up and saw you sitting in that chair I cried a little, I'm not gonna lie. We've been friends since high school and you've never once let me down, and that week was no different. Anyway. I owe you. Big time. Thanks brother. I mean that. God bless you and Linda and the kids.",
+      "margin": 2.5394136905670166,
+      "predicted_class": "AI",
+      "word_count": 129
+    },
+    {
+      "iteration": 3,
+      "text": "Steve. I've been sitting with the pen for an hour now, trying to figure out what to say. You drove what, eight hours, just to sit next to me in that hospital room. Nobody does that anymore. Nobody. That week was the most scared I've ever been in my whole life, and I didn't tell most people how bad it was. But you knew. You always know. I woke up at some point and saw you in that ugly green chair, half asleep with a magazine on your lap, and something in me just settled down. We've been thick as thieves since we were kids and you proved again why. I don't have the words to thank you properly. I really don't. So I'll just say thank you, and I love you brother, and Sue and I will see you and the family at Easter. God bless. Mike",
+      "margin": 0.49074169993400574,
+      "predicted_class": "AI",
+      "word_count": 148
+    },
+    {
+      "iteration": 4,
+      "text": "Steve. been sitting here trying to figure out how to write this and i keep starting over. you drove like 8 hours to sit with me in that hospital room. who does that. nobody. that week was the most scared i have ever been and i didnt tell anybody how bad it actually was, not even sue, but you knew somehow you always know. i woke up at one point and saw you sleeping in that ugly green chair with a magazine on your lap and i just kind of settled. we been friends since we were what, twelve years old, and you proved it again. i dont have the right words. i really dont. so just thank you brother. i love you. tell linda and the kids we said hi and we will see yall at easter for sure. god bless. mike",
+      "margin": 4.152787208557129,
+      "predicted_class": "AI",
+      "word_count": 143
+    },
+    {
+      "iteration": 5,
+      "text": "Steve. Been trying to write this for two weeks. Kept tearing up the paper. You drove eight hours to sit next to me in the hospital. Eight hours. Then you sat there for a day and a half. Nobody does that anymore. That was the worst week of my life. I was more scared than I let anyone see. Not Sue, not the kids, nobody. But somehow you knew, you always have. I woke up sometime in the middle of the night and saw you in that awful green chair, head back, magazine on the floor. And I knew I was gonna be okay. Friends since fifth grade and you still show up for me like that. I don't have the right words, brother. I really don't. So just thank you. I love you. God bless you and Linda and the kids. See y'all at Easter. Mike",
+      "margin": 0.7542577981948853,
+      "predicted_class": "AI",
+      "word_count": 147
+    },
+    {
+      "iteration": 6,
+      "text": "Steve. I've been sitting with this pen for an hour. You drove eight hours to sit next to me in that hospital. Nobody does that anymore. Nobody. That was the most scared I have ever been in my life, and I didn't tell most people how bad it really got. But you knew. You always know. I woke up sometime around 3am and saw you sleeping in that ugly green chair with a magazine on your lap, and something in me just settled. We've been thick as thieves since we were kids and you proved it again. I don't have the words to thank you the right way. I really don't. So I'll just say thank you brother, I love you, and Sue and I will see you and Linda and the kids at Easter. God bless. Mike",
+      "margin": 0.02731648087501526,
+      "predicted_class": "AI",
+      "word_count": 138
+    },
+    {
+      "iteration": 7,
+      "text": "Steve. I've been sitting with this pen for an hour now. You drove eight hours to sit next to me in that hospital. Nobody does that anymore. Nobody. That was the most scared I have ever been in my whole life, and I didn't tell most people how bad it really got. But you knew. You always know. I woke up around 3am and saw you sleeping in that ugly green chair with a magazine on your lap, and something in me just settled down. We have been thick as thieves since we were kids and you proved it again. I don't have the words to thank you the proper way. I really don't. So I will just say thank you brother, I love you, and Sue and I will see you and Linda and the kids at Easter. God bless. Mike",
+      "margin": 0.2585351765155792,
+      "predicted_class": "AI",
+      "word_count": 142
+    },
+    {
+      "iteration": 8,
+      "text": "Steve. I've been sitting with this pen for an hour. You drove eight hours to sit next to me in that hospital. Nobody does that anymore. Nobody. That was the most scared I have ever been, and I didn't tell most people how bad it really got. Sue knew a little. You knew everything. You always know. I woke up around 3am and saw you sleeping in that ugly green chair with a magazine on your lap, and something in me just settled. Praise God for friends like you. We've been thick as thieves since we were kids and you proved it again. I don't have the words to thank you the right way. I really don't. So thank you brother. I love you. Sue and I will see y'all at Easter. God bless. Mike",
+      "margin": -0.6244621276855469,
+      "predicted_class": "Human",
+      "word_count": 135
+    },
+    {
+      "iteration": 9,
+      "text": "Steve. Been sitting with this pen for an hour. You drove eight hours to sit by me in that hospital. Nobody does that anymore. Nobody. That was the most scared I have ever been in my life, and I didn't tell most folks how bad it really got. Sue knew a little. You knew everything. You always do. I woke up around 3am and saw you sleeping in that ugly green chair with a magazine on your lap, and something in me just settled down. The Lord put good people in my life and you are at the top of that list. We've been thick as thieves since we were kids and you proved it again. I don't have the right words to thank you. I really don't. So thank you brother. I love you. Sue and I will see y'all at Easter. God bless you and yours. Mike",
+      "margin": -0.519368052482605,
+      "predicted_class": "Human",
+      "word_count": 149
+    },
+    {
+      "iteration": 10,
+      "text": "Steve. Been sitting with this pen for an hour now. You drove eight hours to sit by my bed in that hospital. Nobody does that anymore. Nobody. That was the most scared I have ever been, and I didn't tell most folks how bad it really got. Sue knew a little. You knew everything. You always do. Woke up around 3am and saw you sleeping in that ugly green chair with a magazine in your lap, and something in me just settled. Praise God for friends like you brother. The Lord put good people in my life and you are at the top of that list. We've been thick as thieves since we were boys and you proved it again. I don't have the right words to thank you. I really don't. So thank you brother. I love you. Sue and I will see y'all at Easter. God bless you and yours. Mike",
+      "margin": 0.20980271697044373,
+      "predicted_class": "AI",
+      "word_count": 153
+    },
+    {
+      "iteration": 11,
+      "text": "Steve. Been sitting with this pen for an hour. You drove eight hours to sit beside me in that hospital. Nobody does that anymore. Nobody. That was the most scared I have ever been, and I didn't tell most folks how bad it really got. Sue knew a little. You knew everything. You always know. I woke up around 3am and saw you sleeping in that ugly green chair with a magazine on your lap, and something in me just settled. Praise God for friends like you. We've been thick as thieves since we were kids and you proved it again. I don't have the words to thank you the right way. I really don't. So thank you brother. I love you. Sue and I will see y'all at Easter. God bless. Mike",
+      "margin": -1.190798282623291,
+      "predicted_class": "Human",
+      "word_count": 133
+    },
+    {
+      "iteration": 12,
+      "text": "Steve. Been sitting with this pen for an hour. You drove eight hours to sit beside me in that hospital. Nobody does that anymore. Nobody. That was the most scared I have ever been in my whole life, and I didn't tell most folks how bad it really got. Sue knew a little. You knew everything. You always know. I woke up around 3am and saw you sleeping in that ugly green chair with a magazine on your lap, and something in me just settled. Praise God for friends like you. We've been thick as thieves since we were boys and you proved it again. I don't have the words to thank you the right way. I really don't. So thank you brother. I love you. Sue and I will see y'all at Easter. God bless. Mike",
+      "margin": -0.675871729850769,
+      "predicted_class": "Human",
+      "word_count": 137
+    },
+    {
+      "iteration": 13,
+      "text": "Steve. Been sitting with this pen for an hour. You drove eight hours to sit beside me in that hospital. Nobody does that anymore. Nobody. That was the most scared I have ever been, and I didn't tell most folks how bad it really got. Sue knew a little. You knew everything. You always know. Woke up around 3am and saw you sleeping in that ugly green chair with a magazine on your lap, and something in me just settled down. Praise God for friends like you brother. We have been thick as thieves since we were kids and you proved it again. I don't have the words. I really don't. So thank you. I love you. Sue and I will see y'all at Easter. God bless. Mike",
+      "margin": -0.5486713647842407,
+      "predicted_class": "Human",
+      "word_count": 128
+    },
+    {
+      "iteration": 14,
+      "text": "Steve. Been sitting with this pen for an hour. You drove eight hours to sit beside me in that hospital. Nobody does that anymore. Nobody. That was the most scared I have ever been, and I didn't tell most folks how bad it really got. Sue knew a little. You knew everything. You always know. I woke up around 3am and saw you sleeping in that ugly green chair with a magazine on your lap, and something in me just settled. Praise God for friends like you. We've been thick as thieves since we were kids and you proved it again brother. I don't have the words to thank you the right way. I really don't. So thank you brother. I love you. Sue and I will see y'all at Easter. God bless you and yours. Mike",
+      "margin": -0.80274498462677,
+      "predicted_class": "Human",
+      "word_count": 137
+    },
+    {
+      "iteration": 15,
+      "text": "Steve. Been sitting with this pen for an hour. You drove eight hours to sit beside me in that hospital. Nobody does that anymore. Nobody. That was the most scared I have ever been, and I didn't tell most folks how bad it really got. Sue knew a little. You knew everything. You always know. I woke up around 3am and saw you asleep in that ugly green chair with a magazine on your lap, and something in me just settled. Praise God for friends like you. We've been thick as thieves since we were kids and you proved it again. I don't have the words to thank you proper. I really don't. So thank you brother. I love you. Sue and I will see y'all at Easter. God bless. Mike",
+      "margin": -1.3712530136108398,
+      "predicted_class": "Human",
+      "word_count": 131
+    },
+    {
+      "iteration": 16,
+      "text": "Steve. Been sitting with this pen for an hour. You drove eight hours to sit beside me in that hospital. Nobody does that anymore. Nobody. That was the most scared I have ever been, and I didn't tell most folks how bad it really got. Sue knew a little. You knew everything. You always know. I woke up around 3am and saw you asleep in that ugly green chair with a magazine on your lap and a coffee gone cold, and something in me just settled. Praise God for friends like you. We've been thick as thieves since we were kids and you proved it again. I don't have the words to thank you proper. I really don't. So thank you brother. I love you. Sue and I will see y'all at Easter. God bless. Mike",
+      "margin": -0.8839989900588989,
+      "predicted_class": "Human",
+      "word_count": 136
+    },
+    {
+      "iteration": 17,
+      "text": "Steve. Been sitting with this pen for an hour. You drove eight hours to sit beside me in that hospital. Nobody does that anymore. Nobody. That was the most scared I have ever been, and I didn't tell most folks how bad it really got. Sue knew a little. You knew everything. You always know. I woke up around 3am and saw you asleep in that ugly green chair with a magazine on your lap, and something in me just settled. Praise God for friends like you. We've been thick as thieves since we were kids and you proved it again. I don't have the words to thank you proper. I really don't. So thank you brother. I love you. Sue and I will see y'all at Easter for sure. God bless. Mike",
+      "margin": -1.431919813156128,
+      "predicted_class": "Human",
+      "word_count": 133
+    },
+    {
+      "iteration": 18,
+      "text": "Steve. Been sitting with this pen for a good hour now. You drove eight hours to sit beside me in that hospital. Nobody does that anymore. Nobody. That was the most scared I have ever been, and I didn't tell most folks how bad it really got. Sue knew a little. You knew everything. You always know. I woke up around 3am and saw you asleep in that ugly green chair with a magazine on your lap, and something in me just settled. Praise God for friends like you. We've been thick as thieves since we were kids and you proved it again. I don't have the words to thank you proper. I really don't. So thank you brother. I love you. Sue and I will see y'all at Easter for sure. God bless. Mike",
+      "margin": -1.3401730060577393,
+      "predicted_class": "Human",
+      "word_count": 135
+    },
+    {
+      "iteration": 19,
+      "text": "Steve. Been sitting with this pen for an hour. You drove eight hours to sit beside me in that hospital. Nobody does that anymore. Nobody. That was the most scared I have ever been, and I didn't tell most folks how bad it really got. Sue knew a little. You knew everything. You always know. I woke up around 3am and saw you asleep in that ugly green chair, magazine on your lap, and something in me just settled. Praise God for friends like you. We've been thick as thieves since we were kids and you proved it again. I don't have the words to thank you proper. I really don't. So thank you brother. I love you. Sue and I will see y'all at Easter for sure. God bless. Mike",
+      "margin": -1.4729173183441162,
+      "predicted_class": "Human",
+      "word_count": 131
+    },
+    {
+      "iteration": 20,
+      "text": "Steve. Been sitting with this pen for an hour. You drove eight hours to sit beside me in that hospital. Nobody does that anymore. Nobody. That was the most scared I have ever been, and I didn't tell most folks how bad it really got. Sue knew a little. You knew everything. You always know. I woke up around 3am and saw you asleep in that ugly green chair, magazine slid off your lap onto the floor, and something in me just settled. Praise God for friends like you. We've been thick as thieves since we were kids and you proved it again. I don't have the words to thank you proper. I really don't. So thank you brother. I love you. Sue and I will see y'all at Easter for sure. God bless. Mike",
+      "margin": -1.1693743467330933,
+      "predicted_class": "Human",
+      "word_count": 135
+    }
+  ]
+}
