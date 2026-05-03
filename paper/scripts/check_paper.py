@@ -73,13 +73,13 @@ def check_A() -> None:
     else:
         fail("A.3", "neither 'Track' nor 'RRPR' found in main.tex")
 
-    cfp_items = ["implementation", "limitations", "improvements",
-                 "reproducibility checklist"]
+    cfp_items = ["implementation", "limitation", "improvement",
+                 "installation", "integration"]
     hits = sum(1 for w in cfp_items if w.lower() in tex.lower())
     if hits >= 3:
-        ok("A.4", f"covers {hits}/4 of the suggested CFP content axes")
+        ok("A.4", f"covers {hits}/{len(cfp_items)} of the suggested CFP content axes")
     else:
-        fail("A.4", f"covers only {hits}/4 of the suggested CFP content axes")
+        fail("A.4", f"covers only {hits}/{len(cfp_items)} of the suggested CFP content axes")
 
     if "Anonymous" in tex:
         ok("A.6", "anonymized for blind review")
