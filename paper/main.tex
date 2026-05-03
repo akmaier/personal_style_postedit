@@ -52,13 +52,23 @@
   \authorrunning{Anonymous Author(s)}
   \institute{Withheld for blind review}
 \else
-  % Real authors and institution. Used by `make arxiv` to build
-  % `main_arxiv.pdf`. Order: project lead first, advisory co-author second.
-  \author{Andreas K. Maier\inst{1} \and Siming Bayer\inst{1}}
-  \authorrunning{A.\,K. Maier and S. Bayer}
+  % Real authors. Used by `make arxiv` to build `main_arxiv.pdf`.
+  % Order: project lead, methods advisor (centre, per request), advisory
+  % co-author. Affiliations:
+  %   1: Pattern Recognition Lab, FAU Erlangen-N\"urnberg
+  %   2: Institute of Neuroradiology, University Hospital Erlangen, FAU
+  %      (Zaiss's primary affiliation, per arXiv:2604.13282)
+  \author{Andreas K. Maier\inst{1} \and
+          Moritz Zaiss\inst{2,1} \and
+          Siming Bayer\inst{1}}
+  \authorrunning{A.\,K. Maier, M. Zaiss, S. Bayer}
   \institute{Pattern Recognition Lab, Friedrich-Alexander-Universit\"at
-    Erlangen-N\"urnberg, Erlangen, Germany\\
-    \email{andreas.maier@fau.de}}
+    Erlangen-N\"urnberg, Erlangen, Germany \\
+    \email{andreas.maier@fau.de}
+    \and
+    Institute of Neuroradiology, University Hospital Erlangen,
+    Friedrich-Alexander-Universit\"at Erlangen-N\"urnberg,
+    Erlangen, Germany}
 \fi
 
 \maketitle

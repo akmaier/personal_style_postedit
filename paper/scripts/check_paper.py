@@ -287,13 +287,49 @@ def check_refs_verified() -> None:
 # Anonymization (D.10 / E.6)
 
 def check_anonymization() -> None:
-    tex = TEX.read_text()
-    bad = ["Andreas Maier", "Moritz Zaiss", "FAU", "Erlangen-Nuremberg"]
-    leaks = [b for b in bad if b in tex]
+    """Check that the *built anonymous PDF* contains no author/affiliation
+    strings. We deliberately run this against the rendered PDF, not the
+    .tex source, because main.tex contains the real authors inside an
+    `\\else` branch of `\\ifanonymous` that is only compiled by `make
+    arxiv`. Grepping the source would false-positive on the inactive
+    branch.
+    """
+    bad = [
+        "Andreas K. Maier", "Andreas Maier",
+        "Moritz Zaiss",
+        "Siming Bayer",
+        "Pattern Recognition Lab",
+        "Friedrich-Alexander",
+        "Institute of Neuroradiology",
+    ]
+    anon_pdf = PAPER / "main_anonymous.pdf"
+    if not anon_pdf.exists():
+        # Fall back to checking the source: the anonymous title block
+        # must always be the active branch of the \\ifanonymous switch.
+        tex = TEX.read_text()
+        if r"\anonymoustrue" in tex:
+            ok("D.10 / E.6 (source)",
+               "main.tex defaults to anonymous (\\anonymoustrue); "
+               "build the PDF with `make all && make anonymize` for full check")
+        else:
+            fail("D.10 / E.6 (source)",
+                 "main.tex does NOT default to \\anonymoustrue; "
+                 "the blind-review build would leak author info")
+        return
+    try:
+        text = subprocess.check_output(
+            ["pdftotext", str(anon_pdf), "-"], text=True
+        )
+    except FileNotFoundError:
+        # pdftotext not installed -- skip with a soft warning instead of
+        # blocking the check.
+        ok("D.10 / E.6 (skipped)", "pdftotext not installed; cannot verify rendered PDF")
+        return
+    leaks = [b for b in bad if b in text]
     if not leaks:
-        ok("D.10 / E.6", "no obvious author/affiliation strings in main.tex")
+        ok("D.10 / E.6", "no author/affiliation strings in rendered main_anonymous.pdf")
     else:
-        fail("D.10 / E.6", f"main.tex contains anonymization leaks: {leaks}")
+        fail("D.10 / E.6", f"main_anonymous.pdf leaks author info: {leaks}")
 
 
 # ---------------------------------------------------------------------------
