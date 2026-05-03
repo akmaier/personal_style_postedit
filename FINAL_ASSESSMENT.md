@@ -141,12 +141,12 @@ embeddings (`scripts/11_detection_experiment.py`,
 `tests/test_detection_no_leakage.py`) shows that detectability drops
 monotonically as the approach gets closer to the participant's style:
 
-| Approach (vs. human held-out control) | AUC (95 % bootstrap CI) |
+| Approach (vs. 162 human control vectors) | AUC (95 % bootstrap CI) |
 |---|---:|
-| o4-mini draft | 0.999 [0.997, 1.000] |
-| Human post-edit | 0.967 [0.957, 0.976] |
-| Claude Opus 4.7 mimic | 0.942 [0.925, 0.958] |
-| GPT-5.5 mimic | 0.914 [0.902, 0.929] |
+| o4-mini draft | 0.999 [0.996, 1.000] |
+| Human post-edit | 0.971 [0.960, 0.980] |
+| Claude Opus 4.7 mimic | 0.952 [0.944, 0.960] |
+| GPT-5.5 mimic | 0.931 [0.924, 0.937] |
 
 None of the four approaches reaches chance, and the bootstrap CIs do not
 overlap between adjacent rows. So the *same* LUAR embeddings used to score

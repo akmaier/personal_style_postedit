@@ -1,4 +1,4 @@
-"""Stage 11: AI-text detection on LUAR embeddings.
+r"""Stage 11: AI-text detection on LUAR embeddings.
 
 For each "AI" approach we train a binary linear-SVM that classifies a
 LUAR-MUD embedding as either *human* or *that approach's output*. We then
@@ -14,26 +14,36 @@ of all. The classifier is intentionally simple (linear SVM in the
 512-d LUAR space) so the result is about the embeddings, not about the
 classifier.
 
-# Leakage protocol (matches the paper's Section 5 held-out protocol)
+# Detection task framing and the no-leakage protocol
 
-The released study has exactly 2 unassisted control texts per
-participant. We re-use the same lower-task-idx demo / higher-task-idx
-held-out split as in scripts/07. Concretely, for each binary classifier
-the *human* class is each participant's HELD-OUT control text -- the
-one that the LLM was *not* shown during generation. The *AI* class is
-that approach's output for one of the participant's 4 treatment tasks.
+The classifier must learn the question "is this text **human** or **AI**?",
+\emph{not} the question "is this text by **this specific author**?".
+Two design choices make this concrete:
 
-Cross-validation uses GroupKFold(groups=pid). This guarantees that no
-author appears in both the train and the test fold of any split, which
-in turn guarantees the AUC is genuinely measuring "can a held-out
-participant's style be distinguished from this approach's output", not
-"does the classifier remember this participant".
+  1. The human class uses *both* unassisted control texts of each
+     participant (162 human samples total: 81 pids x 2 controls). If we
+     used only one (e.g. only the held-out control), the classifier
+     would only ever see one human prototype per author and could
+     trivially solve the task by remembering author-specific embedding
+     directions. With both controls in, the human class is a proper
+     stylistic distribution drawn from 81 different authors.
 
-Two test asserts (in tests/test_detection_no_leakage.py) make the
-no-leakage protocol load-bearing:
-    1. for every (train_idx, test_idx) split: the set of pids in train
-       and the set of pids in test must be disjoint; and
-    2. each AI approach must be on the SAME 81 participants.
+  2. The CV is GroupKFold(groups=pid, n_splits=5): every author appears
+     in *exactly one* of train or test in each split. The test fold
+     therefore contains entirely unseen authors, on both the human
+     side and the AI side, so a high test-fold AUC genuinely measures
+     "can the classifier discriminate human writing from this approach
+     on authors it has never seen before".
+
+These two invariants are both load-bearing. tests/test_detection_no_leakage.py
+asserts them on every CV split for every approach.
+
+Note that the AI samples are still the embeddings of the LLM's
+generated drafts; the demo control text influences the *content* of
+the generated draft, but the LLM's embedding vector is not a function
+of the demo control alone. So including the demo control on the human
+side does not bleed information into the AI side -- the two halves of
+the contrast remain genuinely contrastive.
 
 # Outputs
 
@@ -118,43 +128,46 @@ def assemble_dataset(paths: Paths, base: EmbeddingTable, approach_kind: str
                      ) -> tuple[np.ndarray, np.ndarray, np.ndarray]:
     """For a given approach, return X (vectors), y (1=AI, 0=human), groups (pid).
 
-    Human class: each participant's held-out control vector (1 per pid).
-    AI class: that approach's output for each treatment task (4 per pid for
-        edited / opus / gpt55; 4 per pid for o4-mini draft).
+    Human class (label 0): BOTH unassisted control texts of each participant
+        (162 samples total = 81 pids x 2 controls). Using both controls makes
+        the human class a proper distribution rather than 81 author-specific
+        prototypes -- otherwise the classifier could shortcut the task by
+        remembering author-specific embedding directions instead of learning
+        the broader human-vs-AI distinction.
 
-    No participant's *demo* control is ever used. No participant appears
-    twice in the human class. The human class is therefore exactly the
-    same vector set used as the eval target in Section 5/6 of the paper,
-    which is what makes the detection result an honest companion to those
-    statistics rather than a separately-confounded measurement.
+    AI class (label 1): that approach's output for each treatment task
+        (4 per pid; 324 samples).
+
+    Group label is the participant id, so GroupKFold can guarantee that no
+    author appears in both train and test in any CV split.
     """
-    held = build_heldout_index(base)
     pki = participant_kind_indices(base)
 
     X_list: list[np.ndarray] = []
     y_list: list[int] = []
     g_list: list[str] = []
 
-    if approach_kind in {"llm", "edited"}:
-        # The base embeddings cache has these directly under their kind.
-        for pid, info in held.items():
-            # Human (label 0) -- held-out control vector, exactly once per pid.
-            X_list.append(info["held_out_vec"])
+    pids_with_both = []
+    for pid in sorted(set(base.pids.tolist())):
+        ctrl_idx = pki.get((pid, "control"), [])
+        if len(ctrl_idx) < 2:
+            continue
+        pids_with_both.append(pid)
+        # Human samples -- BOTH unassisted controls.
+        for ei in ctrl_idx:
+            X_list.append(base.vecs[ei])
             y_list.append(0)
             g_list.append(pid)
-            # AI (label 1) -- one entry per treatment task for this pid.
+
+    if approach_kind in {"llm", "edited"}:
+        for pid in pids_with_both:
             for emb_i in pki.get((pid, approach_kind), []):
                 X_list.append(base.vecs[emb_i])
                 y_list.append(1)
                 g_list.append(pid)
     else:
-        # claude-opus-4-7 / gpt-5.5 -- come from the mimic cache.
         mimic = load_mimic_vectors(paths, approach_kind)
-        for pid, info in held.items():
-            X_list.append(info["held_out_vec"])
-            y_list.append(0)
-            g_list.append(pid)
-            # one AI vector per treatment task for this pid
+        for pid in pids_with_both:
             for (p, t), v in mimic.items():
                 if p != pid:
                     continue
@@ -176,10 +189,14 @@ def cv_auc(X: np.ndarray, y: np.ndarray, groups: np.ndarray,
     rows = []
     aucs = []
     for fold_i, (tr, te) in enumerate(gkf.split(X, y, groups)):
-        # SVM hyper-params kept tiny + fixed: this is the embedding test, not
-        # an SVM hyper-search.
-        clf = LinearSVC(C=1.0, dual="auto", random_state=seed + fold_i,
-                        max_iter=5000)
+        # Class weight = balanced because the human class has 2 samples per
+        # author (162 total) while the AI class has 4 samples per author
+        # (324 total); without re-weighting the optimum decision threshold
+        # would drift toward the majority class and bias the AUC.
+        # AUC is computed on the decision function so it is threshold-free,
+        # but balanced weighting also stabilises the SVM optimisation.
+        clf = LinearSVC(C=1.0, dual="auto", class_weight="balanced",
+                        random_state=seed + fold_i, max_iter=5000)
         clf.fit(X[tr], y[tr])
         # decision_function gives a continuous score; that's what
         # roc_auc_score wants.

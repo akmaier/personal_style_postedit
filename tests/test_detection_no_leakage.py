@@ -45,10 +45,11 @@ def test_groupkfold_keeps_authors_disjoint() -> None:
 
 
 @pytest.mark.skipif(not _have_embeddings(), reason="embeddings.npz missing; build it first")
-def test_assemble_dataset_uses_held_out_control_only() -> None:
-    """The human class must use ONLY the held-out control (the higher
-    task_idx one), never the demo control. This makes the AI/human
-    contrast share the same eval target as the paper's Section 5.
+def test_assemble_dataset_uses_both_controls_per_author() -> None:
+    """The human class must use BOTH unassisted control texts of every
+    participant. Using only one would let the classifier shortcut the
+    task by remembering author-specific embedding directions instead of
+    learning the broader human-vs-AI distinction.
     """
     sys.path.insert(0, str(REPO_ROOT / "scripts"))
     import importlib.util as ilu
@@ -61,27 +62,37 @@ def test_assemble_dataset_uses_held_out_control_only() -> None:
     from personal_style.data import Paths
     from personal_style.embeddings import load_embeddings
     from personal_style.similarity import EmbeddingTable
+    from personal_style.similarity import participant_kind_indices
 
     paths = Paths()
     z = load_embeddings(paths.processed_dir / "embeddings.npz")
     base = EmbeddingTable(z["pids"], z["kinds"], z["task_idx"],
                           z["scenarios"], z["vecs"])
-    held = m.build_heldout_index(base)
 
-    # Each pid contributes exactly ONE human-class sample (the held-out vec).
     X, y, g = m.assemble_dataset(paths, base, "edited")
-    pids_y0 = g[y == 0]
-    assert len(pids_y0) == len(set(pids_y0.tolist())), \
-        "human class should have one sample per pid"
 
-    # And that sample must equal the held-out vec, not the demo vec.
-    for pid, vec in zip(pids_y0, X[y == 0]):
-        info = held[str(pid)]
-        assert np.allclose(vec, info["held_out_vec"]), \
-            f"human class for {pid} is not the held-out control"
-        # Also: must NOT equal the demo vec (otherwise we leaked).
-        assert not np.allclose(vec, info["demo_vec"]), \
-            f"human class for {pid} matches the LLM-shown demo control"
+    # Exactly 2 human samples per pid (one per unassisted control text).
+    from collections import Counter
+    pids_y0 = g[y == 0]
+    counts = Counter(pids_y0.tolist())
+    assert len(counts) == 81, f"expected 81 pids in human class, got {len(counts)}"
+    assert all(c == 2 for c in counts.values()), \
+        f"every pid must contribute exactly 2 human samples, got {dict(counts)}"
+    assert int((y == 0).sum()) == 162, \
+        f"expected 162 human samples (81 pids x 2 controls), got {(y==0).sum()}"
+
+    # And those 162 vectors must coincide with the participants' control
+    # embeddings -- no demo/held-out filtering on the human side.
+    pki = participant_kind_indices(base)
+    for pid in set(pids_y0.tolist()):
+        ctrl_idx = pki[(str(pid), "control")]
+        ctrl_vecs = {tuple(v.tolist()) for v in base.vecs[ctrl_idx]}
+        # The 2 human samples for this pid must be a *subset* (in fact equal)
+        # to the participant's 2 control vectors.
+        humans_for_pid = X[y == 0][pids_y0 == pid]
+        humans_set = {tuple(v.tolist()) for v in humans_for_pid}
+        assert humans_set <= ctrl_vecs, \
+            f"human class for {pid} contains non-control embeddings"
 
 
 @pytest.mark.skipif(not (_have_embeddings() and _have_mimic_embeddings()),

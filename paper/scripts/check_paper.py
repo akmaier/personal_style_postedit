@@ -180,10 +180,14 @@ def check_numbers() -> None:
         ok("D.2 (detection o4-mini in paper)", "AUC 0.999 cited")
     else:
         fail("D.2 (detection o4-mini in paper)", "AUC 0.999 not in main.tex")
-    if "0.914" in tex:
-        ok("D.2 (detection GPT-5.5 in paper)", "AUC 0.914 cited")
+    # GPT-5.5 detection AUC -- the redesigned protocol gives ~0.931
+    gpt55_auc = float(det.loc["GPT-5.5", "auc_mean"])
+    rounded = f"{gpt55_auc:.3f}"
+    if rounded in tex:
+        ok("D.2 (detection GPT-5.5 in paper)", f"AUC {rounded} cited")
     else:
-        fail("D.2 (detection GPT-5.5 in paper)", "AUC 0.914 not in main.tex")
+        fail("D.2 (detection GPT-5.5 in paper)",
+             f"AUC {rounded} not in main.tex (CSV says {gpt55_auc:.4f})")
 
 
 # ---------------------------------------------------------------------------

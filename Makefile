@@ -1,6 +1,6 @@
 PY ?= python3
 
-.PHONY: all data embeddings sims tests figures report clean distclean test mimics mimic-compare final-assessment detection
+.PHONY: all data embeddings sims tests figures report clean distclean test mimics mimic-compare final-assessment detection embedding-viz
 
 all: data embeddings sims tests figures report
 
@@ -33,6 +33,9 @@ final-assessment:
 
 detection:
 	$(PY) scripts/11_detection_experiment.py
+
+embedding-viz:
+	$(PY) scripts/12_embedding_visualization.py
 
 test:
 	$(PY) -m pytest -q
