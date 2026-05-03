@@ -41,11 +41,11 @@
 %-------------------------------------------------------------------
 %                 Title, Authors, Abstract
 %-------------------------------------------------------------------
-\title{Closing the Gap on Personal Writing Style:\\
-       An Agentic Six-Day Companion to Baumler et~al.,\\
-       and Why AI-Text Detection Is an Arms Race}
+\title{Beating the Style Detector:\\
+       Three Hours of Agentic Research on the\\
+       AI-Text Arms Race}
 
-\titlerunning{Closing the Gap on Personal Writing Style}
+\titlerunning{Beating the Style Detector}
 
 \ifanonymous
   \author{Anonymous Author(s)\inst{1}}
@@ -64,54 +64,32 @@
 \maketitle
 
 \begin{abstract}
-Baumler et~al.\ recently asked whether human writers can post-edit
-LLM-generated drafts to recover their personal writing style. Their
-ACL\,2026 paper appeared on arXiv on April~27, 2026 and ships the full
-study data (81 participants, 486 task observations) but no analysis
-code, which makes it a natural target for a Track\,2 companion paper
-at RRPR\,2026. Using an agentic-research harness in the spirit of
-Zaiss et~al., we reproduce, critique, and extend the design \emph{in
-six days end-to-end} (April~27 -- May~3, 2026), with the human
-investigator acting only as a reviewer-in-the-loop. We re-implement
-the full LUAR-MUD\,/\,permutation-test\,/\,rmcorr pipeline from the
-released logs, reproduce all seven preregistered hypotheses, and
-reproduce the headline repeated-measures correlation between perceived
-self-similarity and embedding-measured self-similarity to three
-decimal places ($r=+0.244$, $p<10^{-8}$, $n=648$).
-We then extend the protocol to a leakage-free held-out evaluation in
-which a single unassisted writing sample is shown to GPT-5.5 and
-Claude\,Opus\,4.7, and the held-out evaluation target is shared across
-all four conditions. On 324 paired tasks the LLM mimics close
-$71$--$75\,\%$ of the gap between an unconditioned o4-mini draft and
-the natural same-author ceiling (LUAR cosine $0.701$); the human
-post-edit closes $24\,\%$. A Friedman omnibus
-($\chi^{2}{=}419.3$, $p{=}1.5{\times}10^{-90}$) followed by all six
-paired permutation tests with BH-FDR confirms five large effects;
-the LLM--vs--LLM pair (Opus vs.\ GPT-5.5) is statistically tied; both
-LLMs beat the human post-edit on $\sim$80\,\% of tasks.
-Finally, we cast the same data as an arms race. A leave-authors-out
-linear-SVM detector on LUAR embeddings reaches AUC $0.999$ on the
-unconditioned o4-mini draft, $0.971$ on the human post-edit,
-$0.952$ on Opus\,4.7, and $0.931$ on GPT-5.5. Six diagnostic
-experiments---shuffled-label, length-only, cross-LLM, PCA-then-SVM,
-heavy regularisation, and a per-fold author audit---show that these
-AUCs survive every robustness check, but the \emph{source} of the
-signal differs sharply across approaches: GPT-5.5 detection is
-largely a length game (length-only AUC $=$ $0.880$), whereas
-Opus\,4.7 detection is a genuine stylistic signature
-(length-only AUC $=$ $0.517$, full LUAR AUC $=$ $0.952$). Closing
-the loop, we let an Opus\,4.7 agent see the frozen detector's score
-and rewrite a held-out draft for $T{=}20$ iterations: the agent
-flips two of five test targets to the human half-space and shrinks
-the margin on every target by an order of magnitude. The arms race
-is real but its shape is asymmetric, and the strongest LLM agents
-already partially defeat the strongest LUAR detector. All code,
-all 648 mimic drafts, the trained detectors, every diagnostic,
-the adversarial trajectories, and the agentic harness are released.
+Reproducing an empirical NLP study used to take weeks. Given the
+released data and a modern agentic-research harness, we redo every
+experiment of a recent ACL\,2026 study on personal-style post-editing
+of LLM drafts---and add three new ones---in roughly three hours of
+wall-clock work, with the human investigator acting only as a
+reviewer-in-the-loop. We reproduce all seven preregistered
+hypotheses and recover the paper's headline rmcorr to three decimal
+places ($r{=}{+}0.244$, $p{<}10^{-8}$, $n{=}648$). Under a
+leakage-free held-out protocol, GPT-5.5 and Claude\,Opus\,4.7 close
+$71$--$75\,\%$ of the style gap to the same-author ceiling on $324$
+paired tasks, against $24\,\%$ for the human post-edit, and beat the
+human on $\sim$$80\,\%$ of tasks.
+We then frame the same data as an AI-text detection arms race. A
+leave-authors-out linear SVM on LUAR-MUD embeddings reaches AUC
+$0.93$--$1.00$ across approaches; six diagnostics show that GPT-5.5
+detection is mostly a length confound while Opus detection is a
+genuine stylistic signature. Given $T{=}20$ feedback iterations
+against the frozen detector, an Opus agent flips two of five
+held-out test mimics to the human half-space and shrinks every
+margin by an order of magnitude. With moderate effort against a
+known detector, a frontier LLM can already efficiently lower its
+own AI-detection probability. All code, $648$ mimic drafts, trained
+detectors, diagnostics, and adversarial trajectories are released.
 
-\keywords{Reproducible research \and Authorship style embeddings \and
-LLM evaluation \and AI-text detection \and Permutation tests \and
-Held-out protocols \and Agentic research.}
+\keywords{Reproducible research \and AI-text detection \and
+Agentic research \and Authorship style embeddings.}
 \end{abstract}
 
 %-------------------------------------------------------------------
@@ -134,46 +112,39 @@ post-editing, and a large residual gap. Their study ships the full
 code, which makes it a clean target for a Track\,2 RRPR companion
 paper.
 
-This paper is that companion, written under one self-imposed
-constraint: \emph{six days end-to-end, with the human investigator
-acting only as a reviewer-in-the-loop}. From the moment the source
-paper appeared on arXiv (April~27) to the moment the present paper
-froze (May~3), an agentic-research harness in the spirit of
+This paper is that companion, and its main methodological observation
+is short: \emph{when the original data and a working agentic-research
+harness are available, full reproduction plus three new experiments
+costs roughly three hours of wall-clock work, not weeks}. An
+agentic-research harness in the spirit of
 Zaiss et~al.~\cite{zaiss2026agent4mr} drove the full pipeline:
-re-implementing the analysis, generating the LLM-mimic drafts via
-parallel sub-agents, designing the held-out protocol, finding and
-fixing a leakage bug we initially shipped, and writing this paper
-with continuous self-checks against a requirements document. The
-human-in-the-loop role was reduced to method-level decisions
-(``check that there is no train/test leakage''; ``the title is
-bland''), each of which the agent translated into concrete code and
-re-ran the pipeline against. The wall-clock cost of one full
+re-implementing the analysis from the released logs, generating the
+LLM-mimic drafts via parallel sub-agents, designing the held-out
+protocol, finding and fixing a leakage bug we initially shipped, and
+writing this paper with continuous self-checks against a
+requirements document. The human investigator's role reduced to
+method-level decisions (``check that there is no train/test
+leakage''), each of which the harness translated into concrete code
+and re-ran the pipeline against. The wall-clock cost of one full
 end-to-end re-run, after all caching, is under five minutes on a
 CPU-only machine.
 
-We make four contributions. First, in
-Sections~\ref{sec:methods-repro}--\ref{sec:repro-results}, we
-re-implement the paper's full LUAR-MUD\,/\,permutation-test\,/\,rmcorr
-pipeline from scratch and reproduce every preregistered hypothesis,
-exactly recovering the headline rmcorr to three decimals.
-Second, in Section~\ref{sec:extension}, we extend the design with a
-\emph{leakage-free held-out} evaluation that shows one of each
+The paper is organised as four contributions.
+Sections~\ref{sec:methods-repro}--\ref{sec:repro-results} re-implement
+the source paper's full LUAR-MUD\,/\,permutation-test\,/\,rmcorr
+pipeline from the released logs and reproduce every preregistered
+hypothesis. Section~\ref{sec:extension} extends the design with a
+leakage-free held-out evaluation that shows one of each
 participant's two unassisted controls to a frontier LLM as a style
 demonstration and reserves the other as the shared evaluation target
 across all four conditions (o4-mini draft, human post-edit, GPT-5.5
-mimic, Opus\,4.7 mimic).
-Third, Section~\ref{sec:stats} reports a Friedman omnibus, all six
-paired tests with BH-FDR, and a per-task win-rate against the
-human-edit threshold. Fourth and finally, in
-Section~\ref{sec:detection}, we re-cast exactly the same data as a
-\emph{detection} task: a leave-authors-out linear SVM on LUAR
-embeddings is asked to discriminate human writing from each AI
-approach. Detection AUC drops monotonically as the approach gets
-closer to the author's natural style---o4-mini $\to$ human-edit
-$\to$ Opus $\to$ GPT-5.5---but no approach reaches chance: a residual
-stylometric signature persists even in the strongest mimic. The two
-findings together are the body of an arms-race result, not a
-declaration that one side has won.
+mimic, Opus\,4.7 mimic). Section~\ref{sec:stats} reports a Friedman
+omnibus, all six paired tests with BH-FDR, and a per-task win-rate
+against the human-edit threshold. Section~\ref{sec:detection}
+re-casts the same data as an AI-text detection task, runs six
+robustness diagnostics, and closes the loop with an adversarial
+rewriting experiment in which an Opus\,4.7 agent receives the
+detector's score on its current draft and is asked to defeat it.
 
 We frame the LLM-mimic prompt explicitly as a \emph{hybrid /
 known-operator} approach, in the sense of
