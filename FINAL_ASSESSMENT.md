@@ -134,6 +134,27 @@ In the leakage-free protocol on the full 324-task sample:
 - Opus 4.7 and GPT-5.5 are practically tied; differences between them are
   smaller than the bootstrap noise on either alone.
 
+## 7. The arms race: detection on the same embeddings
+
+A leave-authors-out 5-fold linear-SVM detector on the same 512-d LUAR
+embeddings (`scripts/11_detection_experiment.py`,
+`tests/test_detection_no_leakage.py`) shows that detectability drops
+monotonically as the approach gets closer to the participant's style:
+
+| Approach (vs. human held-out control) | AUC (95 % bootstrap CI) |
+|---|---:|
+| o4-mini draft | 0.999 [0.997, 1.000] |
+| Human post-edit | 0.967 [0.957, 0.976] |
+| Claude Opus 4.7 mimic | 0.942 [0.925, 0.958] |
+| GPT-5.5 mimic | 0.914 [0.902, 0.929] |
+
+None of the four approaches reaches chance, and the bootstrap CIs do not
+overlap between adjacent rows. So the *same* LUAR embeddings used to score
+style proximity in §2 can be flipped into a strong AI-text detector — even
+the best frontier-LLM mimic still carries a residual signature. This is
+the arms race in numbers: each new generation closes part of the gap, but
+the discriminative model finds new structure to exploit.
+
 ## 7. Reproducing this
 
 ```

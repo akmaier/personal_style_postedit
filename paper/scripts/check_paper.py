@@ -165,6 +165,26 @@ def check_numbers() -> None:
     else:
         fail("D.2 (Opus vs GPT-5.5 ns)", "row not found in final_pairwise_tests.csv")
 
+    # Detection AUCs: o4-mini > human > Opus > GPT-5.5, all > chance
+    det = pd.read_csv(REPO / "results" / "detection_aucs.csv").set_index("approach")
+    expected_order = ["o4-mini", "Human post-edit", "Claude Opus 4.7", "GPT-5.5"]
+    aucs = [det.loc[k, "auc_mean"] for k in expected_order]
+    if aucs[0] > aucs[1] > aucs[2] > aucs[3] > 0.5:
+        ok("D.2 (detection ordering)",
+           f"AUCs strictly decreasing & above chance: {[f'{a:.3f}' for a in aucs]}")
+    else:
+        fail("D.2 (detection ordering)",
+             f"detection AUCs not strictly decreasing or below chance: {aucs}")
+    # Detection AUC for o4-mini approx 0.999 should appear in the paper
+    if "0.999" in tex:
+        ok("D.2 (detection o4-mini in paper)", "AUC 0.999 cited")
+    else:
+        fail("D.2 (detection o4-mini in paper)", "AUC 0.999 not in main.tex")
+    if "0.914" in tex:
+        ok("D.2 (detection GPT-5.5 in paper)", "AUC 0.914 cited")
+    else:
+        fail("D.2 (detection GPT-5.5 in paper)", "AUC 0.914 not in main.tex")
+
 
 # ---------------------------------------------------------------------------
 # Figures and tables referenced from text

@@ -137,14 +137,34 @@ def build_winrate_table(df: pd.DataFrame) -> str:
     return "\n".join(lines) + "\n"
 
 
+def build_detection_table(df: pd.DataFrame) -> str:
+    lines = [
+        r"\begin{tabular}{l r r r}",
+        r"\toprule",
+        r"Approach (vs.\ human held-out) & $n_{\text{ai}}$ & "
+        r"AUC \,(95\,\% CI) & per-fold SD \\",
+        r"\midrule",
+    ]
+    for _, r in df.iterrows():
+        lines.append(
+            rf"{r['approach']} & {int(r['n_ai'])} & "
+            rf"{r['auc_mean']:.3f}\,[{r['auc_ci_low']:.3f}, {r['auc_ci_high']:.3f}] & "
+            rf"{r['auc_std']:.3f} \\"
+        )
+    lines += [r"\bottomrule", r"\end{tabular}"]
+    return "\n".join(lines) + "\n"
+
+
 def main() -> None:
     repro = pd.read_csv(RESULTS / "hypothesis_tests.csv")
     pairs = pd.read_csv(RESULTS / "final_pairwise_tests.csv")
     wins = pd.read_csv(RESULTS / "final_win_vs_human.csv")
+    detection = pd.read_csv(RESULTS / "detection_aucs.csv")
 
     (OUT / "tab_reproduction.tex").write_text(build_reproduction_table(repro))
     (OUT / "tab_pairwise.tex").write_text(build_pairwise_table(pairs))
     (OUT / "tab_winrate.tex").write_text(build_winrate_table(wins))
+    (OUT / "tab_detection.tex").write_text(build_detection_table(detection))
 
     print("wrote:")
     for p in OUT.glob("*.tex"):
