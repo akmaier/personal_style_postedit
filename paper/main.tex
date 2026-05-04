@@ -22,7 +22,7 @@
 \usepackage{caption}
 \usepackage{subcaption}
 \usepackage{tikz}
-\usetikzlibrary{positioning,arrows.meta,calc,fit,backgrounds}
+\usetikzlibrary{positioning,arrows.meta,calc,fit,backgrounds,shadows}
 
 % Compact display style
 \captionsetup{font=small,labelfont=bf}
@@ -123,23 +123,26 @@ post-editing, and a large residual gap. Their study ships the full
 code, which makes it a clean target for a Track\,2 RRPR companion
 paper.
 
-This paper is that companion, and its main methodological observation
-is short: \emph{when the original data and a working agentic-research
-harness are available, full reproduction plus three new experiments
-costs roughly three hours of real elapsed time, not weeks}. The
-agentic-research harness, in the spirit of
+This paper is that companion. The methodological point is
+straightforward: when released data already exist and an
+agentic-research harness is available, full reproduction plus three
+extension experiments can be executed in roughly three hours of real
+elapsed time rather than weeks. In the present project, the harness,
+in the spirit of
 Karpathy's autoresearch~\cite{karpathy2026autoresearch} and
-Zaiss et~al.~\cite{zaiss2026agent4mr}, drove the full pipeline:
-re-implementing the analysis from the released logs, generating the
-LLM-mimic drafts via parallel sub-agents, designing the held-out
-protocol, finding and fixing a leakage bug we initially shipped, and
-writing this paper with continuous self-checks against a
-requirements document. The human investigator's role reduced to
-method-level decisions (``check that there is no train/test
-leakage''), each of which the harness translated into concrete code
-and re-ran the pipeline against. For RRPR Track\,2, the scientific
-object remains the companion reproducibility study; the agentic loop
-is only the implementation vehicle.
+Zaiss et~al.~\cite{zaiss2026agent4mr}, served as the execution layer
+for the full pipeline: re-implementing the released analysis,
+generating the LLM-mimic drafts via parallel sub-agents,
+instantiating the held-out protocol, identifying and correcting an
+initially shipped leakage bug, and maintaining the manuscript
+against an explicit requirements checklist. The human investigator
+remained at the level of methodological supervision, issuing
+requests such as ``check that there is no train/test leakage'',
+while the harness translated those requests into concrete code
+changes and re-ran the pipeline. This remains within the RRPR
+Track\,2 scope: the scientific object is the companion
+reproducibility study, and the agentic loop is the means by which
+it is carried out.
 
 The paper is organised as four contributions.
 Sections~\ref{sec:methods-repro}--\ref{sec:repro-results} re-implement

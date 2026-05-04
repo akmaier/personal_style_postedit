@@ -5,7 +5,8 @@
   node distance=10pt and 18pt,
   box/.style={
     draw, thick, rounded corners=2pt, minimum height=22pt,
-    inner sep=4pt, align=center
+    inner sep=4pt, align=center,
+    drop shadow={opacity=0.20, shadow xshift=1.4pt, shadow yshift=-1.4pt}
   },
   data/.style={box, fill=black!4, minimum width=68pt},
   proc/.style={box, fill=blue!8, minimum width=78pt},
@@ -20,13 +21,14 @@
   \node[test, right=of sim]   (tests)  {paired perm.\\Hedges' $g$\\\texttt{03\_tests}};
   \node[outbox, right=of tests] (figs)  {Figs.~3--8\\\texttt{05\_figures}};
 
-  \node[proc, below=18pt of luar] (gen) {LLM mimic\\generation\\\texttt{07\_gen}};
+  \node[proc, below=18pt of luar, minimum width=92pt]
+        (gen) {LLM mimic gen\\+ LUAR-MUD\\\texttt{07\_gen}};
   \node[proc, right=of gen] (mimsim) {held-out\\sim. table\\\texttt{08\_compare}};
   \node[test, right=of mimsim] (final) {Friedman + 6\\paired tests\\\texttt{10\_final}};
   \node[outbox, right=of final] (fig9)  {Figs.~9, 10};
 
-  % Drafts box, placed to the left of `gen` (about a cm leftward of its
-  % previous mid-position). It feeds into the LLM mimic generation step.
+  % Drafts box, placed to the left of `gen`. It feeds into the mimic
+  % generation + embedding stage.
   \node[data, below=18pt of gen, xshift=-58pt]
         (drafts) {Opus + GPT-5.5\\drafts\\\texttt{mimics/*.json}};
 
@@ -36,12 +38,10 @@
   \draw[->] (sim)   -- (tests);
   \draw[->] (tests) -- (figs);
 
-  % Branches into the extension lane. Both arrows now end at the WEST
-  % anchor of an actual node so they don't point into empty space:
-  %   tidy -> gen      (planning details flow into mimic generation)
-  %   luar -> mimsim   (the same LUAR embedder also embeds the mimics)
+  % Branch into the extension lane: planning details flow into the
+  % mimic-generation + embedding stage, and the generated drafts feed it
+  % from below.
   \draw[->] (tidy.south) |- (gen.west);
-  \draw[->] (luar.south) |- (mimsim.west);
   \draw[->] (drafts) -| (gen.south);
   \draw[->] (gen) -- (mimsim);
   \draw[->] (mimsim) -- (final);

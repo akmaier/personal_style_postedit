@@ -5,7 +5,7 @@
 % but it is normally \input directly into main.tex.
 \documentclass[border=4pt]{standalone}
 \usepackage{tikz}
-\usetikzlibrary{positioning,arrows.meta,calc,fit,backgrounds}
+\usetikzlibrary{positioning,arrows.meta,calc,fit,backgrounds,shadows}
 
 \begin{document}
 \begin{tikzpicture}[
@@ -13,7 +13,8 @@
   node distance=10pt and 18pt,
   box/.style={
     draw, thick, rounded corners=2pt, minimum height=22pt,
-    inner sep=4pt, align=center
+    inner sep=4pt, align=center,
+    drop shadow={opacity=0.20, shadow xshift=1.4pt, shadow yshift=-1.4pt}
   },
   data/.style={box, fill=black!4, minimum width=68pt},
   proc/.style={box, fill=blue!8, minimum width=78pt},
@@ -28,7 +29,8 @@
   \node[test, right=of sim]   (tests)  {paired perm.\\Hedges' $g$\\\texttt{03\_tests}};
   \node[outbox, right=of tests] (figs)  {Figs.~3--8\\\texttt{05\_figures}};
 
-  \node[proc, below=18pt of luar] (gen) {LLM mimic\\generation\\\texttt{07\_gen}};
+  \node[proc, below=18pt of luar, minimum width=92pt]
+        (gen) {LLM mimic gen\\+ LUAR-MUD\\\texttt{07\_gen}};
   \node[proc, right=of gen] (mimsim) {held-out\\sim. table\\\texttt{08\_compare}};
   \node[test, right=of mimsim] (final) {Friedman + 6\\paired tests\\\texttt{10\_final}};
   \node[outbox, right=of final] (fig9)  {Figs.~9, 10};
@@ -42,7 +44,6 @@
   \draw[->] (tests) -- (figs);
 
   \draw[->] (tidy.south) |- (gen.west);
-  \draw[->] (luar.south) |- (mimsim.west);
   \draw[->] (drafts) -| (gen.south);
   \draw[->] (gen) -- (mimsim);
   \draw[->] (mimsim) -- (final);
