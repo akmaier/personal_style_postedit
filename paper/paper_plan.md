@@ -110,6 +110,10 @@ bibliographically resolved* during this planning turn (see
 
 ### 6.3 Style-inspiration anchor papers (Maier / Zaiss group)
 
+- **Karpathy.** *autoresearch.* GitHub repository (2026).
+  *Cite alongside [C.4]: fixed-budget GPT-style pretraining loop with
+  `val_bpb` as the automatic objective; useful contrast to our
+  inference-time, closed-weight setting.*
 - **Zaiss, Aly, Endres, Dornstetter, Weinmüller, Maier.** *Agentic MR
   sequence development: leveraging LLMs with MR skills for automatic
   physics-informed sequence development.* arXiv:2604.13282 (2026).

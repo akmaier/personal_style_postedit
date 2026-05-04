@@ -99,6 +99,7 @@ def check_B() -> None:
 
     needed_keys = [
         "rivera2021luar",        # D.4
+        "karpathy2026autoresearch",
         "zaiss2026agent4mr",     # C.4
         "maier2018precision",    # C.3
         "maier2022knownoperator",  # C.3

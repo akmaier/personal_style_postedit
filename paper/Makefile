@@ -32,8 +32,16 @@ $(PAPER).pdf: $(PAPER).tex refs.bib tables figures
 
 # Strip metadata for blind review.
 anonymize: $(PAPER).pdf
-	cp $(PAPER).pdf $(PAPER)_anonymous.pdf
-	exiftool -overwrite_original -all= $(PAPER)_anonymous.pdf >/dev/null
+	@if command -v exiftool >/dev/null 2>&1; then \
+		cp $(PAPER).pdf $(PAPER)_anonymous.pdf; \
+		exiftool -overwrite_original -all= $(PAPER)_anonymous.pdf >/dev/null; \
+	elif command -v gs >/dev/null 2>&1; then \
+		gs -q -dNOPAUSE -dBATCH -sDEVICE=pdfwrite \
+			-sOutputFile=$(PAPER)_anonymous.pdf $(PAPER).pdf; \
+	else \
+		echo "ANONYMIZE FAILED: need exiftool or gs"; \
+		exit 1; \
+	fi
 
 # Author-credited build for arXiv: same source, anonymous switch flipped off.
 # Uses -jobname so the aux files do not collide with the blind-review build.

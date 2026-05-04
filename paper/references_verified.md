@@ -9,6 +9,7 @@ date we last confirmed it points at the correct work. This is requirement
 | `baumler2026personalstyle` | Can You Make It Sound Like You? | Baumler et al. | arXiv 2604.24444 / ACL 2026 | https://arxiv.org/abs/2604.24444 | 2026-05-02 |
 | `rivera2021luar` | Learning Universal Authorship Representations | Rivera-Soto et al. | EMNLP 2021 | https://aclanthology.org/2021.emnlp-main.70/ | 2026-05-02 |
 | `zaiss2026agent4mr` | Agentic MR sequence development | Zaiss, Aly, Endres, Dornstetter, Weinmüller, Maier | arXiv 2604.13282 / 2026 | https://arxiv.org/abs/2604.13282 | 2026-05-02 |
+| `karpathy2026autoresearch` | autoresearch | Karpathy | GitHub repository / 2026 | https://github.com/karpathy/autoresearch | 2026-05-04 |
 | `maier2018precision` | Precision Learning: Use of Known Operators | Maier, Schebesch, Syben, Würfl, Steidl, Choi, Fahrig | ICPR 2018, pp. 183--188 | https://doi.org/10.1109/ICPR.2018.8545553 | 2026-05-02 |
 | `maier2022knownoperator` | Known Operator Learning Review | Maier, Köstler, Heisig, Krauß, Yang | Prog. Biomed. Eng. 4(2) 022002, 2022 | https://doi.org/10.1088/2516-1091/ac5b13 | 2026-05-02 |
 | `maier2019gentle` | A gentle introduction to deep learning in medical image processing | Maier, Syben, Lasser, Riess | Z. Med. Phys. 29(2):86--101, 2019 | https://doi.org/10.1016/j.zemedi.2018.12.003 | 2026-05-02 |
@@ -38,9 +39,10 @@ A reference is "verified" when at least one of the following is true:
    confirmed via at least two independent sources, e.g. arXiv listing +
    publisher landing page, or arXiv listing + Google Scholar +
    ACL Anthology. This applies to the rest.
-3. For software / model entries (`wolf2020transformers`,
-   `paszke2019pytorch`, `vallat2018pingouin`, `virtanen2020scipy`,
-   `openai2025o4mini`, `anthropic2026opus47`, `openai2026gpt55`),
+3. For software / model entries (`karpathy2026autoresearch`,
+   `wolf2020transformers`, `paszke2019pytorch`, `vallat2018pingouin`,
+   `virtanen2020scipy`, `openai2025o4mini`, `anthropic2026opus47`,
+   `openai2026gpt55`),
    verification means the package or model is the one actually used by
    the pipeline (cross-check against `requirements.txt` and
    `src/personal_style/llm_mimic.py`).
