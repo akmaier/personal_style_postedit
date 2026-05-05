@@ -14,7 +14,7 @@ tables:
 	python3 scripts/build_tables.py
 
 # Build the standalone figure PDFs that main.tex \includegraphics's.
-figures: figures/_build/fig1_pipeline.pdf figures/_build/fig2_repro_montage.pdf
+figures: figures/_build/fig1_pipeline.pdf
 
 figures/_build/%.pdf: figures/%.tex
 	@mkdir -p figures/_build

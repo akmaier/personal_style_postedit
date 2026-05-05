@@ -23,19 +23,19 @@
   >={Latex[length=4pt]}
 ]
   \node[data] (logs)   {81 study logs\\\textit{(released)}};
-  \node[proc, right=of logs]  (tidy)   {tidy frames\\\texttt{00\_build}};
-  \node[proc, right=of tidy]  (luar)   {LUAR-MUD\\\texttt{01\_embed}};
-  \node[proc, right=of luar]  (sim)    {similarity\\tables\\\texttt{02\_sim}};
-  \node[test, right=of sim]   (tests)  {paired perm.\\Hedges' $g$\\\texttt{03\_tests}};
-  \node[outbox, right=of tests] (figs)  {Figs.~3--8\\\texttt{05\_figures}};
+  \node[proc, right=of logs]  (tidy)   {tidy frames};
+  \node[proc, right=of tidy]  (luar)   {LUAR-MUD};
+  \node[proc, right=of luar]  (sim)    {similarity\\tables};
+  \node[test, right=of sim]   (tests)  {paired tests\\Hedges' $g$};
+  \node[outbox, right=of tests] (figs)  {Figs.~3--8};
 
   \node[proc, below=18pt of luar, minimum width=92pt]
-        (gen) {LLM mimic gen\\+ LUAR-MUD\\\texttt{07\_gen}};
-  \node[proc, right=of gen] (mimsim) {held-out\\sim. table\\\texttt{08\_compare}};
-  \node[test, right=of mimsim] (final) {Friedman + 6\\paired tests\\\texttt{10\_final}};
+        (gen) {LLM mimic gen\\+ LUAR-MUD};
+  \node[proc, right=of gen] (mimsim) {held-out\\sim. table};
+  \node[test, right=of mimsim] (final) {Friedman + 6\\paired tests};
   \node[outbox, right=of final] (fig9)  {Figs.~9, 10};
 
-  \node[data, below=18pt of gen, xshift=-58pt] (drafts) {Opus + GPT-5.5\\drafts\\\texttt{mimics/*.json}};
+  \node[data, below=18pt of gen, xshift=-58pt] (drafts) {Opus + GPT-5.5\\drafts};
 
   \draw[->] (logs)  -- (tidy);
   \draw[->] (tidy)  -- (luar);
