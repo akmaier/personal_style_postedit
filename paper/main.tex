@@ -691,6 +691,41 @@ targets as well. This is the strongest version of the arms race in
 this paper, and it points toward the agent winning rather than the
 detector.
 
+\paragraph{Adversarial strategies are author-specific, not generic
+adversarial noise.}
+A qualitative inspection of the iteration-$0$, $10$, and
+$20$ rewrites (committed under
+\texttt{results/adversarial\_samples.md}) shows that each
+sub-agent locks onto a \emph{different} ``human'' texture appropriate
+to the source participant's voice. The \texttt{letter} target ends
+up in extreme British text-speak (lowercase, fragments, ``oi mate'',
+heavy repetition); the \texttt{thank} target instead ends up in a
+Southern-US ``brother'' register (named addressee, ``Praise God for
+friends like you'', short sentences); the \texttt{apology} target
+adopts fragmented prose plus religious cadence (``May God forgive
+me'') but keeps a formal letter frame; the two \texttt{reassurance}
+and \texttt{wedding} targets, which share an author whose unassisted
+control is already lowercase and casual, lean further into
+abbreviations and informal pacing while preserving the genre frame.
+Three properties are shared across all five trajectories: average
+sentence length drops, polish drops, and the surface texture moves
+toward the participant's apparent voice rather than toward a single
+generic ``humanlike'' direction. The two trajectories that
+\emph{did} cross the boundary (\texttt{thank}, \texttt{letter}) are
+also the ones whose iteration-$0$ draft was most polished and
+therefore had the most stylistic distance to recover; the two that
+did not are constrained by the genre (vows, formal apology) and by a
+participant voice that was already partway human-coded at
+iteration~$0$. We did \emph{not} regularise the rewrites toward the
+original draft's content---the only constraint we imposed was that
+the substantive content from the planning details be preserved and
+that the draft stay within the $100$--$200$ word range. Adding an
+explicit content-similarity regulariser (e.g.\ a sentence-embedding
+cosine floor between the rewrite and the original draft, or a
+ROUGE/BLEU floor) would tighten the trade-off between
+``defeats the detector'' and ``still says what the author meant'',
+and is a natural next step that we leave to future work.
+
 \begin{figure}[!htbp]
 \centering
 \includegraphics[width=0.85\linewidth]{../figures/fig13_adversarial.png}
@@ -747,6 +782,15 @@ adversarial-rewriting result an \emph{upper bound} on what an LLM
 agent with $20$ feedback iterations can already remove; the
 relative ordering across approaches is robust, but the absolute
 AUCs are a snapshot of spring 2026.
+\textit{Unregularised rewrites:} the adversarial loop in
+Section~\ref{sec:detection} optimises only the SVM margin and the
+$100$--$200$ word range. With no explicit content-preservation
+constraint, the strongest rewrites drift away from the polish and
+the cadence of the iteration-$0$ draft; whether they still convey
+the same intent to a human reader is not measured here. A
+content-similarity regulariser (a sentence-embedding cosine floor,
+or a ROUGE/BLEU floor against the original) is the natural next
+step.
 
 %-------------------------------------------------------------------
 \section{Conclusion}\label{sec:conclusion}
